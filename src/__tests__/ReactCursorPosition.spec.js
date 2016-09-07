@@ -59,6 +59,20 @@ describe('ReactCursorPosition', () => {
         });
     });
 
+    it('does not decorate child DOM nodes with cursorPosition prop', () => {
+        const renderedTree = getRenderedComponentTree();
+        const childComponent = renderedTree.find('hr');
+        const el = renderedTree.find('div');
+        el.simulate('mouseEnter');
+
+        el.simulate('mouseMove', {
+            pageX: 1,
+            pageY: 2
+        });
+
+        expect(childComponent.props()).to.be.empty;
+    });
+
     describe('props API', () => {
         it('supports className', () => {
             const tree = getRenderedComponentTree('className', 'foo');
@@ -92,6 +106,7 @@ describe('ReactCursorPosition', () => {
             tree = (
                 <ReactCursorPosition>
                     <GenericSpanComponent />
+                    <hr />
                 </ReactCursorPosition>
             );
         } else {
@@ -100,6 +115,7 @@ describe('ReactCursorPosition', () => {
                     [prop]: value
                 }}>
                     <GenericSpanComponent />
+                    <hr />
                 </ReactCursorPosition>
             );
         }

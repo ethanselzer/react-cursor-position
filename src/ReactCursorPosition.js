@@ -91,9 +91,14 @@ export default React.createClass({
         };
     },
 
+    isComponent(reactElement) {
+        return typeof reactElement.type === 'function';
+    },
+
+
     renderChildrenWithProps(children, props) {
         return Children.map(children, (child) => {
-            return cloneElement(child, props);
+            return this.isComponent(child) ? cloneElement(child, props) : child;
         });
     },
 
