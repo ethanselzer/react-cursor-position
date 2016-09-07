@@ -34,10 +34,13 @@ has the following structure.
 
 ### props API
 
-`className` : Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
+`className` : String - Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
 
-`onCursorPositionChanged` : Optionally provide a function that will be called when the mouse cursor position changes.
+`onCursorPositionChanged` : Function - Optionally provide a function that will be called when the mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
+
+`shouldDecorateChildren` : Boolean - Defaults to true. Optionally suppress `cursorPosition` decoration of child components by
+setting this prop false.
 
 ## Support
 

@@ -32,7 +32,8 @@ describe('ReactCursorPosition', () => {
 
     it('has correct default props', () => {
         expect(cursorObserver.instance().constructor.getDefaultProps()).to.deep.equal({
-            onCursorPositionChanged: noop
+            onCursorPositionChanged: noop,
+            shouldDecorateChildren: true
         });
     });
 
@@ -97,6 +98,20 @@ describe('ReactCursorPosition', () => {
                 });
                 done();
             }
+        });
+
+        it('supports shouldDecorateChildren, which optionally suppresses decoration of child components when unset', () => {
+            const tree = getRenderedComponentTree('shouldDecorateChildren', false);
+            const childComponent = tree.find(GenericSpanComponent);
+            const el = tree.find('div');
+            el.simulate('mouseEnter');
+
+            el.simulate('mouseMove', {
+                pageX: 1,
+                pageY: 2
+            });
+
+            expect(childComponent.props()).to.be.empty;
         });
     });
 

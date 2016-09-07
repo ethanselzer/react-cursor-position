@@ -26,12 +26,14 @@ export default React.createClass({
 
     propTypes: {
         className: PropTypes.string,
-        onCursorPositionChanged: PropTypes.func
+        onCursorPositionChanged: PropTypes.func,
+        shouldDecorateChildren: PropTypes.bool
     },
 
     getDefaultProps() {
         return {
-            onCursorPositionChanged: noop
+            onCursorPositionChanged: noop,
+            shouldDecorateChildren: true
         };
     },
 
@@ -91,14 +93,21 @@ export default React.createClass({
         };
     },
 
-    isComponent(reactElement) {
+    isReactComponent(reactElement) {
         return typeof reactElement.type === 'function';
     },
 
+    shouldDecorateChild(child) {
+        return this.isReactComponent(child) && this.props.shouldDecorateChildren;
+    },
+
+    decorateChild(child, props) {
+        return cloneElement(child, props);
+    },
 
     renderChildrenWithProps(children, props) {
         return Children.map(children, (child) => {
-            return this.isComponent(child) ? cloneElement(child, props) : child;
+            return this.shouldDecorateChild(child) ? this.decorateChild(child, props) : child;
         });
     },
 
@@ -110,7 +119,8 @@ export default React.createClass({
             omit(this.props, [
                 'children',
                 'className',
-                'onCursorPositionChanged'
+                'onCursorPositionChanged',
+                'shouldDecorateChildren'
             ])
         );
 
