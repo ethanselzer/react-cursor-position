@@ -22,6 +22,10 @@
   },
   "homepage": "https://github.com/ethanselzer/react-cursor-position#readme",
   "main": "dist/ReactCursorPosition.js",
+  "files": [
+      "dist/ReactCursorPosition.js",
+      "LICENCE"
+  ],
   "options": {
     "mocha": "--require scripts/mocha_runner src/**/__tests__/**/*.spec.js"
   },
