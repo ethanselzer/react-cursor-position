@@ -42,7 +42,7 @@ describe('ReactCursorPosition', () => {
     });
 
     it('decorates child components with cursorPosition prop', () => {
-        const renderedTree = getRenderedComponentTree();
+        const renderedTree = getMountedComponentTree();
         const childComponent = renderedTree.find(GenericSpanComponent);
         const el = renderedTree.find('div');
         el.simulate('mouseEnter');
@@ -61,7 +61,7 @@ describe('ReactCursorPosition', () => {
     });
 
     it('does not decorate child DOM nodes with cursorPosition prop', () => {
-        const renderedTree = getRenderedComponentTree();
+        const renderedTree = getMountedComponentTree();
         const childComponent = renderedTree.find('hr');
         const el = renderedTree.find('div');
         el.simulate('mouseEnter');
@@ -74,15 +74,21 @@ describe('ReactCursorPosition', () => {
         expect(childComponent.props()).to.be.empty;
     });
 
-    describe('props API', () => {
+    describe('Optional props API', () => {
         it('supports className', () => {
-            const tree = getRenderedComponentTree('className', 'foo');
+            const tree = getMountedComponentTree({ className: 'foo' });
 
             expect(tree.find('div').hasClass('foo')).to.equal(true);
         });
 
-        it('supports onCursorPositionChanged', (done) => {
-            const tree = getRenderedComponentTree('onCursorPositionChanged', onCursorPositionChanged);
+        it('supports style', () => {
+            const tree = render(<ReactCursorPosition style={{ width: '100px' }}/>);
+
+            expect(tree.find('div').css('width')).to.equal('100px');
+        });
+
+        it('supports onCursorPositionChanged callback', (done) => {
+            const tree = getMountedComponentTree({ onCursorPositionChanged: onCursorPositionChanged });
             const el = tree.find('div');
             el.simulate('mouseEnter');
 
@@ -100,8 +106,8 @@ describe('ReactCursorPosition', () => {
             }
         });
 
-        it('supports shouldDecorateChildren, which optionally suppresses decoration of child components when unset', () => {
-            const tree = getRenderedComponentTree('shouldDecorateChildren', false);
+        it('supports shouldDecorateChildren, which suppresses decoration of child components when set false', () => {
+            const tree = getMountedComponentTree({ shouldDecorateChildren: false });
             const childComponent = tree.find(GenericSpanComponent);
             const el = tree.find('div');
             el.simulate('mouseEnter');
@@ -115,26 +121,12 @@ describe('ReactCursorPosition', () => {
         });
     });
 
-    function getRenderedComponentTree(prop, value) {
-        let tree;
-        if (!prop) {
-            tree = (
-                <ReactCursorPosition>
-                    <GenericSpanComponent />
-                    <hr />
-                </ReactCursorPosition>
-            );
-        } else {
-            tree = (
-                <ReactCursorPosition { ...{
-                    [prop]: value
-                }}>
-                    <GenericSpanComponent />
-                    <hr />
-                </ReactCursorPosition>
-            );
-        }
-
-        return mount(tree);
+    function getMountedComponentTree(props = {}) {
+        return mount(
+            <ReactCursorPosition { ...props }>
+                <GenericSpanComponent />
+                <hr />
+            </ReactCursorPosition>
+        );
     }
 });

@@ -27,14 +27,16 @@ has the following structure.
 
 ```JavaScript
 {
-    x: [Number],
-    y: [Number]
+    x: Number,
+    y: Number
 }
 ```
 
 ### props API
 
 `className` : String - Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
+
+`style` : String - Optionally provide a style object to be applied to the div rendered by react-cursor-position.
 
 `onCursorPositionChanged` : Function - Optionally provide a function that will be called when the mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
@@ -50,6 +52,8 @@ Please [open an issue](https://github.com/ethanselzer/react-cursor-position/issu
 
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
+cd react-cursor-position
+npm install
 ```
 See available commands:
 ```ssh

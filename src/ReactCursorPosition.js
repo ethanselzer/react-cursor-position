@@ -27,7 +27,8 @@ export default React.createClass({
     propTypes: {
         className: PropTypes.string,
         onCursorPositionChanged: PropTypes.func,
-        shouldDecorateChildren: PropTypes.bool
+        shouldDecorateChildren: PropTypes.bool,
+        style: PropTypes.object
     },
 
     getDefaultProps() {
@@ -112,7 +113,7 @@ export default React.createClass({
     },
 
     render() {
-        const { children, className } = this.props;
+        const { children, className, style } = this.props;
         const childProps = assign(
             {},
             { cursorPosition: this.state.cursorPosition },
@@ -120,7 +121,8 @@ export default React.createClass({
                 'children',
                 'className',
                 'onCursorPositionChanged',
-                'shouldDecorateChildren'
+                'shouldDecorateChildren',
+                'style'
             ])
         );
 
@@ -128,7 +130,8 @@ export default React.createClass({
             <div { ...{
                 onMouseMove: this.onMouseMove,
                 onMouseEnter: this.onMouseEnter,
-                className
+                className,
+                style
             }}>
                 { this.renderChildrenWithProps(children, childProps) }
             </div>
