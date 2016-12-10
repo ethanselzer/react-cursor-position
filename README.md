@@ -2,6 +2,15 @@
 
 A React component that decorates its children with mouse cursor coordinates, plotted relative to itself.
 
+## Demo
+The react-image-magnify project depends on this package for mouse coordinate observation.
+Please have a look at the [react-image-magnify](https://www.npmjs.com/package/react-image-magnify)
+demo to see this package in action.
+
+## Related Project
+For touch position tracking, see [react-touch-position](https://www.npmjs.com/package/react-touch-position).
+It has a similar architecture and interface.
+
 ## Installation
 
 ```sh
@@ -36,7 +45,7 @@ has the following structure.
 
 `className` : String - Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
 
-`style` : String - Optionally provide a style object to be applied to the div rendered by react-cursor-position.
+`style` : Object - Optionally provide a style object to be applied to the div rendered by react-cursor-position.
 
 `onCursorPositionChanged` : Function - Optionally provide a function that will be called when the mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
@@ -64,3 +73,7 @@ npm run
 
 Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch,
 add commits, and [open a pull request](https://github.com/ethanselzer/react-cursor-position/compare/).
+
+## License
+
+MIT
