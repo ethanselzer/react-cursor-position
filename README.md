@@ -2,6 +2,11 @@
 
 A React component that decorates its children with mouse cursor coordinates, plotted relative to itself.
 
+## Status
+[![CircleCI](https://circleci.com/gh/ethanselzer/react-cursor-position.svg?style=svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
+
+[![npm](https://nodei.co/npm/react-cursor-position.svg?downloads=true)](https://nodei.co/npm/react-cursor-position/)
+
 ## Demo
 The react-image-magnify project depends on this package for mouse coordinate observation.
 Please have a look at the [react-image-magnify](https://www.npmjs.com/package/react-image-magnify)
