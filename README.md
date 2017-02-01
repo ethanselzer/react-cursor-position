@@ -42,7 +42,8 @@ has the following structure.
 ```JavaScript
 {
     x: Number,
-    y: Number
+    y: Number,
+    isOutside: Boolean
 }
 ```
 

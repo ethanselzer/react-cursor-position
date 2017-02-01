@@ -3,8 +3,6 @@ import React, {
     cloneElement,
     PropTypes
 } from 'react';
-import assign from 'lodash.assign';
-import noop from 'lodash.noop';
 import omit from 'lodash.omit';
 
 export default React.createClass({
@@ -19,7 +17,8 @@ export default React.createClass({
             },
             cursorPosition: {
                 x: 0,
-                y: 0
+                y: 0,
+                isOutside: true
             }
         };
     },
@@ -33,7 +32,7 @@ export default React.createClass({
 
     getDefaultProps() {
         return {
-            onCursorPositionChanged: noop,
+            onCursorPositionChanged: () => {},
             shouldDecorateChildren: true
         };
     },
@@ -41,6 +40,18 @@ export default React.createClass({
     onMouseEnter(e) {
         const elementOffset = this.getDocumentRelativeElementOffset(e.currentTarget);
         this.setState({ elementOffset });
+    },
+
+    onMouseLeave() {
+        const cursorPosition = Object.assign(
+            {},
+            this.state.cursorPosition,
+            { isOutside: true }
+        );
+        this.setState({
+            cursorPosition
+        });
+        this.props.onCursorPositionChanged(cursorPosition);
     },
 
     getDocumentRelativeElementOffset(el) {
@@ -71,7 +82,10 @@ export default React.createClass({
     onMouseMove(e) {
         const cursorPosition = this.getDocumentRelativeCursorPosition(e);
         const elementOffset = this.state.elementOffset;
-        const offsetCursorPosition = this.getOffsetCursorPosition(cursorPosition, elementOffset);
+        const offsetCursorPosition = Object.assign(
+            { isOutside: false },
+            this.getOffsetCursorPosition(cursorPosition, elementOffset)
+        );
 
         this.setState({ cursorPosition: offsetCursorPosition });
         this.props.onCursorPositionChanged(offsetCursorPosition);
@@ -114,7 +128,7 @@ export default React.createClass({
 
     render() {
         const { children, className, style } = this.props;
-        const childProps = assign(
+        const childProps = Object.assign(
             {},
             { cursorPosition: this.state.cursorPosition },
             omit(this.props, [
@@ -128,9 +142,10 @@ export default React.createClass({
 
         return (
             <div { ...{
+                className,
                 onMouseMove: this.onMouseMove,
                 onMouseEnter: this.onMouseEnter,
-                className,
+                onMouseLeave: this.onMouseLeave,
                 style
             }}>
                 { this.renderChildrenWithProps(children, childProps) }

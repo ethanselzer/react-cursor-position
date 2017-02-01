@@ -1,5 +1,4 @@
 import React from 'react';
-import noop from 'lodash.noop';
 import {shallow, mount, render} from 'enzyme';
 import {expect} from 'chai';
 
@@ -25,16 +24,20 @@ describe('ReactCursorPosition', () => {
             },
             cursorPosition: {
                 x: 0,
-                y: 0
+                y: 0,
+                isOutside: true
             }
         });
     });
 
     it('has correct default props', () => {
-        expect(cursorObserver.instance().constructor.getDefaultProps()).to.deep.equal({
-            onCursorPositionChanged: noop,
-            shouldDecorateChildren: true
-        });
+        const {
+            onCursorPositionChanged,
+            shouldDecorateChildren
+        } = cursorObserver.instance().constructor.getDefaultProps();
+
+        expect(typeof onCursorPositionChanged === 'function').to.be.true;
+        expect(shouldDecorateChildren).to.be.true;
     });
 
     it('renders a single div html element', () => {
@@ -55,7 +58,60 @@ describe('ReactCursorPosition', () => {
         expect(childComponent.props()).to.deep.equal({
             cursorPosition: {
                 x: 1,
-                y: 2
+                y: 2,
+                isOutside: false
+            }
+        });
+    });
+
+    it('unsets isOutside property of cursorPosition when the cursor is inside the target', () => {
+        const renderedTree = getMountedComponentTree({
+            style: {
+                width: '2px',
+                height: '2px'
+            }
+        });
+        const childComponent = renderedTree.find(GenericSpanComponent);
+        const el = renderedTree.find('div');
+        el.simulate('mouseEnter');
+
+        el.simulate('mouseMove', {
+            pageX: 1,
+            pageY: 1
+        });
+
+        expect(childComponent.props()).to.deep.equal({
+            cursorPosition: {
+                x: 1,
+                y: 1,
+                isOutside: false
+            }
+        });
+    });
+
+    it('sets isOutside property of cursorPosition when the cursor is outside the target', () => {
+        const renderedTree = getMountedComponentTree({
+            style: {
+                width: '2px',
+                height: '2px'
+            }
+        });
+        const childComponent = renderedTree.find(GenericSpanComponent);
+        const el = renderedTree.find('div');
+        el.simulate('mouseEnter');
+
+        el.simulate('mouseMove', {
+            pageX: 4,
+            pageY: 4
+        });
+
+        el.simulate('mouseLeave');
+
+        expect(childComponent.props()).to.deep.equal({
+            cursorPosition: {
+                x: 4,
+                y: 4,
+                isOutside: true
             }
         });
     });
@@ -100,13 +156,14 @@ describe('ReactCursorPosition', () => {
             function onCursorPositionChanged(point) {
                 expect(point).to.deep.equal({
                     x: 1,
-                    y: 2
+                    y: 2,
+                    isOutside: false
                 });
                 done();
             }
         });
 
-        it('supports shouldDecorateChildren, which suppresses decoration of child components when set false', () => {
+        it('supports shouldDecorateChildren', () => {
             const tree = getMountedComponentTree({ shouldDecorateChildren: false });
             const childComponent = tree.find(GenericSpanComponent);
             const el = tree.find('div');
@@ -117,6 +174,7 @@ describe('ReactCursorPosition', () => {
                 pageY: 2
             });
 
+            // Decoration of child components is suppresssed
             expect(childComponent.props()).to.be.empty;
         });
     });
