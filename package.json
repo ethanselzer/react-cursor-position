@@ -7,13 +7,17 @@
     "url": "https://github.com/ethanselzer/react-cursor-position.git"
   },
   "keywords": [
-    "React",
-    "mouse",
+    "component",
+    "coordinates",
     "cursor",
-    "position",
+    "follow",
+    "mouse",
+    "mousemove",
     "observer",
-    "mouseMove",
-    "coordinates"
+    "pointer",
+    "position",
+    "react",
+    "track"
   ],
   "author": "Ethan Selzer <ethanselzer@gmail.com>",
   "license": "MIT",

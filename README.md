@@ -2,6 +2,8 @@
 
 A React component that decorates its children with mouse cursor coordinates, plotted relative to itself.
 
+Safe for server rendering.
+
 ## Status
 [![CircleCI](https://circleci.com/gh/ethanselzer/react-cursor-position.svg?style=svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
 
@@ -12,9 +14,12 @@ The react-image-magnify project depends on this package for mouse coordinate obs
 Please have a look at the [react-image-magnify](https://www.npmjs.com/package/react-image-magnify)
 demo to see this package in action.
 
-## Related Project
-For touch position tracking, see [react-touch-position](https://www.npmjs.com/package/react-touch-position).
-It has a similar architecture and interface.
+## Related Projects
+For touch position tracking, please consider [react-touch-position](https://www.npmjs.com/package/react-touch-position).
+
+For hover monitoring, please consider [react-hover-observer](https://www.npmjs.com/package/react-hover-observer).
+
+Both projects have a similar interface.
 
 ## Installation
 
@@ -28,9 +33,12 @@ Intended as a primitive for composing features that require notification of
 mouse cursor position status.
 
 ```JSX
+import ReactCursorPosition from 'react-cursor-position';
+...
+
 <ReactCursorPosition>
-    <ChildComponentOne/>
-    <ChildComponentTwo/>
+    <YourComponentOne/>
+    <YourComponentTwo/>
 </ReactCursorPosition>
 ```
 ReactCursorPosition wraps its children in a div, which mouse cursor position
@@ -47,7 +55,7 @@ has the following structure.
 }
 ```
 
-### props API
+## Props API
 
 `className` : String - Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
 
@@ -72,22 +80,27 @@ npm start
 ```
 
 If your default browser does not start automatically, open a new browser window and go to localhost:3000
+
 ## Development
 
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
 npm install
-```
-See available commands:
-```ssh
-npm run
+npm run #print available commands
 ```
 
 ## Contributing
 
 Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch,
 add commits, and [open a pull request](https://github.com/ethanselzer/react-cursor-position/compare/).
+
+## Attribution
+Thanks to the following community members for [Openening Issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
+* @pr0digy
+* @JunyuanZheng
+
+You are awesome! ✨💫
 
 ## License
 
