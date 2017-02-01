@@ -63,6 +63,15 @@ setting this prop false.
 
 Please [open an issue](https://github.com/ethanselzer/react-cursor-position/issues).
 
+## Example Project
+```ssh
+git clone https://github.com/ethanselzer/react-cursor-position.git
+cd react-cursor-position/example
+npm install
+npm start
+```
+
+If your default browser does not start automatically, open a new browser window and go to localhost:3000
 ## Development
 
 ```ssh
