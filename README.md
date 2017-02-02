@@ -5,9 +5,9 @@ A React component that decorates its children with mouse cursor coordinates, plo
 Safe for server rendering.
 
 ## Status
-[![CircleCI](https://circleci.com/gh/ethanselzer/react-cursor-position.svg?style=svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
-
-[![npm](https://nodei.co/npm/react-cursor-position.svg?downloads=true)](https://nodei.co/npm/react-cursor-position/)
+[![CircleCI](https://img.shields.io/circleci/project/github/ethanselzer/react-cursor-position.svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
+[![Coverage Status](https://coveralls.io/repos/github/ethanselzer/react-cursor-position/badge.svg?branch=master)](https://coveralls.io/github/ethanselzer/react-cursor-position?branch=master)
+[![npm](https://img.shields.io/npm/v/react-cursor-position.svg)](https://www.npmjs.com/package/react-cursor-position)
 
 ## Demo
 The react-image-magnify project depends on this package for mouse coordinate observation.
