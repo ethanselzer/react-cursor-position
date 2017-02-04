@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactCursorPosition from '../../dist/ReactCursorPosition';
+import ReactCursorPosition from 'react-cursor-position';
 
 import logo from './logo.svg';
 import './App.css';
