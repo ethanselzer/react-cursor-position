@@ -64,6 +64,9 @@ has the following structure.
 `onCursorPositionChanged` : Function - Optionally provide a function that will be called when the mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
 
+`mapChildProps` : Function - Optionally model child component props. Function receives object as input and returns
+an object that will decorate child components. See [example code](https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/App.js#L33).
+
 `shouldDecorateChildren` : Boolean - Defaults to true. Optionally suppress `cursorPosition` decoration of child components by
 setting this prop false.
 

@@ -25,6 +25,7 @@ export default React.createClass({
 
     propTypes: {
         className: PropTypes.string,
+        mapChildProps: PropTypes.func,
         onCursorPositionChanged: PropTypes.func,
         shouldDecorateChildren: PropTypes.bool,
         style: PropTypes.object
@@ -32,6 +33,7 @@ export default React.createClass({
 
     getDefaultProps() {
         return {
+            mapChildProps: (props) => props,
             onCursorPositionChanged: () => {},
             shouldDecorateChildren: true
         };
@@ -127,13 +129,16 @@ export default React.createClass({
     },
 
     render() {
-        const { children, className, style } = this.props;
+        const { children, className, mapChildProps, style } = this.props;
         const childProps = Object.assign(
             {},
-            { cursorPosition: this.state.cursorPosition },
+            mapChildProps(
+                { cursorPosition: this.state.cursorPosition }
+            ),
             omit(this.props, [
                 'children',
                 'className',
+                'mapChildProps',
                 'onCursorPositionChanged',
                 'shouldDecorateChildren',
                 'style'

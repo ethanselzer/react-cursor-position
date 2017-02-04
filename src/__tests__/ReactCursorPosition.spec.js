@@ -163,6 +163,37 @@ describe('ReactCursorPosition', () => {
             }
         });
 
+        it('supports mapChildProps function', () => {
+            const tree = getMountedComponentTree({
+                mapChildProps: (props) => {
+                    const cp = props.cursorPosition;
+                    return {
+                        point: {
+                            x: cp.x * 2,
+                            y: cp.y * 2
+                        },
+                        isPointOutside: cp.isOutside
+                    };
+                }
+            });
+            const childComponent = tree.find(GenericSpanComponent);
+            const el = tree.find('div');
+            el.simulate('mouseEnter');
+
+            el.simulate('mouseMove', {
+                pageX: 1,
+                pageY: 2
+            });
+
+            expect(childComponent.props()).to.deep.equal({
+                point: {
+                    x: 2,
+                    y: 4
+                },
+                isPointOutside: false
+            });
+        });
+
         it('supports shouldDecorateChildren', () => {
             const tree = getMountedComponentTree({ shouldDecorateChildren: false });
             const childComponent = tree.find(GenericSpanComponent);

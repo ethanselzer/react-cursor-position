@@ -7,10 +7,10 @@
 		"allowSyntheticDefaultImports": true
 	},
 	"exclude": [
+		"coverage",
+		"dist",
+		"example",
 		"node_modules",
-		"bower_components",
-		"jspm_packages",
-		"tmp",
-		"temp"
+		"scripts"
 	]
 }

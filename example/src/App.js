@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactCursorPosition from 'react-cursor-position';
+import ReactCursorPosition from '../../dist/ReactCursorPosition';
 
 import logo from './logo.svg';
 import './App.css';
@@ -30,24 +30,50 @@ class App extends Component {
                         margin: '0 auto',
                         border: 'solid 1px green'
                     },
-                    onCursorPositionChanged: (cursorPosition) => {
+                    mapChildProps: props => {
+                        const {
+                            cursorPosition: {
+                                x,
+                                y,
+                                isOutside
+                            }
+                        } = props;
+
+                        return {
+                            point: {
+                                x,
+                                y
+                            },
+                            isPointOutside: isOutside
+                        };
+                    },
+                    onCursorPositionChanged: cursorPosition => {
                         this.setState({ cursorPosition });
                     }
                 }}>
-                    <Label />
                     <Label {...{
-                        mapCursorPositionToContent: cp => `y: ${cp.y}`
+                        mapPropsToContet: props => `x: ${props.point.x}`
                     }} />
+
                     <Label {...{
-                        mapCursorPositionToContent: cp => `isOutside: ${ cp.isOutside ? 'true' : 'false'}`
+                        mapPropsToContet: props => `y: ${props.point.y}`
+                    }} />
+
+                    <Label {...{
+                        mapPropsToContet: props => `isOutside: ${ props.isPointOutside ? 'true' : 'false'}`
                     }} />
                 </ReactCursorPosition>
-                <Label {...this.state} />
+
                 <Label {...this.state} {...{
-                    mapCursorPositionToContent: cp => `y: ${cp.y}`
+                    mapPropsToContet: props => `x: ${props.cursorPosition.x}`
                 }} />
+
                 <Label {...this.state} {...{
-                    mapCursorPositionToContent: cp => `isOutside: ${ cp.isOutside ? 'true' : 'false'}`
+                    mapPropsToContet: props => `y: ${props.cursorPosition.y}`
+                }} />
+
+                <Label {...this.state} {...{
+                    mapPropsToContet: props => `isOutside: ${props.cursorPosition.isOutside ? 'true' : 'false'}`
                 }} />
             </div>
         );
@@ -56,14 +82,8 @@ class App extends Component {
 
 export default App;
 
-const Label = (props) => {
-    return (
-        <div>
-            { props.mapCursorPositionToContent(props.cursorPosition) }
-        </div>
-    );
-}
-
-Label.defaultProps = {
-    mapCursorPositionToContent: cp => `x: ${cp.x}`
-}
+const Label = props => (
+    <div>
+        {props.mapPropsToContet(props)}
+    </div>
+);
