@@ -1,8 +1,13 @@
 # react-cursor-position
 
-A React component that decorates its children with mouse cursor coordinates, plotted relative to itself.
+A React component that decorates its children with mouse cursor coordinates plotted relative to itself.
 
-Safe for server rendering.
+Supports scroll position changes between and during active hover sessions.
+
+Intended as a primitive for composing UI features that require notification of
+mouse cursor position status.
+
+Safe for server rendering and single page applications.
 
 ## Status
 [![CircleCI](https://img.shields.io/circleci/project/github/ethanselzer/react-cursor-position.svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
@@ -28,9 +33,6 @@ npm install --save react-cursor-position
 ```
 
 ## Usage
-
-Intended as a primitive for composing features that require notification of
-mouse cursor position status.
 
 ```JSX
 import ReactCursorPosition from 'react-cursor-position';
