@@ -46,8 +46,8 @@ import ReactCursorPosition from 'react-cursor-position';
 ReactCursorPosition wraps its children in a div, which mouse cursor position
 is plotted relative to.
 
-Each child component will receive a prop named `cursorPosition`, which
-has the following structure.
+Each child component will receive a prop named `cursorPosition`, which has the following structure.
+This structure, and property name, may also be altered by implementing the optional `mapChildProps` feature.
 
 ```JavaScript
 {
@@ -63,11 +63,13 @@ has the following structure.
 
 `style` : Object - Optionally provide a style object to be applied to the div rendered by react-cursor-position.
 
-`onCursorPositionChanged` : Function - Optionally provide a function that will be called when the mouse cursor position changes.
+`onCursorPositionChanged` : Function - Optionally provide a function that will be called when mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
 
-`mapChildProps` : Function - Optionally model child component props. Function receives object as input and returns
-an object that will decorate child components. See [example code](https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/App.js#L33).
+`mapChildProps` : Function - Optionally model child component props. Function receives an object as input and returns
+an object that will decorate child components.
+See [example code](https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/App.js#L33).
+Defaults to `cursorPosition` structure outlined in [Usage](#usage) section.
 
 `shouldDecorateChildren` : Boolean - Defaults to true. Optionally suppress `cursorPosition` decoration of child components by
 setting this prop false.
@@ -97,11 +99,12 @@ npm run #print available commands
 
 ## Contributing
 
-Please contribute using [Github Flow](https://guides.github.com/introduction/flow/). Create a branch,
-add commits, and [open a pull request](https://github.com/ethanselzer/react-cursor-position/compare/).
+Please contribute by [opening an issue](https://github.com/ethanselzer/react-cursor-position/issues)
+or a [pull request](https://github.com/ethanselzer/react-cursor-position/compare/).
 
 ## Attribution
-Thanks to the following community members for [Openening Issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
+Thanks to the following community members for
+[openening issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
 * @pr0digy
 * @JunyuanZheng
 
