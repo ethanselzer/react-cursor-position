@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.9.0/styles/solarized-light.min.css">
+    <script src="//cdn.jsdelivr.net/highlight.js/9.9.0/highlight.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>On Cursor Position Changed | Code Example | React Cursor Position</title>
+  </head>
+  <body>
+<pre>
+<code class="JavaScript flush">export default class extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            cursorPosition: {
+                x: 0,
+                y: 0,
+                isOutside: true
+            }
+        }
+    }
+
+    render() {
+        return (
+            &lt;div className="example"&gt;
+                &lt;ReactCursorPosition  {...{
+                    className: 'example__target',
+
+                    onCursorPositionChanged: cursorPosition =&gt; {
+                        this.setState({ cursorPosition });
+                    }
+                }}&gt;
+                    &lt;InstructionsLabel /&gt;
+                &lt;/ReactCursorPosition&gt;
+
+                &lt;CursorPositionLabel {...this.state} /&gt;
+
+            &lt;/div&gt;
+        );
+    }
+}
+</code>
+</pre>
+
+    <script>
+        hljs.initHighlightingOnLoad();
+    </script>
+
+  </body>
+</html>
