@@ -15,9 +15,7 @@ Safe for server rendering and single page applications.
 [![npm](https://img.shields.io/npm/v/react-cursor-position.svg)](https://www.npmjs.com/package/react-cursor-position)
 
 ## Demo
-The react-image-magnify project depends on this package for mouse coordinate observation.
-Please have a look at the [react-image-magnify](https://www.npmjs.com/package/react-image-magnify)
-demo to see this package in action.
+Please see the [react-cursor-position demo](https://ethanselzer.github.io/react-cursor-position)!
 
 ## Related Projects
 For touch position tracking, please consider [react-touch-position](https://www.npmjs.com/package/react-touch-position).
