@@ -1,0 +1,10 @@
+pre, body {
+    margin: 0;
+}
+
+pre code {
+    margin: 0;
+    padding: 5px 10px !important;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 13px;
+}
