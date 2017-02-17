@@ -96,6 +96,17 @@ cd react-cursor-position
 npm install
 npm run #print available commands
 ```
+The Example Project may be used in development of react-cursor-position. To import ReactCursorPosition
+from your local project change any import of ReactCursorPosition, on files in the components folder, to:
+
+`import ReactCursorPosition from '../../../dist/ReactCursorPosition';`
+
+At this time, the command `npm run prepublsih` must be run from the root of the project each time you want
+your ReactCursorPosition changes to be reflected in the example.
+
+If you experience ReferenceError: Unknown plugin "'transform-es2015-modules-umd'" when running
+`prepublish` you may try running `npm run prepublish-cjs` instead.
+
 
 ## Contributing
 
