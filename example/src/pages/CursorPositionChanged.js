@@ -39,7 +39,7 @@ class  CursorPositionChangedPage extends Component {
                                 <ul className="summary__list">
                                     <li>Type: Function</li>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/CursorPositionChanged.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -57,7 +57,7 @@ class  CursorPositionChangedPage extends Component {
                             <a
                                 style={{display: 'block', height: '600px'}}
                                 className="highlighter"
-                                href="#"
+                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/CursorPositionChanged.js"
                             >
                                 <iframe
                                     src="on-cursor-position-changed.html"

@@ -47,7 +47,7 @@ class  CatalogPage extends Component {
                                 <ul className="summary__list">
                                     <li>Type: String</li>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ClassName.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -65,7 +65,7 @@ class  CatalogPage extends Component {
                             <a
                                 className="highlighter"
                                 style={{ height: '225px' }}
-                                href="#"
+                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ClassName.js"
                             >
                                 <iframe
                                     src="class-name.html"

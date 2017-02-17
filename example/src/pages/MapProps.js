@@ -37,7 +37,7 @@ class  MapChildPropsPage extends Component {
                                 <ul className="summary__list">
                                     <li>Type: Function</li>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/MapProps.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -54,7 +54,7 @@ class  MapChildPropsPage extends Component {
                         <Col sm={6} md={8} lg={8}>
                             <a
                                 className="highlighter"
-                                href="#"
+                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/MapProps.js"
                                 style={{height: '400px'}}
                             >
                                 <iframe

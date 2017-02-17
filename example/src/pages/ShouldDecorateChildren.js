@@ -43,7 +43,7 @@ class  ShouldDecorateChildrenPage extends Component {
                                     <li>Does not affect onCursorPositionChanged</li>
                                     <li>Type: Boolean</li>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ShouldDecorateChildren.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -61,7 +61,7 @@ class  ShouldDecorateChildrenPage extends Component {
                             <a
                                 className="highlighter"
                                 style={{ height: '600px' }}
-                                href="#"
+                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ShouldDecorateChildren.js"
                             >
                                 <iframe
                                     src="should-decorate-children.html"

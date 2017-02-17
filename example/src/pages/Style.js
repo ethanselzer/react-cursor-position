@@ -38,7 +38,7 @@ class  StylePage extends Component {
                                 <ul className="summary__list">
                                     <li>Type: Object</li>
                                     <li>
-                                        <a href="#">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/Style.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -56,7 +56,7 @@ class  StylePage extends Component {
                             <a
                                 className="highlighter"
                                 style={{ height: '400px' }}
-                                href="#"
+                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/Style.js"
                             >
                                 <iframe
                                     src="style.html"
