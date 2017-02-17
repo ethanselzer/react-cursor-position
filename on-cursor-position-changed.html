@@ -10,7 +10,14 @@
   </head>
   <body>
 <pre>
-<code class="JavaScript flush">export default class extends React.Component {
+<code class="JavaScript">
+import React from 'react';
+import ReactCursorPosition from 'react-cursor-position';
+
+import CursorPositionLabel from './CursorPositionLabel';
+import InstructionsLabel from './InstructionsLabel';
+
+export default class extends React.Component {
     constructor(props) {
         super(props);
 
@@ -28,7 +35,6 @@
             &lt;div className="example"&gt;
                 &lt;ReactCursorPosition  {...{
                     className: 'example__target',
-
                     onCursorPositionChanged: cursorPosition =&gt; {
                         this.setState({ cursorPosition });
                     }
@@ -42,6 +48,7 @@
         );
     }
 }
+
 </code>
 </pre>
 
