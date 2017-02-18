@@ -36,7 +36,7 @@ class App extends Component {
                             React Cursor Position re-renders child components with new cursor position props
                             when the cursor position changes.<br />
 
-                            It is safe for server rendering and long-running single page applications.<br />
+                            It is safe for server rendering and single page applications.<br />
                         </p>
                     </Grid>
                 </Jumbotron>
