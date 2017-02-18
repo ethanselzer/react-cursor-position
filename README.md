@@ -1,23 +1,26 @@
 # react-cursor-position
 
-A React component that decorates its children with mouse cursor coordinates plotted relative to itself.
-
-Supports scroll position changes between and during active hover sessions.
-
-Intended as a primitive for composing UI features that require notification of
+React Cursor Position is a primitive component for composing UI features that require notification of
 mouse cursor position status.
 
-Safe for server rendering and single page applications.
+It plots cursor coordinates relative to itself and supports scroll position changes.
+
+React Cursor Position re-renders child components with new cursor position props when the cursor position changes.
+
+It is safe for server rendering and single page applications.
 
 ## Status
+
 [![CircleCI](https://img.shields.io/circleci/project/github/ethanselzer/react-cursor-position.svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
 [![Coverage Status](https://coveralls.io/repos/github/ethanselzer/react-cursor-position/badge.svg?branch=master)](https://coveralls.io/github/ethanselzer/react-cursor-position?branch=master)
 [![npm](https://img.shields.io/npm/v/react-cursor-position.svg)](https://www.npmjs.com/package/react-cursor-position)
 
 ## Demo
+
 Please see the [react-cursor-position demo](https://ethanselzer.github.io/react-cursor-position)!
 
 ## Related Projects
+
 For touch position tracking, please consider [react-touch-position](https://www.npmjs.com/package/react-touch-position).
 
 For hover monitoring, please consider [react-hover-observer](https://www.npmjs.com/package/react-hover-observer).
@@ -69,14 +72,22 @@ an object that will decorate child components.
 See [example code](https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/App.js#L33).
 Defaults to `cursorPosition` structure outlined in [Usage](#usage) section.
 
+`mapChildProps` : Function - Optionally model child component props to your custom shape. Function receives an
+object as input and returns an object that will decorate child components.
+See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
+Defaults to `cursorPosition` structure outlined in [Usage](#usage) section.
+
 `shouldDecorateChildren` : Boolean - Defaults to true. Optionally suppress `cursorPosition` decoration of child components by
 setting this prop false.
+
+See API Examples section of the [demo site](https://ethanselzer.github.io/react-cursor-position/#/) for more.
 
 ## Support
 
 Please [open an issue](https://github.com/ethanselzer/react-cursor-position/issues).
 
 ## Example Project
+
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position/example
@@ -112,6 +123,7 @@ Please contribute by [opening an issue](https://github.com/ethanselzer/react-cur
 or a [pull request](https://github.com/ethanselzer/react-cursor-position/compare/).
 
 ## Attribution
+
 Thanks to the following community members for
 [openening issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
 * @pr0digy
