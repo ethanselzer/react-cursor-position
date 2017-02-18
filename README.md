@@ -67,11 +67,6 @@ This structure, and property name, may also be altered by implementing the optio
 `onCursorPositionChanged` : Function - Optionally provide a function that will be called when mouse cursor position changes.
 Function will receive `cursorPosition` object as parameter.
 
-`mapChildProps` : Function - Optionally model child component props. Function receives an object as input and returns
-an object that will decorate child components.
-See [example code](https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/App.js#L33).
-Defaults to `cursorPosition` structure outlined in [Usage](#usage) section.
-
 `mapChildProps` : Function - Optionally model child component props to your custom shape. Function receives an
 object as input and returns an object that will decorate child components.
 See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
