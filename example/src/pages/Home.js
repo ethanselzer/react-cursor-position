@@ -43,12 +43,12 @@ class App extends Component {
                 <Grid>
                     <Row>
                         <Col xs={12} sm={6} md={4} lg={3}>
-                            <Panel header="Basic Example" bsStyle="primary" style={{ height: '281px' }}>
+                            <Panel header="Basic Example" bsStyle="primary" className="panel">
                                 <BasicExample />
                             </Panel>
                         </Col>
                         <Col xs={12} sm={6} md={4} lg={3}>
-                            <Panel header="Props API Examples" bsStyle="primary">
+                            <Panel header="Props API Examples" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
                                     <NavItem eventKey={2.1} href="#/map-child-props">Map Child Props</NavItem>
                                     <NavItem eventKey={2.2} href="#/on-cursor-position-changed">On Cursor Position Changed</NavItem>
@@ -60,10 +60,19 @@ class App extends Component {
                         </Col>
                         <Clearfix visibleSmBlock />
                         <Col xs={12} sm={6} md={4} lg={3}>
-                            <Panel header="Use Cases" bsStyle="primary" style={{ height: '281px' }}>
+                            <Panel header="Use Cases" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
                                     <NavItem href="#/image-magnify">
                                         React Image Magnify
+                                    </NavItem>
+                                </Nav>
+                            </Panel>
+                        </Col>
+                        <Col xs={12} sm={6} md={4} lg={3}>
+                            <Panel header="Playground" bsStyle="primary" className="panel">
+                                <Nav bsStyle="pills" stacked>
+                                    <NavItem href="http://codepen.io/ethanselzer/pen/ryayLK">
+                                        React Cursor Position Live Edit
                                     </NavItem>
                                 </Nav>
                             </Panel>

@@ -73,3 +73,7 @@ a.highligher:link, a.highligher:active, a.highlighter:hover, a.highligher:visite
     border-radius: 4px;
     background-color: #fdf6e3;
 }
+
+.panel {
+    height: 281px;
+}
