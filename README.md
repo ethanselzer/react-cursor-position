@@ -17,9 +17,9 @@ It is safe for server rendering and single page applications.
 
 ## Demo
 
-See the [react-cursor-position demo site](https://ethanselzer.github.io/react-cursor-position)
+See the [react-cursor-position demo site](https://ethanselzer.github.io/react-cursor-position).
 
-Experiement with React Cursor Position [live on CodePen](http://codepen.io/ethanselzer/pen/ryayLK)
+Experiment with React Cursor Position [live on CodePen](http://codepen.io/ethanselzer/pen/ryayLK).
 
 ## Related Projects
 
@@ -27,7 +27,7 @@ For touch position tracking, please consider [react-touch-position](https://www.
 
 For hover monitoring, please consider [react-hover-observer](https://www.npmjs.com/package/react-hover-observer).
 
-Both projects have a similar interface to react-cursor-position
+Both projects have a similar interface to react-cursor-position, and can be used in combination.
 
 ## Installation
 
