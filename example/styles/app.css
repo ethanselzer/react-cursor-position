@@ -18,7 +18,13 @@ p.summary {
 }
 
 .jumbotron {
-    padding-bottom: 30px;
+    padding: 48px 0 30px;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .jumbotron {
+        padding-top: 90px;
+    }
 }
 
 li.active a {
