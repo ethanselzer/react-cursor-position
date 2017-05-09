@@ -9,9 +9,10 @@ var isparta = require('isparta');
 var runSequence = require('run-sequence');
 
 // Transform all required files with Babel
+process.env.BABEL_ENV = 'cjs';
 require('babel-core/register');
 
-var TEST_FILES = 'src/__tests__/*.spec.js';
+var TEST_FILES = 'test/*.spec.js';
 var SRC_FILES = 'src/*.js';
 
 gulp.task('test', function () {
@@ -51,7 +52,7 @@ gulp.task('test:coveralls', function (done) {
     runSequence('test:coverage', 'coveralls', done);
 });
 
-gulp.task('tdd', function () {
+gulp.task('test:watch', ['test'], function () {
     gulp.watch([
         TEST_FILES,
         SRC_FILES

@@ -35,6 +35,7 @@ function setupDom() {
     global.window = window;
     global.document = window.document;
     global.navigator = window.navigator;
+    global.HTMLElement = () => { };
     applyJsdomWorkaround(window);
 }
 

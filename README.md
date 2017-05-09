@@ -1,11 +1,9 @@
 # react-cursor-position
+react-cursor-position is a primitive component for composing UI features that require notification of cursor and touch position changes. Position coordinates are plotted relative to the HTML element rendered by react-cursor-position.
 
-React Cursor Position is a primitive component for composing UI features that require notification of
-mouse cursor position status.
+In the mouse environment it supports scroll position changes during a hover session. In the touch environment, it supports the [long press gesture](https://material.io/guidelines/patterns/gestures.html) and does not interfere with page or element scrolling.
 
-It plots cursor coordinates relative to itself and supports scroll position changes.
-
-React Cursor Position re-renders child components with new cursor position props when the cursor position changes.
+react-cursor-position re-renders child components with new position props when the cursor or touch position changes.
 
 It is safe for server rendering and single page applications.
 
@@ -19,15 +17,12 @@ It is safe for server rendering and single page applications.
 
 See the [react-cursor-position demo site](https://ethanselzer.github.io/react-cursor-position).
 
-Experiment with React Cursor Position [live on CodePen](http://codepen.io/ethanselzer/pen/ryayLK).
+Experiment with react-cursor-position [live on CodePen](http://codepen.io/ethanselzer/pen/ryayLK).
 
-## Related Projects
-
-For touch position tracking, please consider [react-touch-position](https://www.npmjs.com/package/react-touch-position).
+## Related Project
 
 For hover monitoring, please consider [react-hover-observer](https://www.npmjs.com/package/react-hover-observer).
-
-Both projects have a similar interface to react-cursor-position, and can be used in combination.
+It has a similar interface to react-cursor-position, and can be used in combination with it.
 
 ## Installation
 
@@ -46,36 +41,53 @@ import ReactCursorPosition from 'react-cursor-position';
     <YourComponentTwo/>
 </ReactCursorPosition>
 ```
-ReactCursorPosition wraps its children in a div, which mouse cursor position
-is plotted relative to.
 
-Each child component will receive a prop named `cursorPosition`, which has the following structure.
-This structure, and property name, may also be altered by implementing the optional `mapChildProps` feature.
+react-cursor-position wraps its children in a div, which cursor and touch position
+are plotted relative to.
+
+Each child component will receive the following props:
 
 ```JavaScript
 {
-    x: Number,
-    y: Number,
-    isOutside: Boolean
+    isActive: Boolean,
+    isPositionOutside: Boolean,
+    position: {
+        x: Number,
+        y: Number
+    }
 }
 ```
+This structure may be customized by implementing `mapChildProps` API feature.
 
 ## Props API
 
-`className` : String - Optionally provide a CSS class to be applied to the div rendered by react-cursor-position.
+All props are optional.
 
-`style` : Object - Optionally provide a style object to be applied to the div rendered by react-cursor-position.
+`className` : String - CSS class name(s) to be applied to the div rendered by react-cursor-position.
 
-`onCursorPositionChanged` : Function - Optionally provide a function that will be called when mouse cursor position changes.
-Function will receive `cursorPosition` object as parameter.
+`style` : Object - Style to be applied to the div rendered by react-cursor-position.
 
-`mapChildProps` : Function - Optionally model child component props to your custom shape. Function receives an
-object as input and returns an object that will decorate child components.
+`onActivationChanged` : Function - Called when the component is active.
+Function receives one parameter with the signature `{ isActive: Boolean }`.
+
+`onPositionChanged` : Function - Called when cursor or touch position changes.
+Function receives one parameter with the signature  
+`{ isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
+
+`mapChildProps` : Function - Model child component props to your custom shape. Function receives one parameter with the signature  
+`{ isActive: Boolean, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.  
+It should return an object that is compatible with the props interface of your child components.
 See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
-Defaults to `cursorPosition` structure outlined in [Usage](#usage) section.
 
-`shouldDecorateChildren` : Boolean - Defaults to true. Optionally suppress `cursorPosition` decoration of child components by
-setting this prop false.
+`shouldDecorateChildren` : Boolean - Suppress decoration of child components by
+setting this prop false. Defaults to true.
+
+`isActivatedOnTouch` : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
+gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
+
+`pressDuration` : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
+
+`pressMoveThreshold`: Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
 
 See API Examples section of the [demo site](https://ethanselzer.github.io/react-cursor-position/#/) for more.
 
@@ -110,9 +122,6 @@ from your local project change any import of ReactCursorPosition, on files in th
 At this time, the command `npm run prepublsih` must be run from the root of the project each time you want
 your ReactCursorPosition changes to be reflected in the example.
 
-If you experience ReferenceError: Unknown plugin "'transform-es2015-modules-umd'" when running
-`prepublish` you may try running `npm run prepublish-cjs` instead.
-
 
 ## Contributing
 
@@ -125,6 +134,7 @@ Thanks to the following community members for
 [openening issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
 * @pr0digy
 * @JunyuanZheng
+* @chrisdrackett
 
 You are awesome! ✨💫
 
