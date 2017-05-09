@@ -63,31 +63,31 @@ This structure may be customized by implementing `mapChildProps` API feature.
 
 All props are optional.
 
-`className` : String - CSS class name(s) to be applied to the div rendered by react-cursor-position.
+**className** : String - CSS class name(s) to be applied to the div rendered by react-cursor-position.
 
-`style` : Object - Style to be applied to the div rendered by react-cursor-position.
+**style** : Object - Style to be applied to the div rendered by react-cursor-position.
 
-`onActivationChanged` : Function - Called when the component is active.
+**onActivationChanged** : Function - Called when the component is active.
 Function receives one parameter with the signature `{ isActive: Boolean }`.
 
-`onPositionChanged` : Function - Called when cursor or touch position changes.
+**onPositionChanged** : Function - Called when cursor or touch position changes.
 Function receives one parameter with the signature  
 `{ isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
 
-`mapChildProps` : Function - Model child component props to your custom shape. Function receives one parameter with the signature  
+**mapChildProps** : Function - Model child component props to your custom shape. Function receives one parameter with the signature  
 `{ isActive: Boolean, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.  
 It should return an object that is compatible with the props interface of your child components.
 See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
 
-`shouldDecorateChildren` : Boolean - Suppress decoration of child components by
+**shouldDecorateChildren** : Boolean - Suppress decoration of child components by
 setting this prop false. Defaults to true.
 
-`isActivatedOnTouch` : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
+**isActivatedOnTouch** : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
 gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
 
-`pressDuration` : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
+**pressDuration** : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
 
-`pressMoveThreshold`: Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
+**pressMoveThreshold** : Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
 
 See API Examples section of the [demo site](https://ethanselzer.github.io/react-cursor-position/#/) for more.
 
@@ -114,14 +114,7 @@ cd react-cursor-position
 npm install
 npm run #print available commands
 ```
-The Example Project may be used in development of react-cursor-position. To import ReactCursorPosition
-from your local project change any import of ReactCursorPosition, on files in the components folder, to:
-
-`import ReactCursorPosition from '../../../dist/ReactCursorPosition';`
-
-At this time, the command `npm run prepublsih` must be run from the root of the project each time you want
-your ReactCursorPosition changes to be reflected in the example.
-
+The Example Project may be used in development of react-cursor-position. At this time, the command `npm run build-cjs` must be run from the root of the project each time you want your ReactCursorPosition changes to be reflected in the example.
 
 ## Contributing
 
