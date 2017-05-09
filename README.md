@@ -71,10 +71,10 @@ All props are optional.
 Function receives one parameter with the signature `{ isActive: Boolean }`.
 
 **onPositionChanged** : Function - Called when cursor or touch position changes.
-Function receives one parameter with the signature  
-`{ isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
+Function receives one parameter with the signature `{ isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
 
-**mapChildProps** : Function - Model child component props to your custom shape. Function receives one parameter with the signature  
+**mapChildProps** : Function - Model child component props to your custom shape.
+Function receives one parameter with the signature
 `{ isActive: Boolean, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.  
 It should return an object that is compatible with the props interface of your child components.
 See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
