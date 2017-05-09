@@ -17,23 +17,20 @@ import ReactCursorPosition from 'react-cursor-position';
 import PointPositionLabel from './PointPositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
-export default class extends React.Component {
-    render() {
-        return (
-            &lt;ReactCursorPosition  {...{
-                className: 'example__target',
-                mapChildProps: props =&gt; {
-                    const { cursorPosition } = props;
-                    return { point: cursorPosition };
-                }
-            }}&gt;
-                &lt;PointPositionLabel /&gt;
-                &lt;InstructionsLabel /&gt;
-            &lt;/ReactCursorPosition&gt;
-        );
-    }
-}
-
+export default () => (
+    &lt;ReactCursorPosition
+        className="example__target"
+        mapChildProps={({ isPositionOutside, position }) => {
+            return {
+                isOutside: isPositionOutside,
+                point: position
+            };
+        }}
+    &gt;
+        &lt;PointPositionLabel /&gt;
+        &lt;InstructionsLabel /&gt;
+    &lt;/ReactCursorPosition&gt;
+);
 </code>
 </pre>
 

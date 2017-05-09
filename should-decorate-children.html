@@ -14,17 +14,18 @@
 import React from 'react';
 import ReactCursorPosition from 'react-cursor-position';
 
-import CursorPositionLabel from './CursorPositionLabel';
+import PositionLabel from './PositionLabel';
+import PositionChangedLabel from './PositionChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
     constructor(props) {
-        super(props);
+         super(props);
         this.state = {
-            cursorPosition: {
+            isPositionOutside: true,
+            position: {
                 x: 0,
-                y: 0,
-                isOutside: true
+                y: 0
             }
         }
     }
@@ -34,20 +35,17 @@ export default class extends React.Component {
             &lt;div className="example"&gt;
                 &lt;ReactCursorPosition  {...{
                     className: 'example__target',
-                    onCursorPositionChanged: cursorPosition =&gt; {
-                        this.setState({ cursorPosition });
-                    },
+                    onPositionChanged: props => this.setState(props),
                     shouldDecorateChildren: false
                 }}&gt;
-                    &lt;CursorPositionLabel /&gt;
+                    &lt;PositionLabel /&gt;
                     &lt;InstructionsLabel /&gt;
                 &lt;/ReactCursorPosition&gt;
-                &lt;CursorPositionLabel {...this.state} /&gt;
+                &lt;PositionChangedLabel {...this.state} /&gt;
             &lt;/div&gt;
         );
     }
 }
-
 </code>
 </pre>
 
