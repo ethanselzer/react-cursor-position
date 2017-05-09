@@ -54,21 +54,20 @@ class  ShouldDecorateChildrenPage extends Component {
                 </Jumbotron>
                 <Grid>
                     <Row>
-                        <Col sm={6} md={4} lg={4}>
+                        <Col sm={6} md={4}>
                             <ShouldDecorateChildren/>
                         </Col>
-                        <Col sm={6} md={8} lg={8}>
-                            <a
-                                className="highlighter"
-                                style={{ height: '600px' }}
-                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ShouldDecorateChildren.js"
-                            >
-                                <iframe
-                                    src="should-decorate-children.html"
-                                    frameBorder="0"
-                                    className="code-frame"
-                                />
-                            </a>
+                        <Col
+                            sm={6}
+                            md={8}
+                            className="example__source-container"
+                            style={{ height: '570px' }}
+                        >
+                            <iframe
+                                src="should-decorate-children.html"
+                                frameBorder="0"
+                                className="code-frame"
+                            />
                         </Col>
                     </Row>
                 </Grid>

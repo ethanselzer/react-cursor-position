@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactCursorPosition from '../../../dist/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
-import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
-    <ReactCursorPosition className="example__target" >
+    <ReactCursorPosition
+        className="example__target"
+        isActivatedOnTouch
+    >
         <PositionLabel />
-        <InstructionsLabel />
+        <div className="example__instructions">
+            Touch and Drag In This Area
+        </div>
     </ReactCursorPosition>
 );
 

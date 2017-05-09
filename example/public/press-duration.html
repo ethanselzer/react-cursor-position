@@ -18,7 +18,10 @@ import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
-    &lt;ReactCursorPosition className="example__target"&gt;
+    &lt;ReactCursorPosition
+        className="example__target"
+        pressDuration={1000}
+    &gt;
         &lt;PositionLabel /&gt;
         &lt;InstructionsLabel /&gt;
     &lt;/ReactCursorPosition&gt;

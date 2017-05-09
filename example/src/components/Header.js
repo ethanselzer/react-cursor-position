@@ -29,7 +29,7 @@ class Navigation extends React.Component {
                 return 1;
             case '/map-child-props' :
                 return 2.1;
-            case '/on-cursor-position-changed' :
+            case '/on-position-changed' :
                 return 2.2;
             case '/should-decorate-children' :
                 return 2.3;
@@ -37,6 +37,14 @@ class Navigation extends React.Component {
                 return 2.4;
             case '/style' :
                 return 2.5;
+            case '/is-activated-on-touch' :
+                return 2.6;
+            case '/press-duration' :
+                return 2.7;
+            case '/press-move-threshold' :
+                return 2.8;
+            case '/on-activation-changed' :
+                return 2.9;
             case '/image-magnify' :
                 return 3.1;
             case '/support' :
@@ -61,10 +69,14 @@ class Navigation extends React.Component {
                     <Nav {...{activeKey: this.state.selectedNavKey}}>
                         <NavItem eventKey={1} href="#/">Home</NavItem>
                         <NavDropdown eventKey={2} title="API Examples" id="nav-dropdown">
-                            <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
-                            <MenuItem eventKey={2.2} href="#/on-cursor-position-changed">On Cursor Position Changed</MenuItem>
-                            <MenuItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</MenuItem>
                             <MenuItem eventKey={2.4} href="#/class-name">Class Name</MenuItem>
+                            <MenuItem eventKey={2.6} href="#/is-activated-on-touch">Is Activated On Touch</MenuItem>
+                            <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
+                            <MenuItem eventKey={2.2} href="#/on-position-changed">On Position Changed</MenuItem>
+                            <MenuItem eventKey={2.9} href="#/on-activation-changed">On Activation Changed</MenuItem>
+                            <MenuItem eventKey={2.7} href="#/press-duration">Press Duration</MenuItem>
+                            <MenuItem eventKey={2.8} href="#/press-move-threshold">Press Move Threshold</MenuItem>
+                            <MenuItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</MenuItem>
                             <MenuItem eventKey={2.5} href="#/style">Style</MenuItem>
                         </NavDropdown>
                         <NavDropdown eventKey={3} title="Use Cases" id="nav-dropdown">

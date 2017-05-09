@@ -48,21 +48,20 @@ class  MapChildPropsPage extends Component {
                 </Jumbotron>
                 <Grid>
                     <Row>
-                        <Col sm={6} md={4} lg={4}>
+                        <Col sm={6} md={4}>
                             <MapProps/>
                         </Col>
-                        <Col sm={6} md={8} lg={8}>
-                            <a
-                                className="highlighter"
-                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/MapProps.js"
-                                style={{height: '400px'}}
-                            >
-                                <iframe
-                                    src="map-child-props.html"
-                                    frameBorder="0"
-                                    className="code-frame"
-                                />
-                            </a>
+                        <Col
+                            sm={6}
+                            md={8}
+                            className="example__source-container"
+                            style={{ height: '340px' }}
+                        >
+                            <iframe
+                                src="map-child-props.html"
+                                frameBorder="0"
+                                className="code-frame"
+                            />
                         </Col>
                     </Row>
                 </Grid>

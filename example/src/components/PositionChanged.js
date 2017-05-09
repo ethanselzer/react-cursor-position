@@ -1,9 +1,7 @@
 import React from 'react';
 import ReactCursorPosition from '../../../dist/ReactCursorPosition';
-import PositionLabel from './PositionLabel';
 import PositionChangedLabel from './PositionChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
-
 
 export default class extends React.Component {
     constructor(props) {
@@ -12,9 +10,9 @@ export default class extends React.Component {
             isPositionOutside: true,
             position: {
                 x: 0,
-                y: 0
+                y: 0,
             }
-        }
+        };
     }
 
     render() {
@@ -22,10 +20,8 @@ export default class extends React.Component {
             <div className="example">
                 <ReactCursorPosition  {...{
                     className: 'example__target',
-                    onPositionChanged: (props) => this.setState(props),
-                    shouldDecorateChildren: false
+                    onPositionChanged: props => this.setState(props)
                 }}>
-                    <PositionLabel />
                     <InstructionsLabel />
                 </ReactCursorPosition>
                 <PositionChangedLabel {...this.state} />

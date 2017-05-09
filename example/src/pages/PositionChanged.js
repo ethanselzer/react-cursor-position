@@ -7,31 +7,31 @@ import {
 } from 'react-bootstrap';
 import Helmet from 'react-helmet';
 
-import CursorPositionChanged from '../components/CursorPositionChanged';
+import PositionChanged from '../components/PositionChanged';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../styles/app.css';
 
-class  CursorPositionChangedPage extends Component {
+export default class extends Component {
     render() {
         return (
             <div>
-                <Helmet title="On Cursor Position Changed | React Cursor Position" />
+                <Helmet title="On Position Changed | React Cursor Position" />
                 <Header {...this.props}/>
                 <Jumbotron>
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>On Cursor Position Changed - API Example</h2>
+                                <h2>onPositionChanged - API Example</h2>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>
-                                        Implement onCursorPositionChanged when a parent component or global
-                                        store should be notified of cursor position changes
+                                        Implement onPositionChanged when a parent component or global
+                                        store should be notified of position changes
                                     </li>
                                 </ul>
                             </Col>
@@ -39,7 +39,7 @@ class  CursorPositionChangedPage extends Component {
                                 <ul className="summary__list">
                                     <li>Type: Function</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/CursorPositionChanged.js">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/PositionChanged.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -50,21 +50,20 @@ class  CursorPositionChangedPage extends Component {
                 </Jumbotron>
                 <Grid>
                     <Row>
-                        <Col sm={6} md={4} lg={4}>
-                            <CursorPositionChanged/>
+                        <Col sm={6} md={4}>
+                            <PositionChanged/>
                         </Col>
-                        <Col sm={6} md={8} lg={8}>
-                            <a
-                                style={{display: 'block', height: '600px'}}
-                                className="highlighter"
-                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/CursorPositionChanged.js"
-                            >
-                                <iframe
-                                    src="on-cursor-position-changed.html"
-                                    frameBorder="0"
-                                    className="code-frame"
-                                />
-                            </a>
+                        <Col
+                            sm={6}
+                            md={8}
+                            className="example__source-container"
+                            style={{height: '530px' }}
+                        >
+                            <iframe
+                                src="on-position-changed.html"
+                                frameBorder="0"
+                                className="code-frame"
+                            />
                         </Col>
                     </Row>
                 </Grid>
@@ -72,5 +71,3 @@ class  CursorPositionChangedPage extends Component {
         );
     }
 }
-
-export default CursorPositionChangedPage;

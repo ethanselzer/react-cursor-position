@@ -3,14 +3,14 @@
     font: 25px Courier New, Courier, monospace;
 }
 
-h1, h2 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+h2 {
+    font: 22px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin: 15px 0;
 }
 
 p.summary {
-    margin: 0;
     font-size: 16px;
-    line-height: 2;
+    line-height: 1.5
 }
 
 .summary__list {
@@ -18,13 +18,12 @@ p.summary {
 }
 
 .jumbotron {
-    padding: 48px 0 30px;
+    padding: 0 0 20px 0;
+    margin: 96px 0 20px;
 }
 
-@media (min-width: 768px) and (max-width: 991px) {
-    .jumbotron {
-        padding-top: 90px;
-    }
+.jumbotron--home {
+    padding: 0;
 }
 
 li.active a {
@@ -36,7 +35,7 @@ li.active a {
 }
 
 .example__target {
-    height: 350px;
+    height: 200px;
     padding: 10px;
     position: relative;
     border: 1px solid #ccc;
@@ -45,7 +44,7 @@ li.active a {
     text-align: center;
 }
 
-.example__target--basic {
+.example__target.example__target--basic {
     height: 207px;
     border-color: transparent;
 }
@@ -58,18 +57,26 @@ li.active a {
     height: 20px;
     width: 100%;
     position: absolute;
-    top: calc(50% - 10px);
+    top: 60%;
     left: 0;
     color: #337ab7;
+}
+
+.example__source-container {
+    margin: 20px 0;
+}
+
+.example__source-css {
+    margin-top: 15px;
+}
+
+.example__external-label {
+    margin-top: 10px;
 }
 
 .highlighter {
     display: block;
     margin-bottom: 10px;
-}
-
-a.highligher:link, a.highligher:active, a.highlighter:hover, a.highligher:visited {
-    text-decoration: none;
 }
 
 .code-frame {
@@ -80,6 +87,31 @@ a.highligher:link, a.highligher:active, a.highlighter:hover, a.highligher:visite
     background-color: #fdf6e3;
 }
 
-.panel {
-    height: 281px;
+@media (min-width: 420px) {
+    .jumbotron {
+        margin-top: 51px;
+    }
+}
+
+@media (min-width: 768px) {
+    .jumbotron {
+        margin-top: 51px;
+    }
+    .example__target {
+        height: 350px;
+    }
+
+    .example__instructions {
+        top: calc(50% - 10px);
+    }
+
+    .example__source-container {
+        margin: 0;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .jumbotron {
+        margin-top: 97px;
+    }
 }

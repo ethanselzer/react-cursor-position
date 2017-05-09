@@ -6,28 +6,23 @@
     <link rel="stylesheet" href="//cdn.jsdelivr.net/highlight.js/9.9.0/styles/solarized-light.min.css">
     <script src="//cdn.jsdelivr.net/highlight.js/9.9.0/highlight.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-    <title>Should Decorate Children | Code Example | React Cursor Position</title>
+    <title>On Cursor Position Changed | Code Example | React Cursor Position</title>
   </head>
   <body>
 <pre>
-<code>
+<code class="JavaScript">
 import React from 'react';
 import ReactCursorPosition from 'react-cursor-position';
 
-import PositionLabel from './PositionLabel';
-import PositionChangedLabel from './PositionChangedLabel';
+import ActivationChangedLabel from './ActivationChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
     constructor(props) {
-         super(props);
+        super(props);
         this.state = {
-            isPositionOutside: true,
-            position: {
-                x: 0,
-                y: 0
-            }
-        }
+            isActive: false
+        };
     }
 
     render() {
@@ -35,13 +30,13 @@ export default class extends React.Component {
             &lt;div className="example"&gt;
                 &lt;ReactCursorPosition  {...{
                     className: 'example__target',
-                    onPositionChanged: props => this.setState(props),
-                    shouldDecorateChildren: false
+                    onActivationChanged: ({ isActive }) =&gt; {
+                        this.setState({ isActive });
+                    }
                 }}&gt;
-                    &lt;PositionLabel /&gt;
                     &lt;InstructionsLabel /&gt;
                 &lt;/ReactCursorPosition&gt;
-                &lt;PositionChangedLabel {...this.state} /&gt;
+                &lt;ActivationChangedLabel {...this.state} /&gt;
             &lt;/div&gt;
         );
     }

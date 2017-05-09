@@ -2,18 +2,20 @@ import React from 'react';
 
 export default (props) => {
     const {
-        isOutside = true,
-        point: {
+        position: {
             x = 0,
             y = 0
-        } = {}
+        } = {},
+        isActive = false,
+        isPositionOutside = false
     } = props;
 
     return (
         <div>
             {`x: ${x}`}<br />
             {`y: ${y}`}<br />
-            {`isOutside: ${isOutside ? 'true' : 'false'}`}<br />
+            {`isActive: ${isActive}`}<br />
+            {`isOutside: ${isPositionOutside ? 'true' : 'false'}`}
         </div>
     );
 }

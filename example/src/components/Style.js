@@ -1,7 +1,6 @@
 import React from 'react';
-import ReactCursorPosition from 'react-cursor-position';
-
-import CursorPositionLabel from './CursorPositionLabel';
+import ReactCursorPosition from '../../../dist/ReactCursorPosition';
+import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
@@ -16,7 +15,7 @@ export default class extends React.Component {
 
         return (
             <ReactCursorPosition {...{ style }}>
-                <CursorPositionLabel />
+                <PositionLabel />
                 <InstructionsLabel />
             </ReactCursorPosition>
         );

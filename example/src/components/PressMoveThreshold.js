@@ -4,9 +4,14 @@ import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
-    <ReactCursorPosition className="example__target" >
+    <ReactCursorPosition
+        className="example__target"
+        pressMoveThreshold={20}
+    >
         <PositionLabel />
-        <InstructionsLabel />
+        <div className="example__instructions">
+            <InstructionsLabel />
+        </div>
     </ReactCursorPosition>
 );
 

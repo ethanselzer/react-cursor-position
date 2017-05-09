@@ -7,7 +7,6 @@ import {
 } from 'react-bootstrap';
 import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import solarized from 'react-syntax-highlighter/dist/styles/solarized-light';
-import js from 'highlight.js/lib/languages/javascript';
 import css from 'highlight.js/lib/languages/css';
 import Helmet from 'react-helmet';
 
@@ -18,7 +17,6 @@ import cssString from '../code-examples/class-name-css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../styles/app.css';
 
-registerLanguage('javascript', js);
 registerLanguage('css', css);
 
 class  CatalogPage extends Component {
@@ -58,29 +56,25 @@ class  CatalogPage extends Component {
                 </Jumbotron>
                 <Grid>
                     <Row>
-                        <Col sm={6} md={4} lg={4}>
+                        <Col sm={6} md={4}>
                             <ClassName/>
                         </Col>
-                        <Col sm={6} md={8} lg={8}>
-                            <a
-                                className="highlighter"
-                                style={{ height: '225px' }}
-                                href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ClassName.js"
-                            >
-                                <iframe
-                                    src="class-name.html"
-                                    frameBorder="0"
-                                    className="code-frame"
-                                />
-                            </a>
-                            <a
-                                className="highlighter"
-                                href="#"
-                            >
+                        <Col
+                            sm={6}
+                            md={8}
+                            className="example__source-container"
+                            style={{ height: '225px' }}
+                        >
+                            <iframe
+                                src="class-name.html"
+                                frameBorder="0"
+                                className="code-frame"
+                            />
+                            <div className="highlighter example__source-css">
                                 <SyntaxHighlighter language='css' style={solarized}>
                                     {cssString}
                                 </SyntaxHighlighter>
-                            </a>
+                            </div>
                         </Col>
                     </Row>
                 </Grid>

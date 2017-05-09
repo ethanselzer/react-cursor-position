@@ -24,20 +24,9 @@ class App extends Component {
             <div>
                 <Helmet title="Examples | React Cursor Position" />
                 <Header {...this.props} />
-                <Jumbotron>
+                <Jumbotron className="jumbotron--home">
                     <Grid>
-                        <h1>Examples</h1>
-                        <p className="summary">
-                            React Cursor Position is a primitive component for composing UI features that
-                            require notification of mouse cursor position status.<br />
-
-                            It plots cursor coordinates relative to itself and supports scroll position changes.<br />
-
-                            React Cursor Position re-renders child components with new cursor position props
-                            when the cursor position changes.<br />
-
-                            It is safe for server rendering and single page applications.<br />
-                        </p>
+                        <h2>Examples</h2>
                     </Grid>
                 </Jumbotron>
                 <Grid>
@@ -50,11 +39,15 @@ class App extends Component {
                         <Col xs={12} sm={6} md={4} lg={3}>
                             <Panel header="Props API Examples" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
-                                    <NavItem eventKey={2.1} href="#/map-child-props">Map Child Props</NavItem>
-                                    <NavItem eventKey={2.2} href="#/on-cursor-position-changed">On Cursor Position Changed</NavItem>
-                                    <NavItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</NavItem>
-                                    <NavItem eventKey={2.4} href="#/class-name">Class Name</NavItem>
-                                    <NavItem eventKey={2.5} href="#/style">Style</NavItem>
+                                    <NavItem href="#/class-name">Class Name</NavItem>
+                                    <NavItem href="#/is-activated-on-touch">Is Activated On Touch</NavItem>
+                                    <NavItem href="#/map-child-props">Map Child Props</NavItem>
+                                    <NavItem href="#/on-position-changed">On Position Changed</NavItem>
+                                    <NavItem href="#/on-activation-changed">On Activation Changed</NavItem>
+                                    <NavItem href="#/press-duration">Press Duration</NavItem>
+                                    <NavItem href="#/press-move-threshold">Press Move Threshold</NavItem>
+                                    <NavItem href="#/should-decorate-children">Should Decorate Children</NavItem>
+                                    <NavItem href="#/style">Style</NavItem>
                                 </Nav>
                             </Panel>
                         </Col>

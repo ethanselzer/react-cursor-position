@@ -7,38 +7,42 @@ import {
 } from 'react-bootstrap';
 import Helmet from 'react-helmet';
 
-import Style from '../components/Style';
+import ActivationChanged from '../components/ActivationChanged';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../../styles/app.css';
 
-class  StylePage extends Component {
+export default class extends Component {
     render() {
         return (
             <div>
-                <Helmet title="Style | React Cursor Position" />
+                <Helmet title="On Position Changed | React Cursor Position" />
                 <Header {...this.props}/>
                 <Jumbotron>
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>Style - API Example</h2>
+                                <h2>onActivationChanged - API Example</h2>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>
-                                        Implement style to apply inline CSS to the element rendered by react-cursor-position
+                                        Implement onActivationChanged when a parent component or global
+                                        store should be notified of active state changes
                                     </li>
                                 </ul>
                             </Col>
                             <Col sm={5}>
                                 <ul className="summary__list">
-                                    <li>Type: Object</li>
+                                    <li>Type: Function</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/Style.js">
+                                        {'Function receives one parameter with the signature { isActive: Boolean }.'}
+                                    </li>
+                                    <li>
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationChanged.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -50,16 +54,16 @@ class  StylePage extends Component {
                 <Grid>
                     <Row>
                         <Col sm={6} md={4}>
-                            <Style/>
+                            <ActivationChanged/>
                         </Col>
                         <Col
                             sm={6}
                             md={8}
                             className="example__source-container"
-                            style={{ height: '400px' }}
+                            style={{height: '490px' }}
                         >
                             <iframe
-                                src="style.html"
+                                src="on-activation-changed.html"
                                 frameBorder="0"
                                 className="code-frame"
                             />
@@ -70,5 +74,3 @@ class  StylePage extends Component {
         );
     }
 }
-
-export default StylePage;

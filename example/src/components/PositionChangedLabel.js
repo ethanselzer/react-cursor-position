@@ -2,18 +2,17 @@ import React from 'react';
 
 export default (props) => {
     const {
-        cursorPosition: {
+        isPositionOutside = true,
+        position: {
             x = 0,
             y = 0,
-            isOutside = true
         } = {}
     } = props;
-
     return (
-        <div>
+        <div className="example__external-label">
             {`x: ${x}`}<br />
             {`y: ${y}`}<br />
-            {`isOutside: ${isOutside ? 'true' : 'false'}`}<br />
+            {`isPositionOutside: ${isPositionOutside ? 'true' : 'false'}`}
         </div>
     );
 }

@@ -1,19 +1,14 @@
 import React from 'react';
-import ReactCursorPosition from 'react-cursor-position';
-
-import CursorPositionLabel from './CursorPositionLabel';
+import ReactCursorPosition from '../../../dist/ReactCursorPosition';
+import ActivationChangedLabel from './ActivationChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cursorPosition: {
-                x: 0,
-                y: 0,
-                isOutside: true
-            }
-        }
+            isActive: false
+        };
     }
 
     render() {
@@ -21,14 +16,13 @@ export default class extends React.Component {
             <div className="example">
                 <ReactCursorPosition  {...{
                     className: 'example__target',
-
-                    onCursorPositionChanged: cursorPosition => {
-                        this.setState({ cursorPosition });
+                    onActivationChanged: ({ isActive }) => {
+                        this.setState({ isActive });
                     }
                 }}>
                     <InstructionsLabel />
                 </ReactCursorPosition>
-                <CursorPositionLabel {...this.state} />
+                <ActivationChangedLabel {...this.state} />
             </div>
         );
     }
