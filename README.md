@@ -32,6 +32,8 @@ npm install --save react-cursor-position
 
 ## Usage
 
+If you are upgrading from v1x to v2x please see [the release notes](https://github.com/ethanselzer/react-cursor-position/releases/tag/v2.0.0).
+
 ```JSX
 import ReactCursorPosition from 'react-cursor-position';
 ...
