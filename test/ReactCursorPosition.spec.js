@@ -60,13 +60,12 @@ describe('ReactCursorPosition', () => {
             }
         });
 
+        renderedTree.instance().onMouseEnter(getMouseEvent());
         const el = renderedTree.find('div');
-        el.simulate('mouseEnter');
-
-        el.simulate('mouseMove', {
+        el.simulate('mouseMove', getMouseEvent({
             pageX: 1,
             pageY: 2
-        });
+        }));
 
         expect(childComponent.props()).to.deep.equal({
             isActive: true,
@@ -100,14 +99,14 @@ describe('ReactCursorPosition', () => {
     it('does not pass own-props to child components', () => {
         const renderedTree = getMountedComponentTree({ className: 'foo' });
         const childComponent = renderedTree.find(GenericSpanComponent);
-       
+
         expect(childComponent.props().className).to.be.undefined;
     });
 
     it('passes unknown props (passthrouh props) to child components', () => {
         const renderedTree = getMountedComponentTree({ foo: 'foo' });
         const childComponent = renderedTree.find(GenericSpanComponent);
-       
+
         expect(childComponent.props().foo).to.equal('foo');
     });
 
@@ -284,7 +283,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const childComponent = renderedTree.find(GenericSpanComponent);
                     const el = renderedTree.find('div');
-                    el.simulate('mouseEnter');
+                    renderedTree.instance().onMouseEnter(getMouseEvent());
 
                     el.simulate('mouseMove', {
                         pageX: 1,
@@ -552,6 +551,26 @@ describe('ReactCursorPosition', () => {
                 pageX,
                 pageY
             }]
+        };
+    }
+
+    function getMouseEvent({ pageX = 1, pageY = 2 } = {}) {
+        return {
+            currentTarget: {
+                getBoundingClientRect() {
+                    return {
+                        top: 0,
+                        right: 4,
+                        bottom: 4,
+                        left: 0,
+                        heigth: 4,
+                        width: 4
+                    }
+                }
+            },
+            preventDefault: () => { },
+            pageX,
+            pageY
         };
     }
 });

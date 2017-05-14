@@ -9,6 +9,7 @@ const noop = () => { };
 export default class extends React.Component {
     constructor(props) {
         super(props);
+
         this.state = {
             isActive: false,
             isPositionOutside: true,
@@ -19,6 +20,13 @@ export default class extends React.Component {
         };
 
         this.eventListeners = [];
+
+        this.elementOffset = {
+            x: 0,
+            y: 0,
+            h: 0,
+            w: 0
+        };
 
         this.onTouchStart = this.onTouchStart.bind(this);
         this.onTouchMove = this.onTouchMove.bind(this);
@@ -54,9 +62,9 @@ export default class extends React.Component {
     };
 
     onTouchStart(e) {
-        const touchPosition = this.getDocumentRelativePosition(this.getTouchEvent(e));
+        const position = this.getDocumentRelativePosition(this.getTouchEvent(e));
         this.elementOffset = this.getDocumentRelativeElementOffset(e.currentTarget);
-        this.setTouchPositionState(touchPosition);
+        this.setPositionState(position);
 
         if (this.props.isActivatedOnTouch) {
             e.preventDefault();
@@ -64,37 +72,30 @@ export default class extends React.Component {
             return;
         }
 
-        this.initPressEventCriteria(touchPosition);
+        this.initPressEventCriteria(position);
         this.setPressEventTimer()
     }
 
     onTouchMove(e) {
-        const touchPosition = this.getDocumentRelativePosition(this.getTouchEvent(e));
+        const position = this.getDocumentRelativePosition(this.getTouchEvent(e));
 
         if (!this.state.isActive) {
-            this.setPressEventCriteria(touchPosition);
+            this.setPressEventCriteria(position);
             return;
         }
 
-        this.setTouchPositionState(touchPosition);
+        this.setPositionState(position);
         e.preventDefault();
     }
 
     onMouseEnter(e) {
         this.elementOffset = this.getDocumentRelativeElementOffset(e.currentTarget);
         this.activate();
+        this.setPositionState(this.getDocumentRelativePosition(e))
     }
 
     onMouseMove(e) {
-        const cursorPosition = this.getDocumentRelativePosition(e);
-        const offsetCursorPosition = this.getOffsetPosition(cursorPosition);
-
-        this.setState({
-            isPositionOutside: false,
-            position: offsetCursorPosition
-        }, () => {
-            this.triggerOnPositionChanged();
-        });
+        this.setPositionState(this.getDocumentRelativePosition(e));
     }
 
     onMouseLeave() {
@@ -129,7 +130,7 @@ export default class extends React.Component {
         this.props.onActivationChanged({ isActive: false });
     }
 
-    setTouchPositionState(position) {
+    setPositionState(position) {
         const offsetPosition = this.getOffsetPosition(position);
         const isPositionOutside = this.getIsPositionOutside(position);
 
