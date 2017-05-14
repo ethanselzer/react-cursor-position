@@ -9,7 +9,6 @@ const noop = () => { };
 export default class extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
             isActive: false,
             isPositionOutside: true,

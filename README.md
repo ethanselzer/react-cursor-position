@@ -113,10 +113,10 @@ If your default browser does not start automatically, open a new browser window 
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
-npm install
+yarn
 npm run #print available commands
 ```
-The Example Project may be used in development of react-cursor-position. At this time, the command `npm run build-cjs` must be run from the root of the project each time you want your ReactCursorPosition changes to be reflected in the example.
+The Example Project may be used in development of react-cursor-position. To watch the source for changes, run `npm run build-watch`.
 
 ## Contributing
 
