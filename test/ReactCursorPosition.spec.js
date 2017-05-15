@@ -29,7 +29,9 @@ describe('ReactCursorPosition', () => {
             isPositionOutside: true,
             position: {
                 x: 0,
-                y: 0
+                y: 0,
+                h: 0,
+                w: 0
             }
         });
     });
@@ -56,7 +58,9 @@ describe('ReactCursorPosition', () => {
             isPositionOutside: false,
             position: {
                 x: 3,
-                y: 2
+                y: 2,
+                h: undefined,
+                w: 4
             }
         });
 
@@ -72,7 +76,9 @@ describe('ReactCursorPosition', () => {
             isPositionOutside: false,
             position: {
                 x: 1,
-                y: 2
+                y: 2,
+                h: undefined,
+                w: 4
             }
         });
     });
@@ -295,7 +301,9 @@ describe('ReactCursorPosition', () => {
                         isPositionOutside: false,
                         position: {
                             x: 1,
-                            y: 1
+                            y: 1,
+                            h: undefined,
+                            w: 4
                         }
                     });
                 });
@@ -323,7 +331,9 @@ describe('ReactCursorPosition', () => {
                         isPositionOutside: true,
                         position: {
                             x: 4,
-                            y: 4
+                            y: 4,
+                            h: 0,
+                            w: 0
                         }
                     });
                 });
@@ -341,13 +351,17 @@ describe('ReactCursorPosition', () => {
                     instance.onTouchMove(getTouchEvent({ pageX: 1, pageY: 2 }));
                     expect(childComponent.props().position).to.deep.equal({
                         x: 1,
-                        y: 2
+                        y: 2,
+                        h: undefined,
+                        w: 4
                     });
 
                     instance.onTouchMove(getTouchEvent({ pageX: 2, pageY: 3 }));
                     expect(childComponent.props().position).to.deep.equal({
                         x: 2,
-                        y: 3
+                        y: 3,
+                        h: undefined,
+                        w: 4
                     });
                 });
             });
@@ -366,7 +380,9 @@ describe('ReactCursorPosition', () => {
 
                     expect(childComponent.props().position).to.deep.equal({
                         x: 1,
-                        y: 2
+                        y: 2,
+                        h: 0,
+                        w: 0
                     });
                 });
             });
@@ -417,7 +433,9 @@ describe('ReactCursorPosition', () => {
                 isAlfresco: false,
                 point: {
                     x: 1,
-                    y: 2
+                    y: 2,
+                    h: undefined,
+                    w: 4
                 }
             });
         });
@@ -436,7 +454,9 @@ describe('ReactCursorPosition', () => {
                     isPositionOutside: false,
                     position: {
                         x: 1,
-                        y: 2
+                        y: 2,
+                        h: undefined,
+                        w: 4
                     }
                 });
                 done();

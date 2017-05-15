@@ -15,7 +15,9 @@ export default class extends React.Component {
             isPositionOutside: true,
             position: {
                 x: 0,
-                y: 0
+                y: 0,
+                h: 0,
+                w: 0
             }
         };
 
@@ -179,11 +181,13 @@ export default class extends React.Component {
 
     getOffsetPosition(position) {
         const { x: cursorX, y: cursorY } = position;
-        const { x: offsetX, y: offsetY } = this.elementOffset;
+        const { x: offsetX, y: offsetY, h, w } = this.elementOffset;
 
         return {
             x: cursorX - offsetX,
-            y: cursorY - offsetY
+            y: cursorY - offsetY,
+            h,
+            w
         };
     }
 
