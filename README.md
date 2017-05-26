@@ -126,11 +126,11 @@ or a [pull request](https://github.com/ethanselzer/react-cursor-position/compare
 
 ## Attribution
 
-Thanks to the following community members for
-[openening issues](https://github.com/ethanselzer/react-cursor-position/issues?q=is%3Aissue+is%3Aclosed)
+Thanks to the following community members for opening GitHub Issues and Pull Requests. Your input is very much appreciated!
 * @pr0digy
 * @JunyuanZheng
 * @chrisdrackett
+* @AlexMeah
 
 You are awesome! ✨💫
 
