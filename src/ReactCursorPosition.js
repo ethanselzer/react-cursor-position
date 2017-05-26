@@ -11,6 +11,10 @@ export default class extends React.Component {
         super(props);
 
         this.state = {
+            elementDimensions: {
+                width: 0,
+                height: 0
+            },
             isActive: false,
             isPositionOutside: true,
             position: {
@@ -23,9 +27,7 @@ export default class extends React.Component {
 
         this.elementOffset = {
             x: 0,
-            y: 0,
-            h: 0,
-            w: 0
+            y: 0
         };
 
         this.onTouchStart = this.onTouchStart.bind(this);
@@ -63,7 +65,7 @@ export default class extends React.Component {
 
     onTouchStart(e) {
         const position = this.getDocumentRelativePosition(this.getTouchEvent(e));
-        this.elementOffset = this.getDocumentRelativeElementOffset(e.currentTarget);
+        this.init(e.currentTarget);
         this.setPositionState(position);
 
         if (this.props.isActivatedOnTouch) {
@@ -89,12 +91,15 @@ export default class extends React.Component {
     }
 
     onMouseEnter(e) {
-        this.elementOffset = this.getDocumentRelativeElementOffset(e.currentTarget);
+        this.init(e.currentTarget);
         this.activate();
         this.setPositionState(this.getDocumentRelativePosition(e))
     }
 
     onMouseMove(e) {
+        if (!this.state.isActive) {
+            this.onMouseEnter(e);
+        }
         this.setPositionState(this.getDocumentRelativePosition(e));
     }
 
@@ -104,6 +109,12 @@ export default class extends React.Component {
         });
 
         this.deactivate();
+    }
+
+    init(el) {
+        const { x, y, w, h } = this.getDocumentRelativeElementOffset(el);
+        this.elementOffset = { x, y };
+        this.setElementDimensionsState({ width: w, height: h });
     }
 
     activate() {
@@ -142,6 +153,12 @@ export default class extends React.Component {
         });
     }
 
+    setElementDimensionsState(dimensions) {
+        this.setState({
+            elementDimensions: dimensions
+        })
+    }
+
     setPressEventTimer() {
         const {
             pressDuration,
@@ -167,7 +184,8 @@ export default class extends React.Component {
 
     getIsPositionOutside(position) {
         const { x, y } = position;
-        const { x: elx, y: ely, w: elw, h: elh } = this.elementOffset;
+        const { x: elx, y: ely } = this.elementOffset;
+        const { width: elw, height: elh } = this.state.elementDimensions;
 
         return (
             x < elx ||
@@ -228,11 +246,10 @@ export default class extends React.Component {
     }
 
     triggerOnPositionChanged() {
-        const { isPositionOutside, position } = this.state;
-        this.props.onPositionChanged({
-            isPositionOutside,
-            position
-        });
+        this.props.onPositionChanged(omit(
+            this.state,
+            'isActive'
+        ));
     }
 
     isReactComponent(reactElement) {
@@ -288,14 +305,9 @@ export default class extends React.Component {
 
     render() {
         const { children, className, mapChildProps, style } = this.props;
-        const { isActive, isPositionOutside, position } = this.state;
         const props = objectAssign(
             {},
-            mapChildProps({
-                isActive,
-                isPositionOutside,
-                position
-            }),
+            mapChildProps(this.state),
             this.getPassThroughProps()
         );
 

@@ -12,7 +12,7 @@ export default class extends React.Component {
                     className: 'example__target example__target--basic'
                 }}>
                     <PositionLabel />
-                    <InstructionsLabel />
+                    <InstructionsLabel className="example__instructions--low" />
                 </ReactCursorPosition>
             </div>
         );

@@ -6,8 +6,10 @@ import InstructionsLabel from './InstructionsLabel';
 export default () => (
     <ReactCursorPosition
         className="example__target"
-        mapChildProps={({ isPositionOutside, position }) => {
+        mapChildProps={({ elementDimensions, isActive, isPositionOutside, position }) => {
             return {
+                elementDimensions,
+                isActive,
                 isOutside: isPositionOutside,
                 point: position
             };

@@ -15,7 +15,6 @@ import React from 'react';
 import ReactCursorPosition from 'react-cursor-position';
 
 import PositionLabel from './PositionLabel';
-import PositionChangedLabel from './PositionChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
@@ -41,7 +40,10 @@ export default class extends React.Component {
                     &lt;PositionLabel /&gt;
                     &lt;InstructionsLabel /&gt;
                 &lt;/ReactCursorPosition&gt;
-                &lt;PositionChangedLabel {...this.state} /&gt;
+                &lt;PositionLabel {...this.state} {...{
+                    className: 'example__external-label',
+                    shouldShowIsActive: false }
+                }/&gt;
             &lt;/div&gt;
         );
     }

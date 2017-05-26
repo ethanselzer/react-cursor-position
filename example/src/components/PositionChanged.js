@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactCursorPosition from '../../../dist/ReactCursorPosition';
-import PositionChangedLabel from './PositionChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
+import PositionLabel from './PositionLabel';
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            elementDimensions: {
+                width: 0,
+                height: 0
+            },
             isPositionOutside: true,
             position: {
                 x: 0,
@@ -22,9 +26,15 @@ export default class extends React.Component {
                     className: 'example__target',
                     onPositionChanged: props => this.setState(props)
                 }}>
-                    <InstructionsLabel />
+                    <InstructionsLabel className="example__instructions--center" />
                 </ReactCursorPosition>
-                <PositionChangedLabel {...this.state} />
+                <PositionLabel
+                    {...this.state}
+                    {...{
+                        className: 'example__external-label',
+                        shouldShowIsActive: false
+                    }}
+                />
             </div>
         );
     }

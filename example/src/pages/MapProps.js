@@ -55,7 +55,7 @@ class  MapChildPropsPage extends Component {
                             sm={6}
                             md={8}
                             className="example__source-container"
-                            style={{ height: '340px' }}
+                            style={{ height: '360px' }}
                         >
                             <iframe
                                 src="map-child-props.html"
