@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactCursorPosition from '../../../dist/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
-import PositionChangedLabel from './PositionChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 
@@ -9,6 +8,10 @@ export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            elementDimensions: {
+                width: 0,
+                height: 0
+            },
             isPositionOutside: true,
             position: {
                 x: 0,
@@ -28,7 +31,13 @@ export default class extends React.Component {
                     <PositionLabel />
                     <InstructionsLabel />
                 </ReactCursorPosition>
-                <PositionChangedLabel {...this.state} />
+                <PositionLabel
+                    {...this.state}
+                    {...{
+                        className: 'example__external-label',
+                        shouldShowIsActive: false
+                    }}
+                />
             </div>
         );
     }

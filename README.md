@@ -52,6 +52,10 @@ Each child component will receive the following props:
 
 ```JavaScript
 {
+    elementDimensions: {
+        width: Number,
+        height: Number
+    },
     isActive: Boolean,
     isPositionOutside: Boolean,
     position: {
@@ -74,7 +78,7 @@ All props are optional.
 Function receives one parameter with the signature `{ isActive: Boolean }`.
 
 **onPositionChanged** : Function - Called when cursor or touch position changes.
-Function receives one parameter with the signature `{ isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
+Function receives one parameter with the signature `{ elementDimensions: { width: Number, height: Number }, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
 
 **mapChildProps** : Function - Model child component props to your custom shape.
 Function receives one parameter with the signature

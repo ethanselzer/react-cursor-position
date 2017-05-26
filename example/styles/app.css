@@ -57,9 +57,17 @@ li.active a {
     height: 20px;
     width: 100%;
     position: absolute;
-    top: 60%;
+    top: 70%;
     left: 0;
     color: #337ab7;
+}
+
+.example__instructions--center {
+    top: calc(50% - 10px);
+}
+
+.example__instructions--low {
+    top: 70% !important;
 }
 
 .example__source-container {

@@ -20,7 +20,7 @@ export default class extends React.Component {
                         this.setState({ isActive });
                     }
                 }}>
-                    <InstructionsLabel />
+                    <InstructionsLabel className="example__instructions--center"/>
                 </ReactCursorPosition>
                 <ActivationChangedLabel {...this.state} />
             </div>
