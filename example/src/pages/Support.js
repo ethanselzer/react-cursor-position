@@ -10,7 +10,7 @@ import Helmet from 'react-helmet';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 class  Support extends Component {
     render() {

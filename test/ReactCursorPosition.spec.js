@@ -25,6 +25,10 @@ describe('ReactCursorPosition', () => {
 
     it('has correct initial state', () => {
         expect(positionObserver.state()).to.deep.equal({
+            detectedEnvironment: {
+                isMouseDetected: false,
+                isTouchDetected: false
+            },
             elementDimensions: {
                 width: 0,
                 height: 0
@@ -47,15 +51,22 @@ describe('ReactCursorPosition', () => {
         expect(defaults.shouldDecorateChildren).to.equal(true);
         expect(defaults.onActivationChanged).to.be.a('function');
         expect(defaults.onPositionChanged).to.be.a('function');
+        expect(defaults.onDetectedEnvironmentChanged).to.be.a('function');
+        expect(defaults.pressDuration).to.be.a('number');
+        expect(defaults.pressMoveThreshold).to.be.a('number');
     });
 
-    it('decorates child components with props', () => {
-        const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
-        const childComponent = renderedTree.find(GenericSpanComponent);
+    it('decorates child components with props in the touch environment', () => {
+        const mountedTree = getMountedComponentTree({ isActivatedOnTouch: true });
+        const childComponent = mountedTree.find(GenericSpanComponent);
 
-        renderedTree.instance().onTouchStart(getTouchEvent({ pageX: 3, pageY: 2 }));
+        mountedTree.instance().onTouchStart(getTouchEvent({ pageX: 3, pageY: 2 }));
 
         expect(childComponent.props()).to.deep.equal({
+            detectedEnvironment: {
+                isMouseDetected: false,
+                isTouchDetected: true
+            },
             elementDimensions: {
                 width: 4,
                 height: 4
@@ -67,22 +78,35 @@ describe('ReactCursorPosition', () => {
                 y: 2
             }
         });
+    });
 
-        renderedTree.instance().onMouseEnter(getMouseEvent());
-        const el = renderedTree.find('div');
+    it('decorates child components with props in the mouse environment', (done) => {
+        const mountedTree = getMountedComponentTree();
+        const childComponent = mountedTree.find(GenericSpanComponent);
+        mountedTree.instance().onMouseEnter(getMouseEvent());
+        const el = mountedTree.find('div');
+
         el.simulate('mouseMove', getMouseEvent());
 
-        expect(childComponent.props()).to.deep.equal({
-            elementDimensions: {
-                width: 4,
-                height: 4
-            },
-            isActive: true,
-            isPositionOutside: false,
-            position: {
-                x: 1,
-                y: 2
-            }
+        deferToHoverIntent(() => {
+            expect(childComponent.props()).to.deep.equal({
+                detectedEnvironment: {
+                    isMouseDetected: true,
+                    isTouchDetected: false
+                },
+                elementDimensions: {
+                    width: 4,
+                    height: 4
+                },
+                isActive: true,
+                isPositionOutside: false,
+                position: {
+                    x: 1,
+                    y: 2
+                }
+            });
+
+            done();
         });
     });
 
@@ -119,33 +143,13 @@ describe('ReactCursorPosition', () => {
         expect(childComponent.props().foo).to.equal('foo');
     });
 
-    it('calls clearPressDurationTimer on componentWillUnmount', () => {
+    it('calls clearTimers on componentWillUnmount', () => {
         const instance = positionObserver.instance();
-        sinon.spy(instance, 'clearPressDurationTimer');
+        sinon.spy(instance, 'clearTimers');
 
         instance.componentWillUnmount();
 
-        expect(instance.clearPressDurationTimer).to.have.been.called;
-    });
-
-    it('initializes on mousemove if mouseover does not fire', () => {
-        const renderedTree = getMountedComponentTree();
-        const childComponent = renderedTree.find(GenericSpanComponent);
-
-        renderedTree.instance().onMouseMove(getMouseEvent());
-
-        expect(childComponent.props()).to.deep.equal({
-            elementDimensions: {
-                width: 4,
-                height: 4
-            },
-            isActive: true,
-            isPositionOutside: false,
-            position: {
-                x: 1,
-                y: 2
-            }
-        });
+        expect(instance.clearTimers.calledOnce).to.be.true;
     });
 
     describe('Add Touch Event Listeners', () => {
@@ -172,24 +176,6 @@ describe('ReactCursorPosition', () => {
             expect(match(utils.default.getCall(1))).to.be.true;
             utils.default.restore();
         });
-
-        it('binds touchend and touchcancel with `passive` option set', () => {
-            sinon.spy(utils, 'default');
-            function match(call) {
-                return call.calledWithMatch(
-                    sinon.match.any,
-                    /touch(end|cancel)/,
-                    sinon.match.func,
-                    sinon.match({ passive: true })
-                );
-            }
-
-            positionObserver = getMountedComponentTree();
-
-            expect(match(utils.default.getCall(2))).to.be.true;
-            expect(match(utils.default.getCall(3))).to.be.true;
-            utils.default.restore();
-        });
     });
 
     describe('Remove Touch Event Listeners', () => {
@@ -211,7 +197,7 @@ describe('ReactCursorPosition', () => {
 
             mountedComponent.unmount();
 
-            expect(instance.removeEventListeners).to.have.been.called;
+            expect(instance.removeEventListeners.calledOnce).to.be.true;
         });
 
         it('calls removeEventListener on each item in touch event listeners collection', () => {
@@ -228,7 +214,7 @@ describe('ReactCursorPosition', () => {
 
     describe('Props Passed to Child Components', () => {
         describe('elementDimensions', () => {
-            describe('touch environment', () => {
+            describe('Touch Environment', () => {
                 it('decorates child components with element dimensions', () => {
                     const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -243,7 +229,7 @@ describe('ReactCursorPosition', () => {
                 });
             });
 
-            describe('pointer environment', () => {
+            describe('Mouse Environment', () => {
                 it('decorates child components with element dimensions', () => {
                     const renderedTree = getMountedComponentTree();
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -258,7 +244,7 @@ describe('ReactCursorPosition', () => {
             });
         });
         describe('isActive', () => {
-            describe('touch environment', () => {
+            describe('Touch Environment', () => {
                 const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
                 const childComponent = renderedTree.find(GenericSpanComponent);
                 const instance = renderedTree.instance();
@@ -271,43 +257,59 @@ describe('ReactCursorPosition', () => {
                     expect(childComponent.props().isActive).to.be.true;
                 });
 
-                it('unsets isActive', () => {
+                it('unsets isActive onTouchEnd', () => {
                     instance.onTouchStart(touchEvent);
                     expect(childComponent.props().isActive).to.be.true;
 
-                    instance.deactivate();
+                    instance.onTouchEnd();
+
+                    expect(childComponent.props().isActive).to.be.false;
+                });
+
+                it('unsets isActive onTouchCancel', () => {
+                    instance.onTouchStart(touchEvent);
+                    expect(childComponent.props().isActive).to.be.true;
+
+                    instance.onTouchCancel();
 
                     expect(childComponent.props().isActive).to.be.false;
                 });
             });
 
-            describe('pointer environment', () => {
+            describe('Mouse Environment', () => {
                 const renderedTree = getMountedComponentTree();
                 const childComponent = renderedTree.find(GenericSpanComponent);
 
-                it('sets isActive', () => {
+                it('sets isActive', (done) => {
                     expect(childComponent.props().isActive).to.be.false;
                     const el = renderedTree.find('div');
 
                     el.simulate('mouseEnter');
 
-                    expect(childComponent.props().isActive).to.be.true;
+                    deferToHoverIntent(() => {
+                        expect(childComponent.props().isActive).to.be.true;
+                        done();
+                    });
                 });
 
-                it('unsets isActive', () => {
+                it('unsets isActive', (done) => {
                     const el = renderedTree.find('div');
                     el.simulate('mouseEnter');
                     expect(childComponent.props().isActive).to.be.true;
 
                     el.simulate('mouseLeave');
 
-                    expect(childComponent.props().isActive).to.be.false;
+                    deferToHoverIntent(() => {
+                        expect(childComponent.props().isActive).to.be.false
+                        done();
+                    });
+
                 });
             });
         });
 
         describe('isPositionOutside', () => {
-            describe('touch environment', () => {
+            describe('Touch Environment', () => {
                 const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
                 const childComponent = renderedTree.find(GenericSpanComponent);
                 const instance = renderedTree.instance();
@@ -332,7 +334,7 @@ describe('ReactCursorPosition', () => {
                 });
             });
 
-            describe('pointer environment', () => {
+            describe('Mouse Environment', () => {
                 it('unsets isPositionOutside', () => {
                     const renderedTree = getMountedComponentTree({
                         isActivatedOnTouch: true,
@@ -350,17 +352,23 @@ describe('ReactCursorPosition', () => {
                         pageY: 1
                     });
 
-                    expect(childComponent.props()).to.deep.equal({
-                        elementDimensions: {
-                            width: 4,
-                            height: 4
-                        },
-                        isActive: true,
-                        isPositionOutside: false,
-                        position: {
-                            x: 1,
-                            y: 1
-                        }
+                    deferToHoverIntent(() => {
+                        expect(childComponent.props()).to.deep.equal({
+                            detectedEnvironment: {
+                                isMouseDetected: true,
+                                isTouchDetected: false
+                            },
+                            elementDimensions: {
+                                width: 4,
+                                height: 4
+                            },
+                            isActive: true,
+                            isPositionOutside: false,
+                            position: {
+                                x: 1,
+                                y: 1
+                            }
+                        });
                     });
                 });
 
@@ -383,6 +391,10 @@ describe('ReactCursorPosition', () => {
                     el.simulate('mouseLeave');
 
                     expect(childComponent.props()).to.deep.equal({
+                        detectedEnvironment: {
+                            isMouseDetected: true,
+                            isTouchDetected: false
+                        },
                         elementDimensions: {
                             width: 4,
                             height: 4
@@ -399,7 +411,7 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('position', () => {
-            describe('touch environment', () => {
+            describe('Touch Environment', () => {
                 it('decorates child components with position prop', () => {
                     const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -420,7 +432,7 @@ describe('ReactCursorPosition', () => {
                 });
             });
 
-            describe('pointer environment', () => {
+            describe('Mouse Environment', () => {
                 it('decorates child components with position prop', () => {
                     const renderedTree = getMountedComponentTree();
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -435,6 +447,38 @@ describe('ReactCursorPosition', () => {
                     expect(childComponent.props().position).to.deep.equal({
                         x: 1,
                         y: 2
+                    });
+                });
+            });
+        });
+
+        describe('detectedEnvironment', () => {
+            describe('Touch Environment', () => {
+                it('sets isTouchDetected', () => {
+                    const mountedComponent = getMountedComponentTree();
+                    const instance = mountedComponent.instance();
+                    const childComponent = mountedComponent.find(GenericSpanComponent);
+
+                    instance.onTouchStart(getTouchEvent());
+
+                    expect(childComponent.props().detectedEnvironment).to.deep.equal({
+                        isTouchDetected: true,
+                        isMouseDetected: false
+                    });
+                });
+            });
+
+            describe('Mouse Environment', () => {
+                it('sets isMouseDetected', () => {
+                    const mountedComponent = getMountedComponentTree();
+                    const instance = mountedComponent.instance();
+                    const childComponent = mountedComponent.find(GenericSpanComponent);
+
+                    instance.onMouseEnter(getMouseEvent());
+
+                    expect(childComponent.props().detectedEnvironment).to.deep.equal({
+                        isTouchDetected: false,
+                        isMouseDetected: true
                     });
                 });
             });
@@ -506,6 +550,10 @@ describe('ReactCursorPosition', () => {
             tree.instance().onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
 
             expect(spy.args[1][0]).to.deep.equal({
+                detectedEnvironment: {
+                    isMouseDetected: false,
+                    isTouchDetected: true
+                },
                 elementDimensions: {
                     width: 4,
                     height: 4
@@ -595,15 +643,117 @@ describe('ReactCursorPosition', () => {
                 clock.restore();
             });
         });
+
+        describe('Support for onDetectedEnvironmentChanged', () => {
+            describe('Touch Environment', () => {
+                it('gets called with isTouchDetected set', () => {
+                    const spy = sinon.spy();
+                    const mountedComponent = getMountedComponentTree({
+                        onDetectedEnvironmentChanged: spy
+                    });
+
+                    mountedComponent.instance().onTouchStart(getTouchEvent());
+
+                    expect(spy.calledOnce).to.be.true;
+                });
+            });
+
+            describe('Mouse Environment', () => {
+                it('sets isMouseDetected to true', () => {
+                    const spy = sinon.spy();
+                    const mountedComponent = getMountedComponentTree({
+                        onDetectedEnvironmentChanged: spy
+                    });
+
+                    mountedComponent.instance().onMouseEnter(getMouseEvent());
+
+                    expect(spy.calledOnce).to.be.true;
+                });
+            });
+        })
+    });
+
+    describe('clearTimers', () => {
+        it('drains the timers array', () => {
+            const instance = positionObserver.instance();
+            instance.timers.push({
+                name: 'test',
+                id: 1
+            });
+            expect(instance.timers.length).to.equal(1);
+
+            instance.clearTimers();
+
+            expect(instance.timers.length).to.equal(0);
+        });
+
+        it('calls clearTimeout for each collection item', () => {
+            sinon.spy(global, 'clearTimeout');
+            const instance = positionObserver.instance();
+            instance.timers.push(
+                {
+                    name: 'test',
+                    id: 1
+                },
+                {
+                    name: 'test-two',
+                    id: 2
+                }
+            );
+
+            instance.clearTimers();
+
+            expect(global.clearTimeout.callCount).to.equal(2);
+            expect(global.clearTimeout.getCall(0).args[0]).to.equal(2);
+            expect(global.clearTimeout.getCall(1).args[0]).to.equal(1);
+            global.clearTimeout.restore();
+        });
+    });
+
+    describe('clearTimer', () => {
+        it('calls clearTimeout for items in the collection with a matching name', () => {
+            sinon.spy(global, 'clearTimeout');
+            const instance = positionObserver.instance();
+            instance.timers.push(
+                {
+                    name: 'test',
+                    id: 1
+                },
+                {
+                    name: 'test-two',
+                    id: 2
+                }
+            );
+
+            instance.clearTimer('test');
+
+            expect(global.clearTimeout.callCount).to.equal(1);
+            expect(global.clearTimeout.getCall(0).args[0]).to.equal(1);
+            global.clearTimeout.restore();
+        });
     });
 
     function getMountedComponentTree(props = {}) {
-        return mount(
+        const mountedWrapper = mount(
             <ReactCursorPosition { ...props }>
                 <GenericSpanComponent />
                 <hr />
             </ReactCursorPosition>
         );
+        const { el } = mountedWrapper.instance();
+
+        el.getBoundingClientRect = () => {
+            return {
+                top: 0,
+                right: 4,
+                bottom: 4,
+                left: 0,
+                width: 4,
+                height: 4
+            }
+        }
+
+        return mountedWrapper;
     }
 
     function getTouchEvent({pageX = 1, pageY = 2} = {}) {
@@ -646,5 +796,11 @@ describe('ReactCursorPosition', () => {
             pageX,
             pageY
         };
+    }
+
+    // Mouse activation is scheduled as par of support for hoverintent.
+    // deferToHoverIntent provides the expected order of operations.
+    function deferToHoverIntent(func) {
+        setTimeout(func, 0);
     }
 });

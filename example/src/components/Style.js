@@ -1,12 +1,13 @@
 import React from 'react';
-import ReactCursorPosition from '../../../dist/ReactCursorPosition';
+import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
     render() {
         const style = {
-            height: '350px',
+            height: '250px',
+            paddingTop: '10px',
             position: 'relative',
             border: '1px solid #ccc',
             borderRadius: '4px',

@@ -11,7 +11,7 @@ import ActivationChanged from '../components/ActivationChanged';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 export default class extends Component {
     render() {
@@ -62,7 +62,7 @@ export default class extends Component {
                             className="example__source-container"
                             style={{height: '490px' }}
                         >
-                            <iframe
+                            <iframe title="example"
                                 src="on-activation-changed.html"
                                 frameBorder="0"
                                 className="code-frame"

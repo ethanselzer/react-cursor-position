@@ -20,11 +20,6 @@ See the [react-cursor-position demo site](https://ethanselzer.github.io/react-cu
 
 Experiment with react-cursor-position [live on CodePen](http://codepen.io/ethanselzer/pen/ryayLK).
 
-## Related Project
-
-For hover monitoring, please consider [react-hover-observer](https://www.npmjs.com/package/react-hover-observer).
-It has a similar interface to react-cursor-position, and can be used in combination with it.
-
 ## Installation
 
 ```sh
@@ -45,13 +40,17 @@ import ReactCursorPosition from 'react-cursor-position';
 </ReactCursorPosition>
 ```
 
-react-cursor-position wraps its children in a div, which cursor and touch position
+react-cursor-position wraps its children in a div, which mouse and touch position
 are plotted relative to.
 
 Each child component will receive the following props:
 
 ```JavaScript
 {
+    detectedEnvironment: {
+        isMouseDetected: false,
+        isTouchDetected: false,
+    },
     elementDimensions: {
         width: Number,
         height: Number
@@ -66,19 +65,20 @@ Each child component will receive the following props:
 ```
 This structure may be customized by implementing `mapChildProps` API feature.
 
+The information in `detectedEnvironment` is acquired from interaction with this component and will be unset until the first interaction.
+
 ## Props API
 
 All props are optional.
 
 **className** : String - CSS class name(s) to be applied to the div rendered by react-cursor-position.
 
-**style** : Object - Style to be applied to the div rendered by react-cursor-position.
+**hoverDelayInMs** : Number - Amount of time, in milliseconds, to delay hover interaction from activating. Defaults to 0.
 
-**onActivationChanged** : Function - Called when the component is active.
-Function receives one parameter with the signature `{ isActive: Boolean }`.
+**hoverOffDelayInMs** : Number - Amount of time, in milliseconds, to delay hover off interaciton from deactivating. Defaults to 0.
 
-**onPositionChanged** : Function - Called when cursor or touch position changes.
-Function receives one parameter with the signature `{ elementDimensions: { width: Number, height: Number }, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
+**isActivatedOnTouch** : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
+gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
 
 **mapChildProps** : Function - Model child component props to your custom shape.
 Function receives one parameter with the signature
@@ -86,15 +86,23 @@ Function receives one parameter with the signature
 It should return an object that is compatible with the props interface of your child components.
 See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
 
-**shouldDecorateChildren** : Boolean - Suppress decoration of child components by
-setting this prop false. Defaults to true.
+**onActivationChanged** : Function - Called when the component is active.
+Function receives one parameter with the signature `{ isActive: Boolean }`.
 
-**isActivatedOnTouch** : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
-gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
+**onPositionChanged** : Function - Called when cursor or touch position changes.
+Function receives one parameter with the signature `{ elementDimensions: { width: Number, height: Number }, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.
+
+**onDetectedEnvironmentChanged** : Function - Called when detected environment (mouse or touch) changes.
+Function receives one parameter with the signature `{ isMouseDetected: Boolean, isTouchDetected: Boolean }`.
 
 **pressDuration** : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
 
 **pressMoveThreshold** : Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
+
+**shouldDecorateChildren** : Boolean - Suppress decoration of child components by
+setting this prop false. Defaults to true.
+
+**style** : Object - Style to be applied to the div rendered by react-cursor-position.
 
 See API Examples section of the [demo site](https://ethanselzer.github.io/react-cursor-position/#/) for more.
 

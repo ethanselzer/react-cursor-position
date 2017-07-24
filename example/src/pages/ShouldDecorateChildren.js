@@ -11,7 +11,7 @@ import ShouldDecorateChildren from '../components/ShouldDecorateChildren';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 class  ShouldDecorateChildrenPage extends Component {
     render() {
@@ -63,7 +63,7 @@ class  ShouldDecorateChildrenPage extends Component {
                             className="example__source-container"
                             style={{ height: '570px' }}
                         >
-                            <iframe
+                            <iframe title="example"
                                 src="should-decorate-children.html"
                                 frameBorder="0"
                                 className="code-frame"

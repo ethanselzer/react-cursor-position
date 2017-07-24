@@ -2,6 +2,10 @@ import React from 'react';
 
 const PositionLabel = (props) => {
     const {
+        detectedEnvironment: {
+            isMouseDetected = false,
+            isTouchDetected = false
+        } = {},
         elementDimensions: {
             width = 0,
             height = 0
@@ -19,9 +23,11 @@ const PositionLabel = (props) => {
             {`x: ${x}`}<br />
             {`y: ${y}`}<br />
             {props.shouldShowIsActive && [`isActive: ${isActive}`, <br key="line-break"/>]}
-            {`Element Width: ${width}`}<br />
-            {`Element Height: ${height}`}<br />
-            {`isOutside: ${isPositionOutside ? 'true' : 'false'}`}
+            {`width: ${width}`}<br />
+            {`height: ${height}`}<br />
+            {`isPositionOutside: ${isPositionOutside ? 'true' : 'false'}`}<br />
+            {`isMouseDetected: ${isMouseDetected ? 'true' : 'false'}`}<br />
+            {`isTouchDetected: ${isTouchDetected ? 'true' : 'false'}`}
         </div>
     );
 };

@@ -11,7 +11,7 @@ import Header from '../components/Header';
 import PressMoveThreshold from '../components/PressMoveThreshold';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 export default class extends Component {
     render() {
@@ -59,7 +59,7 @@ export default class extends Component {
                             className="example__source-container"
                             style={{ height: '270px' }}
                         >
-                            <iframe
+                            <iframe title="example"
                                 src="press-move-threshold.html"
                                 frameBorder="0"
                                 className="code-frame"

@@ -5,7 +5,7 @@ import Header from '../components/Header';
 import BasicExample from '../components/BasicExample';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 import {
     Clearfix,
@@ -40,8 +40,10 @@ class App extends Component {
                             <Panel header="Props API Examples" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
                                     <NavItem href="#/class-name">Class Name</NavItem>
+                                    <NavItem href="#/hover-delay">Hover Delay</NavItem>
                                     <NavItem href="#/is-activated-on-touch">Is Activated On Touch</NavItem>
                                     <NavItem href="#/map-child-props">Map Child Props</NavItem>
+                                    <NavItem href="#/detected-environment-changed">Detected Environment Changed</NavItem>
                                     <NavItem href="#/on-position-changed">On Position Changed</NavItem>
                                     <NavItem href="#/on-activation-changed">On Activation Changed</NavItem>
                                     <NavItem href="#/press-duration">Press Duration</NavItem>

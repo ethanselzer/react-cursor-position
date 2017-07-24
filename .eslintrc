@@ -8,16 +8,16 @@
     "rules": {
         "no-unused-expressions": 0,
         "chai-friendly/no-unused-expressions": 2,
-        "import/default": "warn",
-        "import/export": "warn",
-        "import/named": "warn",
-        "import/namespace": "warn",
-        "import/no-amd": "warn",
-        "import/no-duplicates": "warn",
-        "import/no-extraneous-dependencies": "warn",
-        "import/no-named-as-default": "warn",
-        "import/no-named-as-default-member": "warn",
-        "import/no-unresolved": ["warn", { "commonjs": true }],
+        "import/default": "error",
+        "import/export": "error",
+        "import/named": "error",
+        "import/namespace": "error",
+        "import/no-amd": "error",
+        "import/no-duplicates": "error",
+        "import/no-extraneous-dependencies": "error",
+        "import/no-named-as-default": "error",
+        "import/no-named-as-default-member": "error",
+        "import/no-unresolved": ["error", { "commonjs": true }],
         "indent": ["error", 4]
     }
 }

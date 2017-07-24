@@ -10,10 +10,10 @@ import { ReactImageMagnify } from 'react-image-magnify';
 
 import Header from '../components/Header';
 
-import watchImg from '../../images/large-a.jpg';
+import watchImg from '../images/large-a.jpg';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 class  ImageMagnify extends Component {
     render() {

@@ -7,7 +7,7 @@ import {
 } from 'react-bootstrap';
 import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import solarized from 'react-syntax-highlighter/dist/styles/solarized-light';
-import css from 'highlight.js/lib/languages/css';
+import css from 'react-syntax-highlighter/dist/languages/css';
 import Helmet from 'react-helmet';
 
 import ClassName from '../components/ClassName';
@@ -15,7 +15,7 @@ import Header from '../components/Header';
 import cssString from '../code-examples/class-name-css';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 registerLanguage('css', css);
 
@@ -65,7 +65,7 @@ class  CatalogPage extends Component {
                             className="example__source-container"
                             style={{ height: '225px' }}
                         >
-                            <iframe
+                            <iframe title="example"
                                 src="class-name.html"
                                 frameBorder="0"
                                 className="code-frame"

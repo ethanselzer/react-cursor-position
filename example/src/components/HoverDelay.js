@@ -6,7 +6,8 @@ import InstructionsLabel from './InstructionsLabel';
 export default () => (
     <ReactCursorPosition
         className="example__target"
-        pressDuration={1000}
+        hoverDelayInMs={1000}
+        hoverOffDelayInMs={500}
     >
         <PositionLabel />
         <div className="example__instructions">

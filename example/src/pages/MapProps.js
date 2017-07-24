@@ -11,7 +11,7 @@ import MapProps from '../components/MapProps';
 import Header from '../components/Header';
 
 import 'bootstrap/dist/css/bootstrap.css';
-import '../../styles/app.css';
+import '../styles/app.css';
 
 class  MapChildPropsPage extends Component {
     render() {
@@ -57,7 +57,7 @@ class  MapChildPropsPage extends Component {
                             className="example__source-container"
                             style={{ height: '360px' }}
                         >
-                            <iframe
+                            <iframe title="example"
                                 src="map-child-props.html"
                                 frameBorder="0"
                                 className="code-frame"

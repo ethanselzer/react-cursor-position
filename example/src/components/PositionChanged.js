@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCursorPosition from '../../../dist/ReactCursorPosition';
+import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
 import InstructionsLabel from './InstructionsLabel';
 import PositionLabel from './PositionLabel';
 
@@ -26,7 +26,7 @@ export default class extends React.Component {
                     className: 'example__target',
                     onPositionChanged: props => this.setState(props)
                 }}>
-                    <InstructionsLabel className="example__instructions--center" />
+                    <InstructionsLabel className="example__instructions example__instructions--solo" />
                 </ReactCursorPosition>
                 <PositionLabel
                     {...this.state}

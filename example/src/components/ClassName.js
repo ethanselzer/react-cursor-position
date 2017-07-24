@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactCursorPosition from '../../../dist/ReactCursorPosition';
+import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 

@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
-import ActivationChangedLabel from './ActivationChangedLabel';
+import DetectedEnvironmentChangedLabel from './DetectedEnvironmentChangedLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default class extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isActive: false
+            detectedEnvironment: {}
         };
     }
 
@@ -16,13 +16,13 @@ export default class extends React.Component {
             <div className="example">
                 <ReactCursorPosition  {...{
                     className: 'example__target',
-                    onActivationChanged: ({ isActive }) => {
-                        this.setState({ isActive });
+                    onDetectedEnvironmentChanged: (detectedEnvironment) => {
+                        this.setState({ detectedEnvironment });
                     }
                 }}>
                     <InstructionsLabel className="example__instructions example__instructions--solo"/>
                 </ReactCursorPosition>
-                <ActivationChangedLabel {...this.state} />
+                <DetectedEnvironmentChangedLabel {...this.state} />
             </div>
         );
     }

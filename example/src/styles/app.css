@@ -35,7 +35,6 @@ li.active a {
 }
 
 .example__target {
-    height: 200px;
     padding: 10px;
     position: relative;
     border: 1px solid #ccc;
@@ -45,7 +44,6 @@ li.active a {
 }
 
 .example__target.example__target--basic {
-    height: 207px;
     border-color: transparent;
 }
 
@@ -54,20 +52,12 @@ li.active a {
 }
 
 .example__instructions {
-    height: 20px;
-    width: 100%;
-    position: absolute;
-    top: 70%;
-    left: 0;
+    margin-top: 10px;
     color: #337ab7;
 }
 
-.example__instructions--center {
-    top: calc(50% - 10px);
-}
-
-.example__instructions--low {
-    top: 70% !important;
+.example__instructions--solo {
+    margin-bottom: 10px;
 }
 
 .example__source-container {
@@ -104,13 +94,6 @@ li.active a {
 @media (min-width: 768px) {
     .jumbotron {
         margin-top: 51px;
-    }
-    .example__target {
-        height: 350px;
-    }
-
-    .example__instructions {
-        top: calc(50% - 10px);
     }
 
     .example__source-container {
