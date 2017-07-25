@@ -77,7 +77,7 @@ class Navigation extends React.Component {
                             <MenuItem eventKey={2.11} href="#/hover-delay">Hover Delay</MenuItem>
                             <MenuItem eventKey={2.6} href="#/is-activated-on-touch">Is Activated On Touch</MenuItem>
                             <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
-                            <MenuItem eventKey={2.12} href="#/detected-environment-changed">On Detected Environment Changed</MenuItem>
+                            <MenuItem eventKey={2.12} href="#/detected-environment-changed">On Environment Changed</MenuItem>
                             <MenuItem eventKey={2.2} href="#/on-position-changed">On Position Changed</MenuItem>
                             <MenuItem eventKey={2.9} href="#/on-activation-changed">On Activation Changed</MenuItem>
                             <MenuItem eventKey={2.7} href="#/press-duration">Press Duration</MenuItem>

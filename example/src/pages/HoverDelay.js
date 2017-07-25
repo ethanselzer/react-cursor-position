@@ -44,7 +44,7 @@ export default class extends Component {
                                     <li>Type: Number</li>
                                     <li>Default: 0</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/hoverDelayInMs.js">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/HoverDelay.js">
                                             Example Code
                                         </a>
                                     </li>
