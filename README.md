@@ -148,6 +148,7 @@ Thanks to the following community members for opening GitHub Issues and Pull Req
 * @JunyuanZheng
 * @chrisdrackett
 * @AlexMeah
+* @bdefore
 
 You are awesome! ✨💫
 
