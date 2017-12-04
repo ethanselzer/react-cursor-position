@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Col,
-  Grid,
-  Jumbotron,
-  Row
+    Col,
+    Grid,
+    Jumbotron,
+    Row
 } from 'react-bootstrap';
 import SyntaxHighlighter, { registerLanguage } from 'react-syntax-highlighter/dist/light';
 import solarized from 'react-syntax-highlighter/dist/styles/solarized-light';

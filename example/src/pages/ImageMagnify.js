@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {
-  Col,
-  Grid,
-  Jumbotron,
-  Row
+    Col,
+    Grid,
+    Jumbotron,
+    Row
 } from 'react-bootstrap';
 import Helmet from 'react-helmet';
 import { ReactImageMagnify } from 'react-image-magnify';
