@@ -149,7 +149,7 @@ Thanks to the following community members for opening GitHub Issues and Pull Req
 * @pr0digy
 * @JunyuanZheng
 * @chrisdrackett
-* damien916  
+* @damien916  
 * @AlexMeah
 * @bdefore  
 * @webdobe  

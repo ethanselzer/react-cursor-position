@@ -11,6 +11,7 @@
     "prop-types": "^15.6.0",
     "react": "16.0.0",
     "react-bootstrap": "^0.31.3",
+    "react-cursor-position": "2.3.0",
     "react-dom": "16.0.0",
     "react-helmet": "^5.2.0",
     "react-image-magnify": "^2.0.4",
