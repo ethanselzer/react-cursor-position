@@ -52,6 +52,7 @@ export default class extends React.Component {
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
         isActivatedOnTouch: PropTypes.bool,
+        isEnabled: PropTypes.bool,
         mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
         onPositionChanged: PropTypes.func,
@@ -64,6 +65,7 @@ export default class extends React.Component {
 
     static defaultProps = {
         isActivatedOnTouch: false,
+        isEnabled: true,
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
         mapChildProps: props => props,
@@ -158,11 +160,36 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
-        this.addEventListeners();
+        if (this.props.isEnabled) {
+            this.enable();
+        }
+    }
+
+    componentWillReceiveProps({ isEnabled: willBeEnabled }) {
+        const { isEnabled } = this.props;
+        const isEnabledWillChange = isEnabled !== willBeEnabled;
+
+        if (!isEnabledWillChange) {
+            return;
+        }
+
+        if (willBeEnabled) {
+            this.enable();
+        } else {
+            this.disable();
+        }
     }
 
     componentWillUnmount() {
         this.clearTimers();
+        this.disable();
+    }
+
+    enable() {
+        this.addEventListeners();
+    }
+
+    disable() {
         this.removeEventListeners();
     }
 
@@ -389,7 +416,10 @@ export default class extends React.Component {
             addEventListener(this.el, 'touchstart', this.onTouchStart, { passive: false }),
             addEventListener(this.el, 'touchmove', this.onTouchMove, { passive: false }),
             addEventListener(this.el, 'touchend', this.onTouchEnd),
-            addEventListener(this.el, 'touchcancel', this.onTouchCancel)
+            addEventListener(this.el, 'touchcancel', this.onTouchCancel),
+            addEventListener(this.el, 'mouseenter', this.onMouseEnter),
+            addEventListener(this.el, 'mousemove', this.onMouseMove),
+            addEventListener(this.el, 'mouseleave', this.onMouseLeave)
         );
     }
 
@@ -415,9 +445,6 @@ export default class extends React.Component {
         return (
             <div { ...{
                 className,
-                onMouseEnter: this.onMouseEnter,
-                onMouseMove: this.onMouseMove,
-                onMouseLeave: this.onMouseLeave,
                 ref: (el) => this.el = el,
                 style: objectAssign({}, style, {
                     WebkitUserSelect: 'none'

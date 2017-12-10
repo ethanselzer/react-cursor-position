@@ -10,6 +10,7 @@ import * as utils from '../src/utils/addEventListener';
 describe('ReactCursorPosition', () => {
     let positionObserver = shallow(<ReactCursorPosition />, {disableLifecycleMethods: true});
     const touchEvent = getTouchEvent();
+    const mouseEvent = getMouseEvent();
 
     beforeEach(() => {
         positionObserver = shallow(<ReactCursorPosition/>, {disableLifecycleMethods: true});
@@ -44,11 +45,12 @@ describe('ReactCursorPosition', () => {
 
     it('has correct default props', () => {
         const defaults = positionObserver.instance().constructor.defaultProps;
-        expect(defaults.isActivatedOnTouch).to.equal(false);
+        expect(defaults.isActivatedOnTouch).to.be.false;
+        expect(defaults.isEnabled).to.be.true;
         expect(defaults.mapChildProps).to.be.a('function');
         expect(defaults.pressDuration).to.equal(500);
         expect(defaults.pressMoveThreshold).to.equal(5);
-        expect(defaults.shouldDecorateChildren).to.equal(true);
+        expect(defaults.shouldDecorateChildren).to.be.true;
         expect(defaults.onActivationChanged).to.be.a('function');
         expect(defaults.onPositionChanged).to.be.a('function');
         expect(defaults.onDetectedEnvironmentChanged).to.be.a('function');
@@ -85,9 +87,6 @@ describe('ReactCursorPosition', () => {
     it('decorates child components with props in the mouse environment', (done) => {
         const mountedTree = getMountedComponentTree();
         mountedTree.instance().onMouseEnter(getMouseEvent());
-        const el = mountedTree.find('div');
-
-        el.simulate('mouseMove', getMouseEvent());
 
         defer(() => {
             mountedTree.update();
@@ -114,21 +113,11 @@ describe('ReactCursorPosition', () => {
 
     it('does not decorate child DOM nodes with props', () => {
         const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
-        const childComponent = renderedTree.find('hr');
+        const childDomNode = renderedTree.find('hr');
 
         renderedTree.instance().onTouchStart(touchEvent);
 
-        expect(childComponent.props()).to.be.empty;
-
-        const el = renderedTree.find('div');
-        el.simulate('mouseEnter');
-
-        el.simulate('mouseMove', {
-            pageX: 1,
-            pageY: 2
-        });
-
-        expect(childComponent.props()).to.be.empty;
+        expect(childDomNode.props()).to.be.empty;
     });
 
     it('does not pass own-props to child components', () => {
@@ -145,6 +134,17 @@ describe('ReactCursorPosition', () => {
         expect(childComponent.props().foo).to.equal('foo');
     });
 
+    it('guards against mouse emulation for touch input', () => {
+        const positionObserver = getMountedComponentTree();
+        const instance = positionObserver.instance();
+        sinon.spy(instance, 'init');
+        instance.onTouchStart(touchEvent);
+
+        instance.onMouseEnter(mouseEvent);
+
+        expect(instance.init.calledOnce).to.be.true;
+    });
+
     it('calls clearTimers on componentWillUnmount', () => {
         const instance = positionObserver.instance();
         sinon.spy(instance, 'clearTimers');
@@ -154,11 +154,11 @@ describe('ReactCursorPosition', () => {
         expect(instance.clearTimers.calledOnce).to.be.true;
     });
 
-    describe('Add Touch Event Listeners', () => {
+    describe('Add Touch and Mouse Event Listeners', () => {
         it('fills touch event listeners collection', () => {
             positionObserver = getMountedComponentTree();
 
-            expect(positionObserver.instance().eventListeners.length).to.equal(4);
+            expect(positionObserver.instance().eventListeners.length).to.equal(7);
         });
 
         it('binds touchstart and touchmove with `passive` option unset', () => {
@@ -180,7 +180,7 @@ describe('ReactCursorPosition', () => {
         });
     });
 
-    describe('Remove Touch Event Listeners', () => {
+    describe('Remove Touch and Mouse Event Listeners', () => {
         it('drains touch event listeners collection', () => {
             const instance = positionObserver.instance();
             const removeEventListener = sinon.spy();
@@ -202,7 +202,7 @@ describe('ReactCursorPosition', () => {
             expect(instance.removeEventListeners.calledOnce).to.be.true;
         });
 
-        it('calls removeEventListener on each item in touch event listeners collection', () => {
+        it('calls removeEventListener on each item in the event listeners collection', () => {
             const instance = positionObserver.instance();
             const removeEventListener = sinon.spy();
             const eventListener = { removeEventListener };
@@ -309,9 +309,9 @@ describe('ReactCursorPosition', () => {
                     const childComponent = renderedTree.find(GenericSpanComponent);
                     expect(childComponent.props().isActive).to.be.false;
 
-                    const el = renderedTree.find('div');
-                    el.simulate('mouseEnter', getMouseEvent());
-                    el.simulate('mouseMove', getMouseEvent());
+                    const instance = renderedTree.instance();
+                    instance.onMouseEnter(mouseEvent);
+                    instance.onMouseMove(mouseEvent);
 
                     defer(() => {
                         renderedTree.update();
@@ -323,15 +323,15 @@ describe('ReactCursorPosition', () => {
 
                 it('unsets isActive', (done) => {
                     const renderedTree = getMountedComponentTree({ hoverDelayInMs: 0 });
-                    const el = renderedTree.find('div');
-                    el.simulate('mouseEnter', getMouseEvent());
-                    el.simulate('mouseMove', getMouseEvent())
+                    const instance = renderedTree.instance();
+                    instance.onMouseEnter(mouseEvent);
+                    instance.onMouseMove(mouseEvent);
                     defer(() => {
                         renderedTree.update();
                         const childComponent = renderedTree.find(GenericSpanComponent);
                         expect(childComponent.props().isActive).to.be.true;
 
-                        el.simulate('mouseLeave', getMouseEvent());
+                        instance.onMouseLeave(mouseEvent);
 
                         defer(() => {
                             renderedTree.update();
@@ -386,10 +386,10 @@ describe('ReactCursorPosition', () => {
                             height: '2px'
                         }
                     });
-                    const el = renderedTree.find('div');
+                    const instance = renderedTree.instance();
 
-                    el.simulate('mouseEnter', getMouseEvent());
-                    el.simulate('mouseMove', getMouseEvent({
+                    instance.onMouseEnter(mouseEvent);
+                    instance.onMouseMove(getMouseEvent({
                         pageX: 1,
                         pageY: 1
                     }));
@@ -425,10 +425,10 @@ describe('ReactCursorPosition', () => {
                             height: '2px'
                         }
                     });
-                    const el = renderedTree.find('div');
+                    const instance = renderedTree.instance();
 
-                    el.simulate('mouseEnter', getMouseEvent());
-                    el.simulate('mouseMove', getMouseEvent({
+                    instance.onMouseEnter(mouseEvent);
+                    instance.onMouseMove(getMouseEvent({
                         pageX: 5,
                         pageY: 4
                     }));
@@ -478,14 +478,15 @@ describe('ReactCursorPosition', () => {
             describe('Mouse Environment', () => {
                 it('decorates child components with position prop', () => {
                     const renderedTree = getMountedComponentTree();
-                    const el = renderedTree.find('div');
-                    el.simulate('mouseEnter', getMouseEvent());
+                    const instance = renderedTree.instance();
+                    instance.onMouseEnter(mouseEvent);
 
-                    el.simulate('mouseMove', getMouseEvent({
+                    instance.onMouseMove(getMouseEvent({
                         pageX: 1,
                         pageY: 2
                     }));
 
+                    renderedTree.update();
                     const childComponent = renderedTree.find(GenericSpanComponent);
                     expect(childComponent.props().position).to.deep.equal({
                         x: 1,
@@ -726,7 +727,53 @@ describe('ReactCursorPosition', () => {
                     expect(spy.calledOnce).to.be.true;
                 });
             });
-        })
+        });
+
+        describe('Support for isEnabled', () => {
+            it('is enabled by default', () => {
+                const { isEnabled } = ReactCursorPosition.defaultProps;
+                expect( isEnabled ).to.be.true;
+            });
+
+            it('does not call enable if aleady enabled', () => {
+                const positionObserver = getMountedComponentTree({ isEnabled: true });
+                const instance = positionObserver.instance();
+                sinon.spy(instance, 'enable');
+
+                positionObserver.setProps({ isEnabled: true })
+
+                expect(instance.enable.called).to.be.false;
+            });
+
+            it('can be disabled', () => {
+                const positionObserver = getMountedComponentTree({ isEnabled: false });
+                const instance = positionObserver.instance();
+                sinon.spy(instance, 'enable');
+
+                instance.componentDidMount();
+
+                expect(instance.enable.called).to.be.false;
+            });
+
+            it('can be disabled without remounting', () => {
+                const instance = positionObserver.instance();
+                sinon.spy(instance, 'disable');
+
+                positionObserver.setProps({ isEnabled: false });
+
+                expect(instance.disable.calledOnce).to.be.true;
+            });
+
+            it('can be enabled without remounting', () => {
+                const positionObserver = getMountedComponentTree({ isEnabled: false });
+                const instance = positionObserver.instance();
+                sinon.spy(instance, 'enable');
+
+                positionObserver.setProps({ isEnabled: true });
+
+                expect(instance.enable.calledOnce).to.be.true;
+            });
+        });
     });
 
     describe('clearTimers', () => {

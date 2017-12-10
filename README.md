@@ -80,6 +80,8 @@ All props are optional.
 **isActivatedOnTouch** : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
 gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
 
+**isEnabled** : Boolean - Enable or disable cursor position monitoring without remounting. Defaults to true.
+
 **mapChildProps** : Function - Model child component props to your custom shape.
 Function receives one parameter with the signature
 `{ isActive: Boolean, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.  
@@ -147,10 +149,12 @@ Thanks to the following community members for opening GitHub Issues and Pull Req
 * @pr0digy
 * @JunyuanZheng
 * @chrisdrackett
+* damien916  
 * @AlexMeah
 * @bdefore  
 * @webdobe  
-* @renchap
+* @renchap  
+* @Slapbox  
 
 You are awesome! ✨💫
 
