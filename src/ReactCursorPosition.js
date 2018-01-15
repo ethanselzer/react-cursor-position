@@ -160,6 +160,7 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
+        this.init();
         if (this.props.isEnabled) {
             this.enable();
         }
