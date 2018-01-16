@@ -5,8 +5,6 @@ In the mouse environment it supports scroll position changes during a hover sess
 
 react-cursor-position re-renders child components with new position props when the cursor or touch position changes.
 
-It is safe for server rendering and single page applications.
-
 ## Status
 
 [![CircleCI](https://img.shields.io/circleci/project/github/ethanselzer/react-cursor-position.svg)](https://circleci.com/gh/ethanselzer/react-cursor-position)
@@ -103,6 +101,8 @@ Function receives one parameter with the signature `{ isMouseDetected: Boolean, 
 
 **shouldDecorateChildren** : Boolean - Suppress decoration of child components by
 setting this prop false. Defaults to true.
+
+**shouldStopTouchMovePropagation** : Boolean - Stop touchmove event bubbling when react-cursor-position is active. Defaults to false.
 
 **style** : Object - Style to be applied to the div rendered by react-cursor-position.
 

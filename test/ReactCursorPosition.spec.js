@@ -154,6 +154,18 @@ describe('ReactCursorPosition', () => {
         expect(instance.clearTimers.calledOnce).to.be.true;
     });
 
+    it('prevents default on touch move, when activated', () => {
+        const tree = getMountedComponentTree({ isActivatedOnTouch: true });
+        const touchEvent = getTouchEvent();
+        sinon.spy(touchEvent, 'preventDefault');
+
+        tree.instance().onTouchStart(touchEvent);
+        tree.instance().onTouchMove(touchEvent);
+        tree.update();
+
+        expect(touchEvent.preventDefault.called).to.be.true;
+    });
+
     describe('Add Touch and Mouse Event Listeners', () => {
         it('fills touch event listeners collection', () => {
             positionObserver = getMountedComponentTree();
@@ -643,6 +655,35 @@ describe('ReactCursorPosition', () => {
             expect(childComponent.props()).to.be.empty;
         });
 
+        describe('support for shouldStopTouchMovePropagation', () => {
+            it('is unset by default', () => {
+                const tree = getMountedComponentTree({ isActivatedOnTouch: true });
+                const touchEvent = getTouchEvent();
+                sinon.spy(touchEvent, 'stopPropagation');
+
+                tree.instance().onTouchStart(touchEvent);
+                tree.instance().onTouchMove(touchEvent);
+                tree.update();
+
+                expect(touchEvent.stopPropagation.called).to.be.false;
+            });
+
+            it('can be set', () => {
+                const tree = getMountedComponentTree({
+                    isActivatedOnTouch: true,
+                    shouldStopTouchMovePropagation: true
+                });
+                const touchEvent = getTouchEvent();
+                sinon.spy(touchEvent, 'stopPropagation');
+
+                tree.instance().onTouchStart(touchEvent);
+                tree.instance().onTouchMove(touchEvent);
+                tree.update();
+
+                expect(touchEvent.stopPropagation.called).to.be.true;
+            });
+        })
+
         describe('Support for pressDuration', (done) => {
             it('sets isActive if pressThreshold is not exceeded for duration', () => {
                 const clock = sinon.useFakeTimers();
@@ -874,6 +915,7 @@ describe('ReactCursorPosition', () => {
                 }
             },
             preventDefault: () => {},
+            stopPropagation: () => {},
             touches: [{
                 pageX,
                 pageY

@@ -60,6 +60,7 @@ export default class extends React.Component {
         pressDuration: PropTypes.number,
         pressMoveThreshold: PropTypes.number,
         shouldDecorateChildren: PropTypes.bool,
+        shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object
     };
 
@@ -74,7 +75,8 @@ export default class extends React.Component {
         onDetectedEnvironmentChanged: noop,
         pressDuration: 500,
         pressMoveThreshold: 5,
-        shouldDecorateChildren: true
+        shouldDecorateChildren: true,
+        shouldStopTouchMovePropagation: false
     };
 
     onTouchStart(e) {
@@ -105,6 +107,10 @@ export default class extends React.Component {
 
         this.setPositionState(position);
         e.preventDefault();
+
+        if (this.props.shouldStopTouchMovePropagation) {
+            e.stopPropagation();
+        }
     }
 
     onTouchEnd() {
