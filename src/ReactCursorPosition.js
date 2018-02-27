@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import objectAssign from 'object-assign';
 import omit from 'object.omit';
 import addEventListener from './utils/addEventListener';
-import * as constants from 'constants';
+import * as constants from './constants';
 import noop from './utils/noop';
 
 export default class extends React.Component {

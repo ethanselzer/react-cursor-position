@@ -155,6 +155,9 @@ Thanks to the following community members for opening GitHub Issues and Pull Req
 * @webdobe  
 * @renchap  
 * @Slapbox  
+* @heyellieday
+* @Secretmapper  
+* @tekbreak  
 
 You are awesome! ✨💫
 
