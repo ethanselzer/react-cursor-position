@@ -1,6 +1,6 @@
 {
   "name": "react-cursor-position",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "A React component that decorates its children with touch and mouse cursor coordinates, plotted relative to itself.",
   "repository": {
     "type": "git",
