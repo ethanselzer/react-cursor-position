@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "homepage": "http://ethanselzer.github.io/react-cursor-position",
   "devDependencies": {
-    "react-scripts": "^1.0.14"
+    "react-scripts": "1.1.4"
   },
   "dependencies": {
     "bootstrap": "^3.3.7",

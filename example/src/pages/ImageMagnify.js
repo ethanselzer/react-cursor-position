@@ -6,7 +6,7 @@ import {
     Row
 } from 'react-bootstrap';
 import Helmet from 'react-helmet';
-import { ReactImageMagnify } from 'react-image-magnify';
+import ReactImageMagnify from 'react-image-magnify';
 
 import Header from '../components/Header';
 

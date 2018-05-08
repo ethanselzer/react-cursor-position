@@ -2,6 +2,7 @@ import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import objectAssign from 'object-assign';
 import omit from 'object.omit';
+import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
 import * as constants from './constants';
 import noop from './utils/noop';
@@ -80,11 +81,11 @@ export default class extends React.Component {
     };
 
     onTouchStart(e) {
-        const position = this.getDocumentRelativePosition(this.getTouchEvent(e));
-
         this.init();
         this.onTouchDetected();
         this.setShouldGuardAgainstMouseEmulationByDevices();
+
+        const position = this.core.getCursorPosition(this.getTouchEvent(e));
         this.setPositionState(position);
 
         if (this.props.isActivatedOnTouch) {
@@ -98,7 +99,7 @@ export default class extends React.Component {
     }
 
     onTouchMove(e) {
-        const position = this.getDocumentRelativePosition(this.getTouchEvent(e));
+        const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
         if (!this.state.isActive) {
             this.setPressEventCriteria(position);
@@ -130,13 +131,13 @@ export default class extends React.Component {
 
         this.init();
         this.onMouseDetected();
-        this.setPositionState(this.getDocumentRelativePosition(e));
+        this.setPositionState(this.core.getCursorPosition(e));
         this.clearActivationTimers();
         this.schedulActivation(this.props.hoverDelayInMs);
     }
 
     onMouseMove(e) {
-        this.setPositionState(this.getDocumentRelativePosition(e));
+        this.setPositionState(this.core.getCursorPosition(e));
     }
 
     onMouseLeave() {
@@ -163,6 +164,11 @@ export default class extends React.Component {
 
         this.setState({ detectedEnvironment: environment });
         this.props.onDetectedEnvironmentChanged(environment);
+    }
+
+    onPositionChanged = () => {
+        const { onPositionChanged } = this.props;
+        onPositionChanged(this.state);
     }
 
     componentDidMount() {
@@ -200,9 +206,11 @@ export default class extends React.Component {
     }
 
     init() {
-        const { x, y, w, h } = this.getDocumentRelativeElementOffset(this.el);
-        this.elementOffset = { x, y };
-        this.setElementDimensionsState({ width: w, height: h });
+        this.core = new Core(this.el);
+
+        this.setElementDimensionsState(
+            this.getElementDimensions(this.el)
+        );
     }
 
     activate() {
@@ -226,15 +234,15 @@ export default class extends React.Component {
     }
 
     setPositionState(position) {
-        const offsetPosition = this.getOffsetPosition(position);
         const isPositionOutside = this.getIsPositionOutside(position);
 
-        this.setState({
-            isPositionOutside,
-            position: offsetPosition
-        }, () => {
-            this.triggerOnPositionChanged();
-        });
+        this.setState(
+            {
+                isPositionOutside,
+                position
+            },
+            this.onPositionChanged
+        );
     }
 
     setElementDimensionsState(dimensions) {
@@ -325,74 +333,39 @@ export default class extends React.Component {
         });
     }
 
-    getIsPositionOutside(position) {
-        const { x, y } = position;
-        const { x: elx, y: ely } = this.elementOffset;
-        const { width: elw, height: elh } = this.state.elementDimensions;
-
-        return (
-            x < elx ||
-            x > elx + elw ||
-            y < ely ||
-            y > ely + elh
-        );
-    }
-
-    getOffsetPosition(position) {
-        const { x: cursorX, y: cursorY } = position;
-        const { x: offsetX, y: offsetY } = this.elementOffset;
-
-        return {
-            x: cursorX - offsetX,
-            y: cursorY - offsetY
-        };
-    }
-
-    getDocumentRelativeElementOffset(el) {
-        const rootEl = this.getRootOfEl(el);
+    getElementDimensions(el) {
         const {
-            left: docLeft,
-            top: docTop
-        } = rootEl.getBoundingClientRect();
-
-        const {
-            left: elLeft,
-            top: elTop,
-            width: w,
-            height: h
+            width,
+            height
         } = el.getBoundingClientRect();
 
         return {
-            x: Math.abs(docLeft) + elLeft,
-            y: Math.abs(docTop) + elTop,
-            h,
-            w
-        };
-    }
-
-    getRootOfEl(el) {
-        if (el.parentElement) {
-            return this.getRootOfEl(el.parentElement);
+            width,
+            height
         }
-        return el;
     }
 
-    getDocumentRelativePosition(event) {
-        return {
-            x: event.pageX,
-            y: event.pageY
-        };
+    getIsPositionOutside(position) {
+        const { x, y } = position;
+        const {
+            elementDimensions: {
+                width,
+                height
+            }
+        } = this.state
+
+        const isPositionOutside = (
+            x < 0 ||
+            y < 0 ||
+            x > width ||
+            y > height
+        );
+
+        return  isPositionOutside;
     }
 
     getTouchEvent(e) {
         return e.touches[0];
-    }
-
-    triggerOnPositionChanged() {
-        this.props.onPositionChanged(omit(
-            this.state,
-            'isActive'
-        ));
     }
 
     isReactComponent(reactElement) {

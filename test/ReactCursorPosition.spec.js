@@ -621,6 +621,7 @@ describe('ReactCursorPosition', () => {
                     width: 4,
                     height: 4
                 },
+                isActive: true,
                 isPositionOutside: false,
                 position: {
                     x: 2,
