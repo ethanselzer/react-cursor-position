@@ -213,6 +213,24 @@ export default class extends React.Component {
         );
     }
 
+    reset() {
+        const {
+            core: {
+                lastEvent: lastMouseEvent
+            } = {}
+        } = this;
+
+        this.init();
+
+        if (!lastMouseEvent) {
+            return;
+        }
+
+        this.setPositionState(
+            this.core.getCursorPosition(lastMouseEvent)
+        );
+    }
+
     activate() {
         this.setState({ isActive: true });
         this.props.onActivationChanged({ isActive: true });

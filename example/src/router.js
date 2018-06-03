@@ -15,6 +15,7 @@ import ShouldDecorateChildren from './pages/ShouldDecorateChildren';
 import Style from './pages/Style';
 import Support from './pages/Support';
 import DetectedEnvironmentChanged from './pages/DetectedEnvironmentChanged';
+import Reset from './pages/Reset';
 
 const Routes = (props) => (
     <Router {...props}>
@@ -32,6 +33,7 @@ const Routes = (props) => (
         <Route path="/should-decorate-children" component={ShouldDecorateChildren} />
         <Route path="/style" component={Style} />
         <Route path="/support" component={Support} />
+        <Route path="/reset" component={Reset} />
     </Router>
 );
 

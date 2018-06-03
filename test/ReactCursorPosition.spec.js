@@ -816,6 +816,43 @@ describe('ReactCursorPosition', () => {
                 expect(instance.enable.calledOnce).to.be.true;
             });
         });
+
+        describe('reset', () => {
+            it('invokes init', () => {
+                const component = getMountedComponentTree();
+                const instance = component.instance();
+                const spy = sinon.spy(instance, 'init');
+
+                instance.reset();
+
+                expect(spy.calledOnce).to.be.true;
+                spy.restore();
+            });
+
+            it('invokes setPositionState if last event exists', () => {
+                const component = getMountedComponentTree();
+                const instance = component.instance();
+                const spy = sinon.spy(instance, 'setPositionState');
+                instance.init();
+                instance.onMouseMove(mouseEvent);
+
+                instance.reset();
+
+                expect(spy.calledTwice).to.be.true;
+                spy.restore();
+            });
+
+            it('does not invoke setPositionState if last event does not exists', () => {
+                const component = getMountedComponentTree();
+                const instance = component.instance();
+                const spy = sinon.spy(instance, 'setPositionState');
+
+                instance.reset();
+
+                expect(spy.called).to.be.false;
+                spy.restore();
+            });
+        });
     });
 
     describe('clearTimers', () => {

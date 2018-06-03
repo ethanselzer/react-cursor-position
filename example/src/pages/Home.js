@@ -50,6 +50,7 @@ class App extends Component {
                                     <NavItem href="#/press-move-threshold">Press Move Threshold</NavItem>
                                     <NavItem href="#/should-decorate-children">Should Decorate Children</NavItem>
                                     <NavItem href="#/style">Style</NavItem>
+                                    <NavItem href="#/reset">Reset</NavItem>
                                 </Nav>
                             </Panel>
                         </Col>
@@ -64,7 +65,7 @@ class App extends Component {
                             </Panel>
                         </Col>
                         <Col xs={12} sm={6} md={4} lg={3}>
-                            <Panel header="Playground" bsStyle="primary" className="panel">
+                            <Panel header="CodePen" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
                                     <NavItem href="http://codepen.io/ethanselzer/pen/ryayLK">
                                         React Cursor Position Live Edit

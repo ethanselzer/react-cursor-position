@@ -49,6 +49,8 @@ class Navigation extends React.Component {
                 return 2.11;
             case '/detected-environment-changed' :
                 return 2.12;
+            case '/reset' :
+                return 2.13;
             case '/image-magnify' :
                 return 3.1;
             case '/support' :
@@ -84,6 +86,7 @@ class Navigation extends React.Component {
                             <MenuItem eventKey={2.8} href="#/press-move-threshold">Press Move Threshold</MenuItem>
                             <MenuItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</MenuItem>
                             <MenuItem eventKey={2.5} href="#/style">Style</MenuItem>
+                            <MenuItem eventKey={2.13} href="#/reset">Reset</MenuItem>
                         </NavDropdown>
                         <NavDropdown eventKey={3} title="Use Cases" id="nav-dropdown">
                             <MenuItem eventKey={3.1} href="#/image-magnify">React Image Magnify</MenuItem>

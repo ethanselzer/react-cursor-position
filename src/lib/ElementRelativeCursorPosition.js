@@ -29,6 +29,7 @@ export default class ElementRelativeCursorPosition {
     }
 
     getComputedElementRelativeCursorPosition(event, documentRelativeElementOffset) {
+        this.lastEvent = event;
         const position = this.getDocumentRelativeCursorPosition(event);
         const { x: cursorX, y: cursorY } = position;
         const { x: offsetX, y: offsetY } = documentRelativeElementOffset;

@@ -106,6 +106,9 @@ setting this prop false. Defaults to true.
 
 **style** : Object - Style to be applied to the div rendered by react-cursor-position.
 
+## Imperative API
+**reset**: Invoking the reset method instructs react-cursor-position to recalculate its position relative to the page.
+
 See API Examples section of the [demo site](https://ethanselzer.github.io/react-cursor-position/#/) for more.
 
 ## Support
