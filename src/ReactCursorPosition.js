@@ -81,7 +81,6 @@ export default class extends React.Component {
     };
 
     onTouchStart(e) {
-        this.init();
         this.onTouchDetected();
         this.setShouldGuardAgainstMouseEmulationByDevices();
 
@@ -129,7 +128,6 @@ export default class extends React.Component {
             return;
         }
 
-        this.init();
         this.onMouseDetected();
         this.setPositionState(this.core.getCursorPosition(e));
         this.clearActivationTimers();
@@ -172,6 +170,8 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
+        this.init();
+
         if (this.props.isEnabled) {
             this.enable();
         }

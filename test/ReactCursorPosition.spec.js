@@ -60,9 +60,11 @@ describe('ReactCursorPosition', () => {
 
     it('decorates child components with props in the touch environment', () => {
         const mountedTree = getMountedComponentTree({ isActivatedOnTouch: true });
+        const instance = mountedTree.instance();
 
-        mountedTree.instance().onTouchStart(getTouchEvent({ pageX: 1, pageY: 2 }));
-        mountedTree.instance().onTouchMove(getTouchEvent({ pageX: 3, pageY: 2 }));
+        instance.componentDidMount();
+        instance.onTouchStart(getTouchEvent({ pageX: 1, pageY: 2 }));
+        instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 2 }));
         mountedTree.update();
 
         const childComponent = mountedTree.find(GenericSpanComponent);
@@ -86,7 +88,9 @@ describe('ReactCursorPosition', () => {
 
     it('decorates child components with props in the mouse environment', (done) => {
         const mountedTree = getMountedComponentTree();
-        mountedTree.instance().onMouseEnter(getMouseEvent());
+        const instance = mountedTree.instance();
+        instance.componentDidMount();
+        instance.onMouseEnter(getMouseEvent());
 
         defer(() => {
             mountedTree.update();
@@ -138,6 +142,7 @@ describe('ReactCursorPosition', () => {
         const positionObserver = getMountedComponentTree();
         const instance = positionObserver.instance();
         sinon.spy(instance, 'init');
+        instance.componentDidMount();
         instance.onTouchStart(touchEvent);
 
         instance.onMouseEnter(mouseEvent);
@@ -233,6 +238,7 @@ describe('ReactCursorPosition', () => {
                     const renderedTree = getMountedComponentTree({ isActivatedOnTouch: true });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
@@ -247,8 +253,10 @@ describe('ReactCursorPosition', () => {
             describe('Mouse Environment', () => {
                 it('decorates child components with element dimensions', () => {
                     const renderedTree = getMountedComponentTree();
+                    const instance = renderedTree.instance();
 
-                    renderedTree.instance().onMouseEnter(getTouchEvent());
+                    instance.componentDidMount();
+                    instance.onMouseEnter(getTouchEvent());
                     renderedTree.update();
 
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -366,6 +374,7 @@ describe('ReactCursorPosition', () => {
 
                     expect(childComponent.props().isPositionOutside).to.be.true;
 
+                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
@@ -400,6 +409,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
                     instance.onMouseMove(getMouseEvent({
                         pageX: 1,
@@ -439,6 +449,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
                     instance.onMouseMove(getMouseEvent({
                         pageX: 5,
@@ -582,9 +593,11 @@ describe('ReactCursorPosition', () => {
                 mapChildProps,
                 isActivatedOnTouch: true
             });
+            const instance = tree.instance();
 
-            tree.instance().onTouchStart(touchEvent);
-            tree.instance().onTouchMove(touchEvent);
+            instance.componentDidMount();
+            instance.onTouchStart(touchEvent);
+            instance.onTouchMove(touchEvent);
             tree.update();
 
             const childComponent = tree.find(GenericSpanComponent);
@@ -608,9 +621,11 @@ describe('ReactCursorPosition', () => {
                 isActivatedOnTouch: true,
                 onPositionChanged: spy
             });
-            tree.instance().onTouchStart(touchEvent);
+            const instance = tree.instance();
 
-            tree.instance().onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
+            instance.componentDidMount();
+            instance.onTouchStart(touchEvent);
+            instance.onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
 
             expect(spy.args[1][0]).to.deep.equal({
                 detectedEnvironment: {
