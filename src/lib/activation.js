@@ -24,11 +24,13 @@ export class Activation {
             this.activate();
             return;
         }
+
         this.initPressEventCriteria(position);
         this.setPressEventTimer();
     }
 
     touchMoved(e, position) {
+        console.log('activator isActive', this.isActive);
         if (!this.isActive) {
             this.setPressEventCriteria(position);
         }
