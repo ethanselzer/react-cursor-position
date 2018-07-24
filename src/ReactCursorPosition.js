@@ -6,6 +6,7 @@ import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
 import * as constants from './constants';
 import noop from './utils/noop';
+import { Activation } from './lib/Activation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -43,6 +44,18 @@ export default class extends React.Component {
         this.onMouseEnter = this.onMouseEnter.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
+
+        const activation = new Activation({
+            onIsActiveChanged: this.onIsActiveChanged,
+            isActivatedOnTouch: props.isActivatedOnTouch,
+            pressDuration: props.pressDuration,
+            pressMoveThreshold: props.pressMoveThreshold
+        });
+
+        this.activation = activation;
+
+        window.foo = this;
     }
 
     static displayName = 'ReactCursorPosition';
@@ -80,6 +93,15 @@ export default class extends React.Component {
         shouldStopTouchMovePropagation: false
     };
 
+    onIsActiveChanged({ isActive }) {
+        console.log('actiation changed', isActive)
+        if (isActive) {
+            this.activate();
+        } else {
+            this.deactivate();
+        }
+    }
+
     onTouchStart(e) {
         this.init();
         this.onTouchDetected();
@@ -88,21 +110,26 @@ export default class extends React.Component {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
         this.setPositionState(position);
 
-        if (this.props.isActivatedOnTouch) {
-            e.preventDefault();
-            this.activate();
-            return;
-        }
+        // if (this.props.isActivatedOnTouch) {
+        //     e.preventDefault();
+        //     this.activate();
+        //     return;
+        // }
 
-        this.initPressEventCriteria(position);
-        this.setPressEventTimer();
+        // this.initPressEventCriteria(position);
+        // this.setPressEventTimer();
+
+        this.activation.touchStarted(e, position);
     }
 
     onTouchMove(e) {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
+        this.activation.touchMoved(e, position);
+        console.log('touchMove', this.state.isActive)
+        // may need to use this.activation.isActive because state changes are asynchronous in React
         if (!this.state.isActive) {
-            this.setPressEventCriteria(position);
+            // this.setPressEventCriteria(position);
             return;
         }
 
@@ -115,12 +142,15 @@ export default class extends React.Component {
     }
 
     onTouchEnd() {
-        this.deactivate();
+        // this.deactivate();
+        this.activation.touchEnded();
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
     onTouchCancel() {
-        this.deactivate();
+        // this.deactivate();
+        this.activation.touchCanceled();
+
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
@@ -234,6 +264,7 @@ export default class extends React.Component {
     activate() {
         this.setState({ isActive: true });
         this.props.onActivationChanged({ isActive: true });
+        console.log('activated')
     }
 
     deactivate() {
