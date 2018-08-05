@@ -81,7 +81,9 @@ export default class extends React.Component {
         shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
-        activationInteractions: PropTypes.object
+        activationInteractions: PropTypes.object,
+        tapMoveThreshold: PropTypes.number,
+        tapDuration: PropTypes.number
     };
 
     static defaultProps = {
@@ -94,7 +96,9 @@ export default class extends React.Component {
         onPositionChanged: noop,
         onDetectedEnvironmentChanged: noop,
         pressDuration: 500,
+        tapDuration: 180,
         pressMoveThreshold: 5,
+        tapMoveThreshold: 5,
         shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
         activationInteractions: {
@@ -257,6 +261,13 @@ export default class extends React.Component {
     // setTouchActivationStrategy
     setTouchActivationStrategy(interaction) {
         const {
+            pressDuration,
+            pressMoveThreshold,
+            tapDuration,
+            tapMoveThreshold
+        }= this.props;
+
+        const {
             INTERACTIONS: {
                 TOUCH,
                 TAP,
@@ -264,8 +275,7 @@ export default class extends React.Component {
                 PRESS,
             }
         } = constants;
-        // debugger;
-        console.log('interactin', interaction)
+
         /* eslint-disable indent */
         switch (interaction) {
             case PRESS :
@@ -277,7 +287,6 @@ export default class extends React.Component {
 
                 this.touchActivation = new PressActivation({
                     onIsActiveChanged: this.onIsActiveChanged,
-                    isActivatedOnTouch,
                     pressDuration,
                     pressMoveThreshold
                 });
@@ -290,7 +299,9 @@ export default class extends React.Component {
                 break;
             case TAP :
                 this.touchActivation = new TapActivation({
-                    onIsActiveChanged: this.onIsActiveChanged
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    tapDuration,
+                    tapMoveThreshold
                 });
                 break;
             default :

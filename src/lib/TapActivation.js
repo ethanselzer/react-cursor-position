@@ -4,13 +4,11 @@ import TouchEnvironmentActivation from './TouchEnvironmentActivation';
 export default class TapActivation extends TouchEnvironmentActivation {
     constructor ({
         onIsActiveChanged,
-        tapDuration = 180,
-        tapMoveThreshold = 5
+        tapDuration,
+        tapMoveThreshold
     }) {
         super({ onIsActiveChanged });
 
-        this.initialElTop = 0;
-        this.currentElTop = 0;
         this.hasTapGestureEnded = false;
         this.tapDuration = tapDuration;
         this.tapMoveThreshold = tapMoveThreshold;
