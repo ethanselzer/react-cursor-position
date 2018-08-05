@@ -6,7 +6,7 @@ import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
 import * as constants from './constants';
 import noop from './utils/noop';
-import { Activation } from './lib/Activation';
+import PressActivation from './lib/PressActivation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -46,14 +46,16 @@ export default class extends React.Component {
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
-        const activation = new Activation({
-            onIsActiveChanged: this.onIsActiveChanged,
-            isActivatedOnTouch: props.isActivatedOnTouch,
-            pressDuration: props.pressDuration,
-            pressMoveThreshold: props.pressMoveThreshold
-        });
+        // const activation = new Activation({
+        //     onIsActiveChanged: this.onIsActiveChanged,
+        //     isActivatedOnTouch: props.isActivatedOnTouch,
+        //     pressDuration: props.pressDuration,
+        //     pressMoveThreshold: props.pressMoveThreshold
+        // });
 
-        this.activation = activation;
+        // this.touchActivation = activation;
+
+        this.setActivationStrategy('press');
 
         window.foo = this;
     }
@@ -119,15 +121,15 @@ export default class extends React.Component {
         // this.initPressEventCriteria(position);
         // this.setPressEventTimer();
 
-        this.activation.touchStarted(e, position);
+        this.touchActivation.touchStarted(e, position);
     }
 
     onTouchMove(e) {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
-        this.activation.touchMoved(e, position);
+        this.touchActivation.touchMoved(e, position);
         console.log('touchMove', this.state.isActive)
-        // may need to use this.activation.isActive because state changes are asynchronous in React
+        // may need to use this.touchActivation.isActive because state changes are asynchronous in React
         if (!this.state.isActive) {
             // this.setPressEventCriteria(position);
             return;
@@ -143,13 +145,13 @@ export default class extends React.Component {
 
     onTouchEnd() {
         // this.deactivate();
-        this.activation.touchEnded();
+        this.touchActivation.touchEnded();
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
     onTouchCancel() {
         // this.deactivate();
-        this.activation.touchCanceled();
+        this.touchActivation.touchCanceled();
 
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
@@ -241,6 +243,42 @@ export default class extends React.Component {
         this.setElementDimensionsState(
             this.getElementDimensions(this.el)
         );
+    }
+
+    setActivationStrategy(interaction) {
+        const {
+            INTERACTIONS: {
+                TOUCH,
+                TAP,
+                DOUBLE_TAP,
+                PRESS,
+                CLICK,
+                HOVER
+            }
+        } = constants;
+        debugger;
+        /* eslint-disable indent */
+        switch (interaction) {
+            case PRESS :
+                const {
+                    isActivatedOnTouch,
+                    pressDuration,
+                    pressMoveThreshold
+                } = this.props;
+
+                this.touchActivation = new PressActivation({
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    isActivatedOnTouch,
+                    pressDuration,
+                    pressMoveThreshold
+                });
+
+                break;
+            default :
+                noop();
+                break;
+        }
+        /* eslint-enable indent */
     }
 
     reset() {
