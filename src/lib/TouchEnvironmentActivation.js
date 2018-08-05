@@ -4,6 +4,8 @@ export default class TouchEnvironmentActivation {
             throw new Error('onIsActiveChanged should be a function');
         }
 
+        this.initialElTop = 0;
+        this.currentElTop = 0;
         this.onIsActiveChanged = onIsActiveChanged;
         this.isActive = false;
         this.timers = [];
