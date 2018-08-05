@@ -11,7 +11,7 @@ export default class extends React.Component {
             <ReactCursorPosition {...{
                 className: 'example__target example__target--basic',
                 activationInteractions: {
-                    touch: INTERACTIONS.TOUCH
+                    touch: INTERACTIONS.PRESS
                 }
 
             }}>
