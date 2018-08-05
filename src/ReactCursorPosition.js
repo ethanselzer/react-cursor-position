@@ -66,6 +66,7 @@ export default class extends React.Component {
     static displayName = 'ReactCursorPosition';
 
     static propTypes = {
+        activationInteractions: PropTypes.object,
         children: PropTypes.any,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
@@ -81,7 +82,6 @@ export default class extends React.Component {
         shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
-        activationInteractions: PropTypes.object,
         tapMoveThreshold: PropTypes.number,
         tapDuration: PropTypes.number
     };
@@ -102,7 +102,7 @@ export default class extends React.Component {
         shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
         activationInteractions: {
-            touch: constants.INTERACTIONS.PRESS,
+            touch: constants.INTERACTIONS.PRESS, //how about some destructuring
             mouse: constants.INTERACTIONS.HOVER
         }
     };
@@ -279,22 +279,10 @@ export default class extends React.Component {
         /* eslint-disable indent */
         switch (interaction) {
             case PRESS :
-                const {
-                    isActivatedOnTouch,
-                    pressDuration,
-                    pressMoveThreshold
-                } = this.props;
-
                 this.touchActivation = new PressActivation({
                     onIsActiveChanged: this.onIsActiveChanged,
                     pressDuration,
                     pressMoveThreshold
-                });
-
-                break;
-            case TOUCH :
-                this.touchActivation = new TouchActivation({
-                    onIsActiveChanged: this.onIsActiveChanged
                 });
                 break;
             case TAP :
@@ -304,9 +292,13 @@ export default class extends React.Component {
                     tapMoveThreshold
                 });
                 break;
-            default :
-                noop();
+            case TOUCH :
+                this.touchActivation = new TouchActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
+                });
                 break;
+            default :
+                throw new Error('Must implement a touch activation strategy');
         }
         /* eslint-enable indent */
     }
