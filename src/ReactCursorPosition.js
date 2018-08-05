@@ -8,6 +8,7 @@ import * as constants from './constants';
 import noop from './utils/noop';
 import PressActivation from './lib/PressActivation';
 import TouchActivation from './lib/TouchActivation';
+import TapActivation from './lib/TapActivation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -132,6 +133,7 @@ export default class extends React.Component {
     }
 
     onTouchMove(e) {
+    console.log('onTouchMove', this.state.isActive)
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
         this.touchActivation.touchMoved({ e, position });
@@ -141,7 +143,7 @@ export default class extends React.Component {
             // this.setPressEventCriteria(position);
             return;
         }
-
+// console.log('onTouchMove', this.state.isActive)
         this.setPositionState(position);
         e.preventDefault();
 
@@ -286,7 +288,11 @@ export default class extends React.Component {
                     onIsActiveChanged: this.onIsActiveChanged
                 });
                 break;
-
+            case TAP :
+                this.touchActivation = new TapActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
+                });
+                break;
             default :
                 noop();
                 break;
