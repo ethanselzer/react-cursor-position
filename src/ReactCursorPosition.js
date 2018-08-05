@@ -7,6 +7,7 @@ import addEventListener from './utils/addEventListener';
 import * as constants from './constants';
 import noop from './utils/noop';
 import PressActivation from './lib/PressActivation';
+import TouchActivation from './lib/TouchActivation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -55,7 +56,8 @@ export default class extends React.Component {
 
         // this.touchActivation = activation;
 
-        this.setActivationStrategy('press');
+        // this.setActivationStrategy('press');
+        this.setTouchActivationStrategy(props.activationInteractions.touch)
 
         window.foo = this;
     }
@@ -67,7 +69,7 @@ export default class extends React.Component {
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
-        isActivatedOnTouch: PropTypes.bool,
+        // isActivatedOnTouch: PropTypes.bool,
         isEnabled: PropTypes.bool,
         mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
@@ -77,7 +79,8 @@ export default class extends React.Component {
         pressMoveThreshold: PropTypes.number,
         shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
-        style: PropTypes.object
+        style: PropTypes.object,
+        activationInteractions: PropTypes.object
     };
 
     static defaultProps = {
@@ -92,7 +95,11 @@ export default class extends React.Component {
         pressDuration: 500,
         pressMoveThreshold: 5,
         shouldDecorateChildren: true,
-        shouldStopTouchMovePropagation: false
+        shouldStopTouchMovePropagation: false,
+        activationInteractions: {
+            touch: constants.INTERACTIONS.PRESS,
+            mouse: constants.INTERACTIONS.HOVER
+        }
     };
 
     onIsActiveChanged({ isActive }) {
@@ -245,18 +252,18 @@ export default class extends React.Component {
         );
     }
 
-    setActivationStrategy(interaction) {
+    // setTouchActivationStrategy
+    setTouchActivationStrategy(interaction) {
         const {
             INTERACTIONS: {
                 TOUCH,
                 TAP,
                 DOUBLE_TAP,
                 PRESS,
-                CLICK,
-                HOVER
             }
         } = constants;
-        debugger;
+        // debugger;
+        console.log('interactin', interaction)
         /* eslint-disable indent */
         switch (interaction) {
             case PRESS :
@@ -274,6 +281,12 @@ export default class extends React.Component {
                 });
 
                 break;
+            case TOUCH :
+                this.touchActivation = new TouchActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
+                });
+                break;
+
             default :
                 noop();
                 break;
