@@ -9,13 +9,9 @@ export default class TouchEnvironmentActivation {
         this.timers = [];
     }
 
-    touchStarted() {
+    touchStarted() {}
 
-    }
-
-    touchMoved() {
-
-    }
+    touchMoved() {}
 
     touchEnded() {
         this.deactivate();

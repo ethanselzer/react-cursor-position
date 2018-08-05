@@ -128,13 +128,13 @@ export default class extends React.Component {
         // this.initPressEventCriteria(position);
         // this.setPressEventTimer();
 
-        this.touchActivation.touchStarted(e, position);
+        this.touchActivation.touchStarted({ e, position });
     }
 
     onTouchMove(e) {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
-        this.touchActivation.touchMoved(e, position);
+        this.touchActivation.touchMoved({ e, position });
         console.log('touchMove', this.state.isActive)
         // may need to use this.touchActivation.isActive because state changes are asynchronous in React
         if (!this.state.isActive) {

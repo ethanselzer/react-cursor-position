@@ -15,12 +15,12 @@ export default class PressActivation extends TouchEnvironmentActivation {
         this.pressMoveThreshold = pressMoveThreshold;
     }
 
-    touchStarted(e, position) {
+    touchStarted({ position }) {
         this.initPressEventCriteria(position);
         this.setPressEventTimer();
     }
 
-    touchMoved(e, position) {
+    touchMoved({ position }) {
         if (!this.isActive) {
             this.setPressEventCriteria(position);
         }

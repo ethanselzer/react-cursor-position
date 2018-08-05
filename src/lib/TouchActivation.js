@@ -5,7 +5,7 @@ export default class TouchActivation extends TouchEnvironmentActivation{
         super({ onIsActiveChanged });
     }
 
-    touchStarted(e) {
+    touchStarted({ e }) {
         e.preventDefault();
         this.activate();
     }
