@@ -9,6 +9,7 @@ import noop from './utils/noop';
 import PressActivation from './lib/PressActivation';
 import TouchActivation from './lib/TouchActivation';
 import TapActivation from './lib/TapActivation';
+import HoverActivation from './lib/HoverActivation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -48,7 +49,8 @@ export default class extends React.Component {
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
-        this.setTouchActivationStrategy(props.activationInteractions.touch)
+        this.setTouchActivationStrategy(props.activationInteractions.touch);
+        this.setMouseActivationStrategy(props.activationInteractions.mouse);
 
         window.foo = this;
     }
@@ -151,8 +153,9 @@ export default class extends React.Component {
         this.init();
         this.onMouseDetected();
         this.setPositionState(this.core.getCursorPosition(e));
-        this.clearActivationTimers();
-        this.schedulActivation(this.props.hoverDelayInMs);
+        // this.clearActivationTimers();
+        // this.schedulActivation(this.props.hoverDelayInMs);
+        this.mouseActivation.mouseEntered();
     }
 
     onMouseMove(e) {
@@ -160,8 +163,9 @@ export default class extends React.Component {
     }
 
     onMouseLeave() {
-        this.clearActivationTimers();
-        this.scheduleDeactivation(this.props.hoverOffDelayInMs);
+        // this.clearActivationTimers();
+        // this.scheduleDeactivation(this.props.hoverOffDelayInMs);
+        this.mouseActivation.mouseLeft();
         this.setState({ isPositionOutside: true });
     }
 
@@ -276,6 +280,34 @@ export default class extends React.Component {
         /* eslint-enable indent */
     }
 
+    setMouseActivationStrategy(interaction) {
+        const {
+            hoverDelayInMs,
+            hoverOffDelayInMs
+        }= this.props;
+
+        const {
+            INTERACTIONS: {
+                HOVER,
+                CLICK
+            }
+        } = constants;
+
+        /* eslint-disable indent */
+        switch (interaction) {
+            case  HOVER :
+                this.mouseActivation = new HoverActivation({
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    hoverDelayInMs,
+                    hoverOffDelayInMs
+                });
+                break;
+            default :
+                throw new Error('Must implement a mouse activation strategy');
+        }
+        /* eslint-enable indent */
+    }
+
     reset() {
         const {
             core: {
@@ -300,7 +332,7 @@ export default class extends React.Component {
     }
 
     deactivate() {
-        this.clearTimer(constants.PRESS_EVENT_TIMER_NAME);
+        // this.clearTimer(constants.PRESS_EVENT_TIMER_NAME);
 
         this.setState({ isActive: false }, () => {
             const { isPositionOutside, position } = this.state;
@@ -332,58 +364,58 @@ export default class extends React.Component {
         })
     }
 
-    schedulActivation(schedule) {
-        const scheduleId = setTimeout(() => {
-            this.activate();
-        }, schedule);
+    // schedulActivation(schedule) {
+    //     const scheduleId = setTimeout(() => {
+    //         this.activate();
+    //     }, schedule);
 
-        this.timers.push({
-            id: scheduleId,
-            name: constants.SET_ACTIVATION_TIMER_NAME
-        });
-    }
+    //     this.timers.push({
+    //         id: scheduleId,
+    //         name: constants.SET_ACTIVATION_TIMER_NAME
+    //     });
+    // }
 
-    scheduleDeactivation(schedule) {
-        const scheduleId = setTimeout(() => {
-            this.deactivate();
-        }, schedule);
+    // scheduleDeactivation(schedule) {
+    //     const scheduleId = setTimeout(() => {
+    //         this.deactivate();
+    //     }, schedule);
 
-        this.timers.push({
-            id: scheduleId,
-            name: constants.UNSET_ACTIVATION_TIMER_NAME
-        });
-    }
+    //     this.timers.push({
+    //         id: scheduleId,
+    //         name: constants.UNSET_ACTIVATION_TIMER_NAME
+    //     });
+    // }
 
-    clearActivationTimers() {
-        this.clearTimer(constants.SET_ACTIVATION_TIMER_NAME);
-        this.clearTimer(constants.UNSET_ACTIVATION_TIMER_NAME);
-    }
+    // clearActivationTimers() {
+    //     this.clearTimer(constants.SET_ACTIVATION_TIMER_NAME);
+    //     this.clearTimer(constants.UNSET_ACTIVATION_TIMER_NAME);
+    // }
 
-    setPressEventTimer() {
-        const {
-            pressDuration,
-            pressMoveThreshold
-        } = this.props;
+    // setPressEventTimer() {
+    //     const {
+    //         pressDuration,
+    //         pressMoveThreshold
+    //     } = this.props;
 
-        this.timers.push({
-            name: constants.PRESS_EVENT_TIMER_NAME,
-            id: setTimeout(() => {
-                if (Math.abs(this.currentElTop - this.initialElTop) < pressMoveThreshold) {
-                    this.activate();
-                }
-            }, pressDuration)
-        });
-    }
+    //     this.timers.push({
+    //         name: constants.PRESS_EVENT_TIMER_NAME,
+    //         id: setTimeout(() => {
+    //             if (Math.abs(this.currentElTop - this.initialElTop) < pressMoveThreshold) {
+    //                 this.activate();
+    //             }
+    //         }, pressDuration)
+    //     });
+    // }
 
-    setPressEventCriteria(position) {
-        this.currentElTop = position.y;
-    }
+    // setPressEventCriteria(position) {
+    //     this.currentElTop = position.y;
+    // }
 
-    initPressEventCriteria(position) {
-        const top = position.y
-        this.initialElTop = top;
-        this.currentElTop = top;
-    }
+    // initPressEventCriteria(position) {
+    //     const top = position.y
+    //     this.initialElTop = top;
+    //     this.currentElTop = top;
+    // }
 
     setShouldGuardAgainstMouseEmulationByDevices() {
         this.shouldGuardAgainstMouseEmulationByDevices = true;
@@ -398,21 +430,21 @@ export default class extends React.Component {
         });
     }
 
-    clearTimers() {
-        const timers = this.timers;
-        while (timers.length) {
-            const timer = timers.pop();
-            clearTimeout(timer.id);
-        }
-    }
+    // clearTimers() {
+    //     const timers = this.timers;
+    //     while (timers.length) {
+    //         const timer = timers.pop();
+    //         clearTimeout(timer.id);
+    //     }
+    // }
 
-    clearTimer(timerName) {
-        this.timers.forEach((timer) => {
-            if (timer.name === timerName) {
-                clearTimeout(timer.id);
-            }
-        });
-    }
+    // clearTimer(timerName) {
+    //     this.timers.forEach((timer) => {
+    //         if (timer.name === timerName) {
+    //             clearTimeout(timer.id);
+    //         }
+    //     });
+    // }
 
     getElementDimensions(el) {
         const {
