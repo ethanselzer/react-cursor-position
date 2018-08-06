@@ -48,16 +48,6 @@ export default class extends React.Component {
         this.onMouseLeave = this.onMouseLeave.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
-        // const activation = new Activation({
-        //     onIsActiveChanged: this.onIsActiveChanged,
-        //     isActivatedOnTouch: props.isActivatedOnTouch,
-        //     pressDuration: props.pressDuration,
-        //     pressMoveThreshold: props.pressMoveThreshold
-        // });
-
-        // this.touchActivation = activation;
-
-        // this.setActivationStrategy('press');
         this.setTouchActivationStrategy(props.activationInteractions.touch)
 
         window.foo = this;
@@ -124,30 +114,17 @@ export default class extends React.Component {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
         this.setPositionState(position);
 
-        // if (this.props.isActivatedOnTouch) {
-        //     e.preventDefault();
-        //     this.activate();
-        //     return;
-        // }
-
-        // this.initPressEventCriteria(position);
-        // this.setPressEventTimer();
-
         this.touchActivation.touchStarted({ e, position });
     }
 
     onTouchMove(e) {
-    console.log('onTouchMove', this.state.isActive)
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
         this.touchActivation.touchMoved({ e, position });
-        console.log('touchMove', this.state.isActive)
-        // may need to use this.touchActivation.isActive because state changes are asynchronous in React
+
         if (!this.state.isActive) {
-            // this.setPressEventCriteria(position);
             return;
         }
-// console.log('onTouchMove', this.state.isActive)
         this.setPositionState(position);
         e.preventDefault();
 
@@ -157,13 +134,11 @@ export default class extends React.Component {
     }
 
     onTouchEnd() {
-        // this.deactivate();
         this.touchActivation.touchEnded();
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
     onTouchCancel() {
-        // this.deactivate();
         this.touchActivation.touchCanceled();
 
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
@@ -258,7 +233,6 @@ export default class extends React.Component {
         );
     }
 
-    // setTouchActivationStrategy
     setTouchActivationStrategy(interaction) {
         const {
             pressDuration,
