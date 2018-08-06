@@ -98,7 +98,6 @@ export default class extends React.Component {
     };
 
     onIsActiveChanged({ isActive }) {
-        console.log('actiation changed', isActive)
         if (isActive) {
             this.activate();
         } else {
@@ -298,7 +297,6 @@ export default class extends React.Component {
     activate() {
         this.setState({ isActive: true });
         this.props.onActivationChanged({ isActive: true });
-        console.log('activated')
     }
 
     deactivate() {
