@@ -30,7 +30,6 @@ export class Activation {
     }
 
     touchMoved(e, position) {
-        console.log('activator isActive', this.isActive);
         if (!this.isActive) {
             this.setPressEventCriteria(position);
         }
