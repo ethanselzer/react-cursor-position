@@ -123,15 +123,16 @@ export default class extends React.Component {
 
         this.touchActivation.touchMoved({ e, position });
 
-        if (!this.state.isActive) {
-            return;
-        }
-        this.setPositionState(position);
-        e.preventDefault();
-
         if (this.props.shouldStopTouchMovePropagation) {
             e.stopPropagation();
         }
+
+        if (!this.state.isActive) {
+            return;
+        }
+
+        this.setPositionState(position);
+        e.preventDefault();
     }
 
     onTouchEnd() {
