@@ -365,59 +365,6 @@ export default class extends React.Component {
         })
     }
 
-    // schedulActivation(schedule) {
-    //     const scheduleId = setTimeout(() => {
-    //         this.activate();
-    //     }, schedule);
-
-    //     this.timers.push({
-    //         id: scheduleId,
-    //         name: constants.SET_ACTIVATION_TIMER_NAME
-    //     });
-    // }
-
-    // scheduleDeactivation(schedule) {
-    //     const scheduleId = setTimeout(() => {
-    //         this.deactivate();
-    //     }, schedule);
-
-    //     this.timers.push({
-    //         id: scheduleId,
-    //         name: constants.UNSET_ACTIVATION_TIMER_NAME
-    //     });
-    // }
-
-    // clearActivationTimers() {
-    //     this.clearTimer(constants.SET_ACTIVATION_TIMER_NAME);
-    //     this.clearTimer(constants.UNSET_ACTIVATION_TIMER_NAME);
-    // }
-
-    // setPressEventTimer() {
-    //     const {
-    //         pressDuration,
-    //         pressMoveThreshold
-    //     } = this.props;
-
-    //     this.timers.push({
-    //         name: constants.PRESS_EVENT_TIMER_NAME,
-    //         id: setTimeout(() => {
-    //             if (Math.abs(this.currentElTop - this.initialElTop) < pressMoveThreshold) {
-    //                 this.activate();
-    //             }
-    //         }, pressDuration)
-    //     });
-    // }
-
-    // setPressEventCriteria(position) {
-    //     this.currentElTop = position.y;
-    // }
-
-    // initPressEventCriteria(position) {
-    //     const top = position.y
-    //     this.initialElTop = top;
-    //     this.currentElTop = top;
-    // }
-
     setShouldGuardAgainstMouseEmulationByDevices() {
         this.shouldGuardAgainstMouseEmulationByDevices = true;
     }
@@ -430,22 +377,6 @@ export default class extends React.Component {
             }, 0)
         });
     }
-
-    // clearTimers() {
-    //     const timers = this.timers;
-    //     while (timers.length) {
-    //         const timer = timers.pop();
-    //         clearTimeout(timer.id);
-    //     }
-    // }
-
-    // clearTimer(timerName) {
-    //     this.timers.forEach((timer) => {
-    //         if (timer.name === timerName) {
-    //             clearTimeout(timer.id);
-    //         }
-    //     });
-    // }
 
     getElementDimensions(el) {
         const {
