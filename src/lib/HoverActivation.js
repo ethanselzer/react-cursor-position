@@ -1,7 +1,7 @@
 import * as constants from '../constants';
-import MouseActivation from './MouseActivation';
+import MouseEnvironmentActivation from './MouseEnvironmentActivation';
 
-export default class HoverActivation extends MouseActivation {
+export default class HoverActivation extends MouseEnvironmentActivation {
     constructor ({
         onIsActiveChanged,
         hoverDelayInMs,
