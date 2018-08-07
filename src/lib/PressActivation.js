@@ -9,9 +9,6 @@ export default class PressActivation extends TouchEnvironmentActivation {
     }) {
         super({ onIsActiveChanged });
 
-        this.initialElTop = 0;
-        this.currentElTop = 0;
-
         this.pressDuration = pressDuration;
         this.pressMoveThreshold = pressMoveThreshold;
     }
