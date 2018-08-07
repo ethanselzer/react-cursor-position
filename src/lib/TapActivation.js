@@ -1,4 +1,4 @@
-import { PRESS_EVENT_TIMER_NAME } from '../constants';
+import { TAP_GESTURE_TIMER_NAME } from '../constants';
 import TouchEnvironmentActivation from './TouchEnvironmentActivation';
 
 export default class TapActivation extends TouchEnvironmentActivation {
@@ -22,7 +22,7 @@ export default class TapActivation extends TouchEnvironmentActivation {
 
     touchMoved({ position }) {
         if (!this.isActive) {
-            this.setPressEventCriteria(position);
+            this.setMoveThresholdCriteria(position);
         }
     }
 
@@ -40,7 +40,7 @@ export default class TapActivation extends TouchEnvironmentActivation {
 
     setTapEventTimer() {
         this.timers.push({
-            name: PRESS_EVENT_TIMER_NAME,
+            name: TAP_GESTURE_TIMER_NAME,
             id: setTimeout(() => {
                 if (this.isTapGestureActive) {
                     this.toggleActivation();
@@ -57,7 +57,7 @@ export default class TapActivation extends TouchEnvironmentActivation {
         }
     }
 
-    setPressEventCriteria(position) {
+    setMoveThresholdCriteria(position) {
         this.currentElTop = position.y;
     }
 
