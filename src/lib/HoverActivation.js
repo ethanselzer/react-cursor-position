@@ -1,23 +1,16 @@
 import * as constants from '../constants';
+import MouseActivation from './MouseActivation';
 
-export default class HoverActivation {
+export default class HoverActivation extends MouseActivation {
     constructor ({
         onIsActiveChanged,
         hoverDelayInMs,
         hoverOffDelayInMs
     }) {
-        if (typeof onIsActiveChanged !== 'function'){
-            throw new Error('onIsActiveChanged should be a function');
-        }
-
-        // this.initialElTop = 0;
-        // this.currentElTop = 0;
+        super({ onIsActiveChanged });
 
         this.hoverDelayInMs = hoverDelayInMs;
         this.hoverOffDelayInMs = hoverOffDelayInMs;
-        this.onIsActiveChanged = onIsActiveChanged;
-        this.isActive = false;
-        this.timers = [];
     }
 
     mouseEntered() {
@@ -51,31 +44,4 @@ export default class HoverActivation {
             name: constants.UNSET_ACTIVATION_TIMER_NAME
         });
     }
-
-    activate() {
-        this.isActive = true;
-        this.onIsActiveChanged({ isActive: true });
-    }
-
-    deactivate() {
-        this.isActive = false;
-        this.onIsActiveChanged({ isActive: false });
-        this.clearTimers();
-    }
-
-    clearTimers() {
-        const timers = this.timers;
-        while (timers.length) {
-            const timer = timers.pop();
-            clearTimeout(timer.id);
-        }
-    }
-
-    // clearTimer(timerName) {
-    //     this.timers.forEach((timer) => {
-    //         if (timer.name === timerName) {
-    //             clearTimeout(timer.id);
-    //         }
-    //     });
-    // }
 }
