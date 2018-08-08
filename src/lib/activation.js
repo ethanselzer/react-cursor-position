@@ -22,6 +22,14 @@ export default class Activation {
         this.clearTimers();
     }
 
+    toggleActivation() {
+        if (this.isActive){
+            this.deactivate();
+        } else {
+            this.activate();
+        }
+    }
+
     clearTimers() {
         const timers = this.timers;
         while (timers.length) {

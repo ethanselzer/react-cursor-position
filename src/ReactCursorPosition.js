@@ -65,7 +65,6 @@ export default class extends React.Component {
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
-        // isActivatedOnTouch: PropTypes.bool,
         isEnabled: PropTypes.bool,
         mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
@@ -156,8 +155,6 @@ export default class extends React.Component {
         this.init();
         this.onMouseDetected();
         this.setPositionState(this.core.getCursorPosition(e));
-        // this.clearActivationTimers();
-        // this.schedulActivation(this.props.hoverDelayInMs);
         this.mouseActivation.mouseEntered();
     }
 
@@ -166,14 +163,13 @@ export default class extends React.Component {
     }
 
     onMouseLeave() {
-        // this.clearActivationTimers();
-        // this.scheduleDeactivation(this.props.hoverOffDelayInMs);
         this.mouseActivation.mouseLeft();
         this.setState({ isPositionOutside: true });
     }
 
     onClick() {
         this.mouseActivation.mouseClicked();
+        this.onMouseDetected();
     }
 
     onTouchDetected() {
@@ -260,7 +256,6 @@ export default class extends React.Component {
             }
         } = constants;
 
-        /* eslint-disable indent */
         switch (interaction) {
             case PRESS :
                 this.touchActivation = new PressActivation({
@@ -284,7 +279,6 @@ export default class extends React.Component {
             default :
                 throw new Error('Must implement a touch activation strategy');
         }
-        /* eslint-enable indent */
     }
 
     setMouseActivationStrategy(interaction) {
@@ -300,7 +294,6 @@ export default class extends React.Component {
             }
         } = constants;
 
-        /* eslint-disable indent */
         switch (interaction) {
             case  HOVER :
                 this.mouseActivation = new HoverActivation({
@@ -317,7 +310,6 @@ export default class extends React.Component {
             default :
                 throw new Error('Must implement a mouse activation strategy');
         }
-        /* eslint-enable indent */
     }
 
     reset() {
@@ -344,8 +336,6 @@ export default class extends React.Component {
     }
 
     deactivate() {
-        // this.clearTimer(constants.PRESS_EVENT_TIMER_NAME);
-
         this.setState({ isActive: false }, () => {
             const { isPositionOutside, position } = this.state;
 

@@ -8,12 +8,4 @@ export default class ClickActivation extends MouseEnvironmentActivation {
     mouseClicked() {
         this.toggleActivation();
     }
-
-    toggleActivation() {
-        if (this.isActive) {
-            this.deactivate();
-        } else {
-            this.activate();
-        }
-    }
 }

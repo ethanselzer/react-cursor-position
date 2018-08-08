@@ -49,14 +49,6 @@ export default class TapActivation extends TouchEnvironmentActivation {
         });
     }
 
-    toggleActivation() {
-        if (this.isActive){
-            this.deactivate();
-        } else {
-            this.activate();
-        }
-    }
-
     setMoveThresholdCriteria(position) {
         this.currentElTop = position.y;
     }
