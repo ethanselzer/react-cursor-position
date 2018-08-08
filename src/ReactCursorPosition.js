@@ -10,6 +10,7 @@ import PressActivation from './lib/PressActivation';
 import TouchActivation from './lib/TouchActivation';
 import TapActivation from './lib/TapActivation';
 import HoverActivation from './lib/HoverActivation';
+import ClickActivation from './lib/ClickActivation';
 
 export default class extends React.Component {
     constructor(props) {
@@ -47,6 +48,7 @@ export default class extends React.Component {
         this.onMouseEnter = this.onMouseEnter.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.onClick = this.onClick.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
         this.setTouchActivationStrategy(props.activationInteractions.touch);
@@ -168,6 +170,10 @@ export default class extends React.Component {
         // this.scheduleDeactivation(this.props.hoverOffDelayInMs);
         this.mouseActivation.mouseLeft();
         this.setState({ isPositionOutside: true });
+    }
+
+    onClick() {
+        this.mouseActivation.mouseClicked();
     }
 
     onTouchDetected() {
@@ -301,6 +307,11 @@ export default class extends React.Component {
                     onIsActiveChanged: this.onIsActiveChanged,
                     hoverDelayInMs,
                     hoverOffDelayInMs
+                });
+                break;
+            case CLICK :
+                this.mouseActivation = new ClickActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
                 });
                 break;
             default :
@@ -443,7 +454,8 @@ export default class extends React.Component {
             addEventListener(this.el, 'touchcancel', this.onTouchCancel),
             addEventListener(this.el, 'mouseenter', this.onMouseEnter),
             addEventListener(this.el, 'mousemove', this.onMouseMove),
-            addEventListener(this.el, 'mouseleave', this.onMouseLeave)
+            addEventListener(this.el, 'mouseleave', this.onMouseLeave),
+            addEventListener(this.el, 'click', this.onClick)
         );
     }
 
