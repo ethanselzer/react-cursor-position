@@ -80,7 +80,6 @@ export default class extends React.Component {
     };
 
     static defaultProps = {
-        isActivatedOnTouch: false,
         isEnabled: true,
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
@@ -219,7 +218,6 @@ export default class extends React.Component {
     }
 
     componentWillUnmount() {
-        this.clearTimers();
         this.disable();
     }
 
