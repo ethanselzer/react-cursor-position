@@ -17,15 +17,15 @@ describe('ReactCursorPosition', () => {
     });
 
     it('has the display name ReactCursorPosition', () => {
-        expect(positionObserver.instance().constructor.displayName).to.equal('ReactCursorPosition');
+        expect(positionObserver.instance().constructor.displayName).toBe('ReactCursorPosition');
     });
 
     it('renders a single div HTML element', () => {
-        expect(positionObserver.type()).to.equal('div');
+        expect(positionObserver.type()).toBe('div');
     });
 
     it('has correct initial state', () => {
-        expect(positionObserver.state()).to.deep.equal({
+        expect(positionObserver.state()).toEqual({
             detectedEnvironment: {
                 isMouseDetected: false,
                 isTouchDetected: false
@@ -45,16 +45,16 @@ describe('ReactCursorPosition', () => {
 
     it('has correct default props', () => {
         const defaults = positionObserver.instance().constructor.defaultProps;
-        expect(defaults.isEnabled).to.be.true;
-        expect(defaults.mapChildProps).to.be.a('function');
-        expect(defaults.pressDuration).to.equal(500);
-        expect(defaults.pressMoveThreshold).to.equal(5);
-        expect(defaults.shouldDecorateChildren).to.be.true;
-        expect(defaults.onActivationChanged).to.be.a('function');
-        expect(defaults.onPositionChanged).to.be.a('function');
-        expect(defaults.onDetectedEnvironmentChanged).to.be.a('function');
-        expect(defaults.pressDuration).to.be.a('number');
-        expect(defaults.pressMoveThreshold).to.be.a('number');
+        expect(defaults.isEnabled).toBe(true);
+        expect(typeof defaults.mapChildProps).toBe('function');
+        expect(defaults.pressDuration).toBe(500);
+        expect(defaults.pressMoveThreshold).toBe(5);
+        expect(defaults.shouldDecorateChildren).toBe(true);
+        expect(typeof defaults.onActivationChanged).toBe('function');
+        expect(typeof defaults.onPositionChanged).toBe('function');
+        expect(typeof defaults.onDetectedEnvironmentChanged).toBe('function');
+        expect(typeof defaults.pressDuration).toBe('number');
+        expect(typeof defaults.pressMoveThreshold).toBe('number');
     });
 
     it('decorates child components with props in the touch environment', () => {
@@ -70,7 +70,7 @@ describe('ReactCursorPosition', () => {
         mountedTree.update();
 
         const childComponent = mountedTree.find(GenericSpanComponent);
-        expect(childComponent.props()).to.deep.equal({
+        expect(childComponent.props()).toEqual({
             detectedEnvironment: {
                 isMouseDetected: false,
                 isTouchDetected: true
@@ -95,7 +95,7 @@ describe('ReactCursorPosition', () => {
         defer(() => {
             mountedTree.update();
             const childComponent = mountedTree.find(GenericSpanComponent);
-            expect(childComponent.props()).to.deep.equal({
+            expect(childComponent.props()).toEqual({
                 detectedEnvironment: {
                     isMouseDetected: true,
                     isTouchDetected: false
@@ -126,21 +126,21 @@ describe('ReactCursorPosition', () => {
 
         renderedTree.instance().onTouchStart(touchEvent);
 
-        expect(childDomNode.props()).to.be.empty;
+        expect(childDomNode.props()).toHaveLength(0);
     });
 
     it('does not pass own-props to child components', () => {
         const renderedTree = getMountedComponentTree({ className: 'foo' });
         const childComponent = renderedTree.find(GenericSpanComponent);
 
-        expect(childComponent.props().className).to.be.undefined;
+        expect(childComponent.props().className).toBeUndefined();
     });
 
     it('passes unknown props (passthrouh props) to child components', () => {
         const renderedTree = getMountedComponentTree({ foo: 'foo' });
         const childComponent = renderedTree.find(GenericSpanComponent);
 
-        expect(childComponent.props().foo).to.equal('foo');
+        expect(childComponent.props().foo).toBe('foo');
     });
 
     it('guards against mouse emulation for touch input', () => {
@@ -151,7 +151,7 @@ describe('ReactCursorPosition', () => {
 
         instance.onMouseEnter(mouseEvent);
 
-        expect(instance.init.calledOnce).to.be.true;
+        expect(instance.init.calledOnce).toBe(true);
     });
 
     it.skip('calls clearTimers on componentWillUnmount', () => {
@@ -160,7 +160,7 @@ describe('ReactCursorPosition', () => {
 
         instance.componentWillUnmount();
 
-        expect(instance.clearTimers.calledOnce).to.be.true;
+        expect(instance.clearTimers.calledOnce).toBe(true);
     });
 
     it('prevents default on touch move, when activated', () => {
@@ -177,14 +177,14 @@ describe('ReactCursorPosition', () => {
         tree.instance().onTouchMove(touchEvent);
         tree.update();
 
-        expect(touchEvent.preventDefault.called).to.be.true;
+        expect(touchEvent.preventDefault.called).toBe(true);
     });
 
     describe('Add Touch and Mouse Event Listeners', () => {
         it('fills touch event listeners collection', () => {
             positionObserver = getMountedComponentTree();
 
-            expect(positionObserver.instance().eventListeners.length).to.equal(8);
+            expect(positionObserver.instance().eventListeners.length).toBe(8);
         });
 
         it('binds touchstart and touchmove with `passive` option unset', () => {
@@ -200,8 +200,8 @@ describe('ReactCursorPosition', () => {
 
             positionObserver = getMountedComponentTree();
 
-            expect(match(utils.default.getCall(0))).to.be.true;
-            expect(match(utils.default.getCall(1))).to.be.true;
+            expect(match(utils.default.getCall(0))).toBe(true);
+            expect(match(utils.default.getCall(1))).toBe(true);
             utils.default.restore();
         });
     });
@@ -215,7 +215,7 @@ describe('ReactCursorPosition', () => {
 
             positionObserver.unmount();
 
-            expect(instance.eventListeners.length).to.equal(0);
+            expect(instance.eventListeners.length).toBe(0);
         });
 
         it('calls removeEventListeners', () => {
@@ -225,7 +225,7 @@ describe('ReactCursorPosition', () => {
 
             mountedComponent.unmount();
 
-            expect(instance.removeEventListeners.calledOnce).to.be.true;
+            expect(instance.removeEventListeners.calledOnce).toBe(true);
         });
 
         it('calls removeEventListener on each item in the event listeners collection', () => {
@@ -236,7 +236,7 @@ describe('ReactCursorPosition', () => {
 
             positionObserver.unmount();
 
-            expect(removeEventListener.calledTwice).to.be.true;
+            expect(removeEventListener.calledTwice).toBe(true);
         });
     });
 
@@ -256,7 +256,7 @@ describe('ReactCursorPosition', () => {
                     renderedTree.update();
 
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().elementDimensions).to.deep.equal({
+                    expect(childComponent.props().elementDimensions).toEqual({
                         width: 4,
                         height: 4
                     });
@@ -271,7 +271,7 @@ describe('ReactCursorPosition', () => {
                     renderedTree.update();
 
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().elementDimensions).to.deep.equal({
+                    expect(childComponent.props().elementDimensions).toEqual({
                         width: 4,
                         height: 4
                     });
@@ -289,7 +289,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
                     let childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.false;
+                    expect(childComponent.props().isActive).toBe(false);
 
                     instance.onTouchStart(touchEvent);
                     instance.onTouchMove(touchEvent);
@@ -298,7 +298,7 @@ describe('ReactCursorPosition', () => {
                     defer(() => {
                         renderedTree.update();
                         childComponent = renderedTree.find(GenericSpanComponent);
-                        expect(childComponent.props().isActive).to.be.true;
+                        expect(childComponent.props().isActive).toBe(true);
                         done();
                     });
                 });
@@ -316,14 +316,14 @@ describe('ReactCursorPosition', () => {
                     renderedTree.update();
 
                     let childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.true;
+                    expect(childComponent.props().isActive).toBe(true);
 
                     instance.onTouchMove(touchEvent)
                     instance.onTouchEnd(touchEvent);
 
                     renderedTree.update();
                     childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.false;
+                    expect(childComponent.props().isActive).toBe(false);
                 });
 
                 it('unsets isActive onTouchCancel', () => {
@@ -338,14 +338,14 @@ describe('ReactCursorPosition', () => {
                     instance.onTouchMove(touchEvent);
                     renderedTree.update();
                     let childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.true;
+                    expect(childComponent.props().isActive).toBe(true);
 
                     instance.onTouchMove(touchEvent);
                     instance.onTouchCancel(touchEvent);
 
                     renderedTree.update();
                     childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.false;
+                    expect(childComponent.props().isActive).toBe(false);
                 });
             });
 
@@ -353,7 +353,7 @@ describe('ReactCursorPosition', () => {
                 it('sets isActive', (done) => {
                     const renderedTree = getMountedComponentTree({ hoverDelayInMs: 0 });
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).to.be.false;
+                    expect(childComponent.props().isActive).toBe(false);
 
                     const instance = renderedTree.instance();
                     instance.onMouseEnter(mouseEvent);
@@ -362,7 +362,7 @@ describe('ReactCursorPosition', () => {
                     defer(() => {
                         renderedTree.update();
                         const childComponent = renderedTree.find(GenericSpanComponent);
-                        expect(childComponent.props().isActive).to.be.true;
+                        expect(childComponent.props().isActive).toBe(true);
                         done();
                     });
                 });
@@ -375,14 +375,14 @@ describe('ReactCursorPosition', () => {
                     defer(() => {
                         renderedTree.update();
                         const childComponent = renderedTree.find(GenericSpanComponent);
-                        expect(childComponent.props().isActive).to.be.true;
+                        expect(childComponent.props().isActive).toBe(true);
 
                         instance.onMouseLeave(mouseEvent);
 
                         defer(() => {
                             renderedTree.update();
                             const childComponent = renderedTree.find(GenericSpanComponent);
-                            expect(childComponent.props().isActive).to.be.false;
+                            expect(childComponent.props().isActive).toBe(false);
                             done();
                         });
                     });
@@ -403,13 +403,13 @@ describe('ReactCursorPosition', () => {
                     const instance = renderedTree.instance();
                     let childComponent = renderedTree.find(GenericSpanComponent);
 
-                    expect(childComponent.props().isPositionOutside).to.be.true;
+                    expect(childComponent.props().isPositionOutside).toBe(true);
 
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
                     childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isPositionOutside).to.be.false;
+                    expect(childComponent.props().isPositionOutside).toBe(false);
                 });
 
                 it('sets isPositionOutside', () => {
@@ -429,7 +429,7 @@ describe('ReactCursorPosition', () => {
                     renderedTree.update();
 
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isPositionOutside).to.be.true;
+                    expect(childComponent.props().isPositionOutside).toBe(true);
                 });
             });
 
@@ -453,7 +453,7 @@ describe('ReactCursorPosition', () => {
                     defer(() => {
                         renderedTree.update();
                         const childComponent = renderedTree.find(GenericSpanComponent);
-                        expect(childComponent.props()).to.deep.equal({
+                        expect(childComponent.props()).toEqual({
                             detectedEnvironment: {
                                 isMouseDetected: true,
                                 isTouchDetected: false
@@ -492,7 +492,7 @@ describe('ReactCursorPosition', () => {
                     defer(() => {
                         renderedTree.update();
                         const childComponent = renderedTree.find(GenericSpanComponent);
-                        expect(childComponent.props()).to.deep.equal({
+                        expect(childComponent.props()).toEqual({
                             detectedEnvironment: {
                                 isMouseDetected: true,
                                 isTouchDetected: false
@@ -529,7 +529,7 @@ describe('ReactCursorPosition', () => {
                     instance.onTouchMove(getTouchEvent({ pageX: 2, pageY: 3 }));
                     renderedTree.update();
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().position).to.deep.equal({
+                    expect(childComponent.props().position).toEqual({
                         x: 2,
                         y: 3
                     });
@@ -549,7 +549,7 @@ describe('ReactCursorPosition', () => {
 
                     renderedTree.update();
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().position).to.deep.equal({
+                    expect(childComponent.props().position).toEqual({
                         x: 1,
                         y: 2
                     });
@@ -567,7 +567,7 @@ describe('ReactCursorPosition', () => {
                     mountedComponent.update();
 
                     const childComponent = mountedComponent.find(GenericSpanComponent);
-                    expect(childComponent.props().detectedEnvironment).to.deep.equal({
+                    expect(childComponent.props().detectedEnvironment).toEqual({
                         isTouchDetected: true,
                         isMouseDetected: false
                     });
@@ -583,7 +583,7 @@ describe('ReactCursorPosition', () => {
                     mountedComponent.update();
 
                     const childComponent = mountedComponent.find(GenericSpanComponent);
-                    expect(childComponent.props().detectedEnvironment).to.deep.equal({
+                    expect(childComponent.props().detectedEnvironment).toEqual({
                         isTouchDetected: false,
                         isMouseDetected: true
                     });
@@ -596,26 +596,26 @@ describe('ReactCursorPosition', () => {
         it('supports className', () => {
             const tree = getMountedComponentTree({ className: 'foo' });
 
-            expect(tree.find('div').hasClass('foo')).to.equal(true);
+            expect(tree.find('div').hasClass('foo')).toBe(true);
         });
 
         it('supports style', () => {
             const tree = render(<ReactCursorPosition style={{ width: '100px' }}/>);
 
-            expect(tree.css('width')).to.equal('100px');
+            expect(tree.css('width')).toBe('100px');
         });
 
         it.skip('supports isActivatedOnTouch', () => {
             const tree = getMountedComponentTree({ isActivatedOnTouch: true });
             let childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props().isActive).to.be.false;
+            expect(childComponent.props().isActive).toBe(false);
 
             tree.instance().onTouchStart(touchEvent);
             tree.instance().onTouchMove(touchEvent);
             tree.update();
 
             childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props().isActive).to.be.true;
+            expect(childComponent.props().isActive).toBe(true);
         });
 
         it('supports mapChildProps', () => {
@@ -640,7 +640,7 @@ describe('ReactCursorPosition', () => {
             tree.update();
 
             const childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props()).to.deep.equal({
+            expect(childComponent.props()).toEqual({
                 elementDimensions: {
                     width: 4,
                     height: 4
@@ -667,7 +667,7 @@ describe('ReactCursorPosition', () => {
 
             tree.instance().onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
 
-            expect(spy.args[1][0]).to.deep.equal({
+            expect(spy.args[1][0]).toEqual({
                 detectedEnvironment: {
                     isMouseDetected: false,
                     isTouchDetected: true
@@ -697,7 +697,7 @@ describe('ReactCursorPosition', () => {
 
             tree.instance().onTouchStart(touchEvent);
 
-            expect(spy.args[0][0].isActive).to.be.true;
+            expect(spy.args[0][0].isActive).toBe(true);
         });
 
         it('supports shouldDecorateChildren', () => {
@@ -711,7 +711,7 @@ describe('ReactCursorPosition', () => {
 
             instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
 
-            expect(childComponent.props()).to.be.empty;
+            expect(childComponent.props()).toHaveLength(0);
         });
 
         describe('support for shouldStopTouchMovePropagation', () => {
@@ -729,7 +729,7 @@ describe('ReactCursorPosition', () => {
                 tree.instance().onTouchMove(touchEvent);
                 tree.update();
 
-                expect(touchEvent.stopPropagation.called).to.be.false;
+                expect(touchEvent.stopPropagation.called).toBe(false);
             });
 
             it('can be set', () => {
@@ -747,7 +747,7 @@ describe('ReactCursorPosition', () => {
                 tree.instance().onTouchMove(touchEvent);
                 tree.update();
 
-                expect(touchEvent.stopPropagation.called).to.be.true;
+                expect(touchEvent.stopPropagation.called).toBe(true);
             });
         });
 
@@ -770,7 +770,7 @@ describe('ReactCursorPosition', () => {
                 defer(() => {
                     childComponent = tree.find(GenericSpanComponent);
                     // expect(childComponent.props().isActive).to.be.true;
-                    expect(true).to.be.true;
+                    expect(true).toBe(true);
                     clock.restore();
                     done();
                 })
@@ -783,11 +783,11 @@ describe('ReactCursorPosition', () => {
                 });
                 const childComponent = tree.find(GenericSpanComponent);
                 tree.instance().onTouchStart(touchEvent);
-                expect(childComponent.props().isActive).to.be.false;
+                expect(childComponent.props().isActive).toBe(false);
 
                 clock.tick(99);
 
-                expect(childComponent.props().isActive).to.be.false
+                expect(childComponent.props().isActive).toBe(false)
                 clock.restore();
             });
         });
@@ -805,7 +805,7 @@ describe('ReactCursorPosition', () => {
                 tree.instance().onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
                 clock.tick(101);
 
-                expect(childComponent.props().isActive).to.be.false
+                expect(childComponent.props().isActive).toBe(false)
                 clock.restore();
             });
         });
@@ -820,7 +820,7 @@ describe('ReactCursorPosition', () => {
 
                     mountedComponent.instance().onTouchStart(getTouchEvent());
 
-                    expect(spy.calledOnce).to.be.true;
+                    expect(spy.calledOnce).toBe(true);
                 });
             });
 
@@ -833,7 +833,7 @@ describe('ReactCursorPosition', () => {
 
                     mountedComponent.instance().onMouseEnter(getMouseEvent());
 
-                    expect(spy.calledOnce).to.be.true;
+                    expect(spy.calledOnce).toBe(true);
                 });
             });
         });
@@ -841,7 +841,7 @@ describe('ReactCursorPosition', () => {
         describe('Support for isEnabled', () => {
             it('is enabled by default', () => {
                 const { isEnabled } = ReactCursorPosition.defaultProps;
-                expect( isEnabled ).to.be.true;
+                expect( isEnabled ).toBe(true);
             });
 
             it('does not call enable if aleady enabled', () => {
@@ -851,7 +851,7 @@ describe('ReactCursorPosition', () => {
 
                 positionObserver.setProps({ isEnabled: true })
 
-                expect(instance.enable.called).to.be.false;
+                expect(instance.enable.called).toBe(false);
             });
 
             it('can be disabled', () => {
@@ -861,7 +861,7 @@ describe('ReactCursorPosition', () => {
 
                 instance.componentDidMount();
 
-                expect(instance.enable.called).to.be.false;
+                expect(instance.enable.called).toBe(false);
             });
 
             it('can be disabled without remounting', () => {
@@ -870,7 +870,7 @@ describe('ReactCursorPosition', () => {
 
                 positionObserver.setProps({ isEnabled: false });
 
-                expect(instance.disable.calledOnce).to.be.true;
+                expect(instance.disable.calledOnce).toBe(true);
             });
 
             it('can be enabled without remounting', () => {
@@ -880,7 +880,7 @@ describe('ReactCursorPosition', () => {
 
                 positionObserver.setProps({ isEnabled: true });
 
-                expect(instance.enable.calledOnce).to.be.true;
+                expect(instance.enable.calledOnce).toBe(true);
             });
         });
 
@@ -892,7 +892,7 @@ describe('ReactCursorPosition', () => {
 
                 instance.reset();
 
-                expect(spy.calledOnce).to.be.true;
+                expect(spy.calledOnce).toBe(true);
                 spy.restore();
             });
 
@@ -905,7 +905,7 @@ describe('ReactCursorPosition', () => {
 
                 instance.reset();
 
-                expect(spy.calledTwice).to.be.true;
+                expect(spy.calledTwice).toBe(true);
                 spy.restore();
             });
 
@@ -916,7 +916,7 @@ describe('ReactCursorPosition', () => {
 
                 instance.reset();
 
-                expect(spy.called).to.be.false;
+                expect(spy.called).toBe(false);
                 spy.restore();
             });
         });
@@ -929,11 +929,11 @@ describe('ReactCursorPosition', () => {
                 name: 'test',
                 id: 1
             });
-            expect(instance.timers.length).to.equal(1);
+            expect(instance.timers.length).toBe(1);
 
             instance.clearTimers();
 
-            expect(instance.timers.length).to.equal(0);
+            expect(instance.timers.length).toBe(0);
         });
 
         it('calls clearTimeout for each collection item', () => {
@@ -952,9 +952,9 @@ describe('ReactCursorPosition', () => {
 
             instance.clearTimers();
 
-            expect(global.clearTimeout.callCount).to.equal(2);
-            expect(global.clearTimeout.getCall(0).args[0]).to.equal(2);
-            expect(global.clearTimeout.getCall(1).args[0]).to.equal(1);
+            expect(global.clearTimeout.callCount).toBe(2);
+            expect(global.clearTimeout.getCall(0).args[0]).toBe(2);
+            expect(global.clearTimeout.getCall(1).args[0]).toBe(1);
             global.clearTimeout.restore();
         });
     });
@@ -976,8 +976,8 @@ describe('ReactCursorPosition', () => {
 
             instance.clearTimer('test');
 
-            expect(global.clearTimeout.callCount).to.equal(1);
-            expect(global.clearTimeout.getCall(0).args[0]).to.equal(1);
+            expect(global.clearTimeout.callCount).toBe(1);
+            expect(global.clearTimeout.getCall(0).args[0]).toBe(1);
             global.clearTimeout.restore();
         });
     });
