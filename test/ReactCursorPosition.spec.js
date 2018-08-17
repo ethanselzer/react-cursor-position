@@ -585,19 +585,6 @@ describe('ReactCursorPosition', () => {
             expect(tree.css('width')).toBe('100px');
         });
 
-        it.skip('supports isActivatedOnTouch', () => {
-            const tree = getMountedComponentTree({ isActivatedOnTouch: true });
-            let childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props().isActive).toBe(false);
-
-            tree.instance().onTouchStart(touchEvent);
-            tree.instance().onTouchMove(touchEvent);
-            tree.update();
-
-            childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props().isActive).toBe(true);
-        });
-
         it('supports mapChildProps', () => {
             function mapChildProps({ elementDimensions, isActive, isPositionOutside, position }) {
                 return {
@@ -688,6 +675,61 @@ describe('ReactCursorPosition', () => {
             expect(childComponent.props()).toEqual({});
         });
 
+        describe('touch interaction options', () => {
+            it('supports activation on touch', () => {
+                const tree = getMountedComponentTree({
+                    touchInteraction: INTERACTIONS.TOUCH
+                });
+                let childComponent = tree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(false);
+
+                tree.instance().onTouchStart(touchEvent);
+                tree.instance().onTouchMove(touchEvent);
+                tree.update();
+
+                childComponent = tree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(true);
+            });
+
+            describe('Supports press interaction', () => {
+                it('sets isActive if pressThreshold is not exceeded for duration', () => {
+                    const clock = sinon.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        pressDuration: 100,
+                        pressMoveThreshold: 5,
+                        touchInteraction: INTERACTIONS.PRESS
+                    });
+                    tree.instance().onTouchStart(touchEvent);
+                    tree.instance().onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
+                    tree.update();
+                    let childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.props().isActive).toBe(false);
+
+                    clock.tick(101);
+                    tree.update();
+
+                    childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.props().isActive).toBe(true);
+                    clock.restore();
+                });
+
+                it('does not set isActive before duration elapses', () => {
+                    const clock = sinon.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        pressDuration: 100
+                    });
+                    const childComponent = tree.find(GenericSpanComponent);
+                    tree.instance().onTouchStart(touchEvent);
+                    expect(childComponent.props().isActive).toBe(false);
+
+                    clock.tick(99);
+
+                    expect(childComponent.props().isActive).toBe(false)
+                    clock.restore();
+                });
+            });
+        });
+
         describe('support for shouldStopTouchMovePropagation', () => {
             it('is unset by default', () => {
                 const tree = getMountedComponentTree({
@@ -718,47 +760,6 @@ describe('ReactCursorPosition', () => {
                 tree.update();
 
                 expect(touchEvent.stopPropagation.called).toBe(true);
-            });
-        });
-
-        describe('Support for pressDuration', () => {
-            it.skip('sets isActive if pressThreshold is not exceeded for duration', (done) => {
-                const clock = sinon.useFakeTimers();
-                const tree = getMountedComponentTree({
-                    pressDuration: 100,
-                    pressMoveThreshold: 5
-                });
-                tree.instance().onTouchStart(touchEvent);
-                tree.instance().onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
-                tree.update();
-                let childComponent = tree.find(GenericSpanComponent);
-                // expect(childComponent.props().isActive).to.be.false;
-
-                clock.tick(101);
-                tree.update();
-
-                defer(() => {
-                    childComponent = tree.find(GenericSpanComponent);
-                    // expect(childComponent.props().isActive).to.be.true;
-                    expect(true).toBe(true);
-                    clock.restore();
-                    done();
-                })
-            });
-
-            it('does not set isActive before duration elapses', () => {
-                const clock = sinon.useFakeTimers();
-                const tree = getMountedComponentTree({
-                    pressDuration: 100
-                });
-                const childComponent = tree.find(GenericSpanComponent);
-                tree.instance().onTouchStart(touchEvent);
-                expect(childComponent.props().isActive).toBe(false);
-
-                clock.tick(99);
-
-                expect(childComponent.props().isActive).toBe(false)
-                clock.restore();
             });
         });
 

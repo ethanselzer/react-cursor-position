@@ -85,7 +85,7 @@ export default class extends React.Component {
             INTERACTIONS.TOUCH
         ]),
         mouseInteraction: PropTypes.oneOf([
-            INTERACTIONS.Click,
+            INTERACTIONS.CLICK,
             INTERACTIONS.HOVER
         ])
     };
