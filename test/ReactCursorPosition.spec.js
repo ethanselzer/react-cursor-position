@@ -274,7 +274,6 @@ describe('ReactCursorPosition', () => {
             describe('Touch Environment', () => {
                 it('sets isActive', (done) => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
                         touchInteraction: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
@@ -295,7 +294,6 @@ describe('ReactCursorPosition', () => {
 
                 it('unsets isActive onTouchEnd', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
                         touchInteraction: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
@@ -316,7 +314,6 @@ describe('ReactCursorPosition', () => {
 
                 it('unsets isActive onTouchCancel', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
                         touchInteraction: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
@@ -675,8 +672,8 @@ describe('ReactCursorPosition', () => {
             expect(childComponent.props()).toEqual({});
         });
 
-        describe('touch interaction options', () => {
-            it('supports activation on touch', () => {
+        describe('touch activation interaction options', () => {
+            it('supports activation immediately on touch', () => {
                 const tree = getMountedComponentTree({
                     touchInteraction: INTERACTIONS.TOUCH
                 });
@@ -691,8 +688,8 @@ describe('ReactCursorPosition', () => {
                 expect(childComponent.props().isActive).toBe(true);
             });
 
-            describe('Supports press interaction', () => {
-                it('sets isActive if pressThreshold is not exceeded for duration', () => {
+            describe('Supports activation by press gesture (long touch)', () => {
+                it('sets isActive if pressMoveThreshold is not exceeded for duration', () => {
                     const clock = sinon.useFakeTimers();
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
@@ -713,10 +710,28 @@ describe('ReactCursorPosition', () => {
                     clock.restore();
                 });
 
-                it('does not set isActive before duration elapses', () => {
+                it('does not set isActive if pressMoveThreshold is exceeded for duration', () => {
                     const clock = sinon.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        pressDuration: 100
+                        pressDuration: 100,
+                        pressMoveThreshold: 5,
+                        touchInteraction: INTERACTIONS.PRESS
+                    });
+                    const childComponent = tree.find(GenericSpanComponent);
+                    tree.instance().onTouchStart(touchEvent);
+
+                    tree.instance().onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
+                    clock.tick(101);
+
+                    expect(childComponent.props().isActive).toBe(false)
+                    clock.restore();
+                });
+
+                it('does not set isActive if pressDuration has not elapsed', () => {
+                    const clock = sinon.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        pressDuration: 100,
+                        touchInteraction: INTERACTIONS.PRESS
                     });
                     const childComponent = tree.find(GenericSpanComponent);
                     tree.instance().onTouchStart(touchEvent);
@@ -727,6 +742,20 @@ describe('ReactCursorPosition', () => {
                     expect(childComponent.props().isActive).toBe(false)
                     clock.restore();
                 });
+            });
+
+            describe.skip('Supports activation by tap gesture', () => {
+
+            });
+        });
+
+        describe('Mouse interactions', () => {
+            it.skip('supports hover', () => {
+
+            });
+
+            it.skip('supports click', () => {
+
             });
         });
 
@@ -764,21 +793,7 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('Support for pressMoveThreshold', () => {
-            it('sets isActive if movement is constrained to the threshold within the specified duration ', () => {
-                const clock = sinon.useFakeTimers();
-                const tree = getMountedComponentTree({
-                    pressDuration: 100,
-                    pressMoveThreshold: 5
-                });
-                const childComponent = tree.find(GenericSpanComponent);
-                tree.instance().onTouchStart(touchEvent);
 
-                tree.instance().onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
-                clock.tick(101);
-
-                expect(childComponent.props().isActive).toBe(false)
-                clock.restore();
-            });
         });
 
         describe('Support for onDetectedEnvironmentChanged', () => {
@@ -815,7 +830,7 @@ describe('ReactCursorPosition', () => {
                 expect( isEnabled ).toBe(true);
             });
 
-            it('does not call enable if aleady enabled', () => {
+            it('does not call enable if already enabled', () => {
                 const positionObserver = getMountedComponentTree({ isEnabled: true });
                 const instance = positionObserver.instance();
                 sinon.spy(instance, 'enable');
