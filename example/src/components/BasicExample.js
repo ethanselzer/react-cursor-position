@@ -10,10 +10,7 @@ export default class extends React.Component {
         return (
             <ReactCursorPosition {...{
                 className: 'example__target example__target--basic',
-                activationInteractions: {
-                    touch: INTERACTIONS.TAP,
-                    mouse: INTERACTIONS.CLICK
-                },
+
                 hoverDelayInMs: 250,
                 hoverOffDelayInMs: 350
             }}>

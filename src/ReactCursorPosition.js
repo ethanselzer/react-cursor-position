@@ -4,7 +4,10 @@ import objectAssign from 'object-assign';
 import omit from 'object.omit';
 import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
-import * as constants from './constants';
+import {
+    INTERACTIONS,
+    MOUSE_EMULATION_GUARD_TIMER_NAME
+} from './constants';
 import noop from './utils/noop';
 import PressActivation from './lib/PressActivation';
 import TouchActivation from './lib/TouchActivation';
@@ -51,8 +54,8 @@ export default class extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
-        this.setTouchActivationStrategy(props.activationInteractions.touch);
-        this.setMouseActivationStrategy(props.activationInteractions.mouse);
+        this.setTouchActivationStrategy(props.touchInteraction);
+        this.setMouseActivationStrategy(props.mouseInteraction);
 
         window.foo = this;
     }
@@ -60,7 +63,6 @@ export default class extends React.Component {
     static displayName = 'ReactCursorPosition';
 
     static propTypes = {
-        activationInteractions: PropTypes.object,
         children: PropTypes.any,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
@@ -76,7 +78,16 @@ export default class extends React.Component {
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
         tapMoveThreshold: PropTypes.number,
-        tapDuration: PropTypes.number
+        tapDuration: PropTypes.number,
+        touchInteraction: PropTypes.oneOf([
+            INTERACTIONS.PRESS,
+            INTERACTIONS.TAP,
+            INTERACTIONS.TOUCH
+        ]),
+        mouseInteraction: PropTypes.oneOf([
+            INTERACTIONS.Click,
+            INTERACTIONS.HOVER
+        ])
     };
 
     static defaultProps = {
@@ -93,10 +104,8 @@ export default class extends React.Component {
         tapMoveThreshold: 5,
         shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
-        activationInteractions: {
-            touch: constants.INTERACTIONS.PRESS, //how about some destructuring
-            mouse: constants.INTERACTIONS.HOVER
-        }
+        touchInteraction: INTERACTIONS.PRESS,
+        mouseInteraction: INTERACTIONS.HOVER
     };
 
     onIsActiveChanged({ isActive }) {
@@ -246,13 +255,11 @@ export default class extends React.Component {
         }= this.props;
 
         const {
-            INTERACTIONS: {
-                TOUCH,
-                TAP,
-                // DOUBLE_TAP,
-                PRESS,
-            }
-        } = constants;
+            TOUCH,
+            TAP,
+            // DOUBLE_TAP,
+            PRESS
+        } = INTERACTIONS;
 
         switch (interaction) {
             case PRESS :
@@ -286,11 +293,9 @@ export default class extends React.Component {
         }= this.props;
 
         const {
-            INTERACTIONS: {
-                HOVER,
-                CLICK
-            }
-        } = constants;
+            HOVER,
+            CLICK
+        } = INTERACTIONS;
 
         switch (interaction) {
             case  HOVER :
@@ -370,7 +375,7 @@ export default class extends React.Component {
 
     unsetShouldGuardAgainstMouseEmulationByDevices() {
         this.timers.push({
-            name: constants.MOUSE_EMULATION_GUARD_TIMER_NAME,
+            name: MOUSE_EMULATION_GUARD_TIMER_NAME,
             id: setTimeout(() => {
                 this.shouldGuardAgainstMouseEmulationByDevices = false;
             }, 0)

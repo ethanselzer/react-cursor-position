@@ -146,12 +146,12 @@ describe('ReactCursorPosition', () => {
     it('guards against mouse emulation for touch input', () => {
         const positionObserver = getMountedComponentTree();
         const instance = positionObserver.instance();
-        sinon.spy(instance, 'init');
+        const init = jest.spyOn(instance, 'init');
         instance.onTouchStart(touchEvent);
 
         instance.onMouseEnter(mouseEvent);
 
-        expect(instance.init.calledOnce).toBe(true);
+        expect(init).toHaveBeenCalledTimes(1);
     });
 
     it.skip('calls clearTimers on componentWillUnmount', () => {
