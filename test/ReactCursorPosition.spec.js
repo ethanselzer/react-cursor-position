@@ -126,7 +126,7 @@ describe('ReactCursorPosition', () => {
 
         renderedTree.instance().onTouchStart(touchEvent);
 
-        expect(childDomNode.props()).toHaveLength(0);
+        expect(childDomNode.props()).toEqual({});
     });
 
     it('does not pass own-props to child components', () => {
@@ -209,7 +209,7 @@ describe('ReactCursorPosition', () => {
     describe('Remove Touch and Mouse Event Listeners', () => {
         it('drains touch event listeners collection', () => {
             const instance = positionObserver.instance();
-            const removeEventListener = sinon.spy();
+            const removeEventListener = () => {};
             const eventListener = { removeEventListener };
             instance.eventListeners.push(eventListener, eventListener);
 
@@ -711,7 +711,7 @@ describe('ReactCursorPosition', () => {
 
             instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
 
-            expect(childComponent.props()).toHaveLength(0);
+            expect(childComponent.props()).toEqual({});
         });
 
         describe('support for shouldStopTouchMovePropagation', () => {
