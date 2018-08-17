@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import { expect } from 'chai';
 import sinon from 'sinon';
 
 import ReactCursorPosition from '../src/ReactCursorPosition';
@@ -768,13 +767,13 @@ describe('ReactCursorPosition', () => {
                 clock.tick(101);
                 tree.update();
 
-                // defer(() => {
+                defer(() => {
                     childComponent = tree.find(GenericSpanComponent);
                     // expect(childComponent.props().isActive).to.be.true;
                     expect(true).to.be.true;
                     clock.restore();
                     done();
-                // })
+                })
             });
 
             it('does not set isActive before duration elapses', () => {
