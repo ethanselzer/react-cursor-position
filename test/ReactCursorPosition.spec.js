@@ -756,7 +756,7 @@ describe('ReactCursorPosition', () => {
             });
 
             describe('Supports activation by tap gesture', () => {
-                it.only('sets isActive for default tap', () => {
+                it('sets isActive for default tap', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         touchInteraction: INTERACTIONS.TAP,
@@ -772,11 +772,32 @@ describe('ReactCursorPosition', () => {
                     jest.advanceTimersByTime(11);
                     tree.update();
                     childComponent = tree.find(GenericSpanComponent);
-                    expect(childComponent.prop('isActive')).toBe(true)
+                    expect(childComponent.prop('isActive')).toBe(true);
                 });
 
-                it.skip('unsets isActive on second tap', () => {
+                it('unsets isActive on second tap', () => {
+                    jest.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        touchInteraction: INTERACTIONS.TAP,
+                    });
+                    const instance = tree.instance();
 
+                    // tap once to activate
+                    instance.onTouchStart(touchEvent);
+                    instance.onTouchEnd(touchEvent);
+                    // default tapDuration is 180
+                    jest.advanceTimersByTime(181);
+                    tree.update();
+                    let childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(true);
+
+                    // tap a second time to deactivate
+                    instance.onTouchStart(touchEvent);
+                    instance.onTouchEnd(touchEvent);
+                    jest.advanceTimersByTime(181);
+                    tree.update();
+                    childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(false);
                 });
             });
         });
