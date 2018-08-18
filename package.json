@@ -44,12 +44,12 @@
     "prepublishOnly": "npm run lint && npm test && npm run build",
     "lint": "eslint \"@(src|test)/**/*.js\"",
     "stats": "webpack -p --profile --json > stats.json",
-    "test": "jest",
-    "test-only": "cross-env BABEL_ENV=test mocha --require babel-core/register --require test/setup test/*.spec.js",
+    "test": "npm run lint && jest",
+    "test-only": "jest",
     "test-watch": "jest --watch",
     "test-coverage": "jest --coverage",
-    "test-ci": "npm run lint && npm run test-coverage && npm run coveralls",
-    "coveralls": "nyc report --reporter=text-lcov | coveralls"
+    "test-ci": "npm run test && npm run coveralls",
+    "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
   "nyc": {
     "sourceMap": false,
