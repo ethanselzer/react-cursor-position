@@ -827,6 +827,17 @@ describe('ReactCursorPosition', () => {
 
                 expect(childComponent.prop('isActive')).toBe(true);
             });
+
+            it('throws an error if an unsupported mouse interaction is specified', () => {
+                function shouldThrow() {
+                    const tree = getMountedComponentTree();
+                    const instance = tree.instance();
+
+                    instance.setMouseActivationStrategy('foo');
+                }
+
+                expect(shouldThrow).toThrow();
+            });
         });
 
         describe('support for shouldStopTouchMovePropagation', () => {

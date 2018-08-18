@@ -48,6 +48,7 @@
     "test-only": "jest",
     "test-watch": "jest --watch",
     "test-coverage": "jest --coverage",
+    "test-watch-coverage": "jest --watch --coverage",
     "test-ci": "npm run test && npm run coveralls",
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
