@@ -8,7 +8,7 @@ import * as utils from '../src/utils/addEventListener';
 import { INTERACTIONS } from '../src/constants';
 
 describe('ReactCursorPosition', () => {
-    let positionObserver = shallow(<ReactCursorPosition />);
+    let positionObserver = shallow(<ReactCursorPosition />, {disableLifecycleMethods: true});
     const touchEvent = getTouchEvent();
     const mouseEvent = getMouseEvent();
 
