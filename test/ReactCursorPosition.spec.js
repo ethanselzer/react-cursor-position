@@ -750,12 +750,39 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('Mouse interactions', () => {
-            it.skip('supports hover', () => {
+            it('supports activation on hover', (done) => {
+                const renderedTree = getMountedComponentTree({
+                    hoverDelayInMs: 0,
+                    mouseInteraction: INTERACTIONS.HOVER
+                });
+                const childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(false);
 
+                const instance = renderedTree.instance();
+                instance.onMouseEnter(mouseEvent);
+                instance.onMouseMove(mouseEvent);
+
+                defer(() => {
+                    renderedTree.update();
+                    const childComponent = renderedTree.find(GenericSpanComponent);
+                    expect(childComponent.props().isActive).toBe(true);
+                    done();
+                });
             });
 
-            it.skip('supports click', () => {
+            it('supports click', () => {
+                const renderedTree = getMountedComponentTree({
+                    mouseInteraction: INTERACTIONS.CLICK
+                });
+                let childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(false);
 
+                const instance = renderedTree.instance();
+                instance.onClick(mouseEvent);
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
+
+                expect(childComponent.props().isActive).toBe(true);
             });
         });
 
@@ -792,7 +819,7 @@ describe('ReactCursorPosition', () => {
             });
         });
 
-        describe('Support for pressMoveThreshold', () => {
+        describe.skip('Support for pressMoveThreshold', () => {
 
         });
 
