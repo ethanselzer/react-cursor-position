@@ -51,13 +51,6 @@
     "test-ci": "npm run test && npm run coveralls",
     "coveralls": "npm run test-coverage && cat ./coverage/lcov.info | coveralls"
   },
-  "nyc": {
-    "sourceMap": false,
-    "instrument": false,
-    "exclude": [
-      "test"
-    ]
-  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
