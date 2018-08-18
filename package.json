@@ -46,8 +46,8 @@
     "stats": "webpack -p --profile --json > stats.json",
     "test": "jest",
     "test-only": "cross-env BABEL_ENV=test mocha --require babel-core/register --require test/setup test/*.spec.js",
-    "test-watch": "npm run test-only -- --watch",
-    "test-coverage": "rimraf coverage && nyc --reporter=lcov npm run test-only && nyc report",
+    "test-watch": "jest --watch",
+    "test-coverage": "jest --coverage",
     "test-ci": "npm run lint && npm run test-coverage && npm run coveralls",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
