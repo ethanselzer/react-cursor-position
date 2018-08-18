@@ -750,14 +750,13 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('Mouse interactions', () => {
-            // either use a describe or add tests for hoverDelayInMs and hoverOffDelayInMs
             it('supports activation on hover', (done) => {
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 0,
                     mouseInteraction: INTERACTIONS.HOVER
                 });
                 const childComponent = renderedTree.find(GenericSpanComponent);
-                expect(childComponent.props().isActive).toBe(false);
+                expect(childComponent.prop('isActive')).toBe(false);
 
                 const instance = renderedTree.instance();
                 instance.onMouseEnter(mouseEvent);
@@ -765,7 +764,7 @@ describe('ReactCursorPosition', () => {
                 defer(() => {
                     renderedTree.update();
                     const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.props().isActive).toBe(true);
+                    expect(childComponent.prop('isActive')).toBe(true);
                     done();
                 });
             });
@@ -778,7 +777,7 @@ describe('ReactCursorPosition', () => {
                     mouseInteraction: INTERACTIONS.HOVER
                 });
                 let childComponent = renderedTree.find(GenericSpanComponent);
-                expect(childComponent.props().isActive).toBe(false);
+                expect(childComponent.prop('isActive')).toBe(false);
 
                 const instance = renderedTree.instance();
                 instance.onMouseEnter(mouseEvent);
@@ -786,7 +785,32 @@ describe('ReactCursorPosition', () => {
 
                 renderedTree.update();
                 childComponent = renderedTree.find(GenericSpanComponent);
-                expect(childComponent.props().isActive).toBe(true);
+                expect(childComponent.prop('isActive')).toBe(true);
+            });
+
+            it('supports delayed deactivation on hover', () => {
+                jest.useFakeTimers();
+
+                const renderedTree = getMountedComponentTree({
+                    hoverDelayInMs: 0,
+                    hoverOffDelayInMs: 10,
+                    mouseInteraction: INTERACTIONS.HOVER
+                });
+                const instance = renderedTree.instance();
+                instance.onMouseEnter(mouseEvent);
+                jest.advanceTimersByTime(1);
+
+                instance.onMouseLeave(mouseEvent);
+
+                jest.advanceTimersByTime(5);
+                renderedTree.update();
+                let childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.prop('isActive')).toBe(true);
+
+                jest.advanceTimersByTime(11);
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.prop('isActive')).toBe(false);
             });
 
             it('supports click', () => {
@@ -801,7 +825,7 @@ describe('ReactCursorPosition', () => {
                 renderedTree.update();
                 childComponent = renderedTree.find(GenericSpanComponent);
 
-                expect(childComponent.props().isActive).toBe(true);
+                expect(childComponent.prop('isActive')).toBe(true);
             });
         });
 
