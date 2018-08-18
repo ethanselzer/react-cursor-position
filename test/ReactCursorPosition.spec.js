@@ -8,7 +8,7 @@ import * as utils from '../src/utils/addEventListener';
 import { INTERACTIONS } from '../src/constants';
 
 describe('ReactCursorPosition', () => {
-    let positionObserver = shallow(<ReactCursorPosition />, {disableLifecycleMethods: true});
+    let positionObserver = shallow(<ReactCursorPosition />);
     const touchEvent = getTouchEvent();
     const mouseEvent = getMouseEvent();
 
@@ -750,6 +750,7 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('Mouse interactions', () => {
+            // either use a describe or add tests for hoverDelayInMs and hoverOffDelayInMs
             it('supports activation on hover', (done) => {
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 0,
@@ -760,7 +761,6 @@ describe('ReactCursorPosition', () => {
 
                 const instance = renderedTree.instance();
                 instance.onMouseEnter(mouseEvent);
-                instance.onMouseMove(mouseEvent);
 
                 defer(() => {
                     renderedTree.update();
@@ -768,6 +768,25 @@ describe('ReactCursorPosition', () => {
                     expect(childComponent.props().isActive).toBe(true);
                     done();
                 });
+            });
+
+            it('supports delayed activation on hover', () => {
+                jest.useFakeTimers();
+
+                const renderedTree = getMountedComponentTree({
+                    hoverDelayInMs: 10,
+                    mouseInteraction: INTERACTIONS.HOVER
+                });
+                let childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(false);
+
+                const instance = renderedTree.instance();
+                instance.onMouseEnter(mouseEvent);
+                jest.advanceTimersByTime(11);
+
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.props().isActive).toBe(true);
             });
 
             it('supports click', () => {
@@ -817,10 +836,6 @@ describe('ReactCursorPosition', () => {
 
                 expect(touchEvent.stopPropagation.called).toBe(true);
             });
-        });
-
-        describe.skip('Support for pressMoveThreshold', () => {
-
         });
 
         describe('Support for onDetectedEnvironmentChanged', () => {
