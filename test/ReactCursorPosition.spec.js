@@ -673,7 +673,18 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('touch activation interaction options', () => {
-            it('supports activation immediately on touch', () => {
+            it('throws an error if an unsupported touch interaction is specified', () => {
+                function shouldThrow() {
+                    const tree = getMountedComponentTree();
+                    const instance = tree.instance();
+
+                    instance.setTouchActivationStrategy('foo');
+                }
+
+                expect(shouldThrow).toThrow();
+            });
+
+            it('supports activation by touch gesture', () => {
                 const tree = getMountedComponentTree({
                     touchInteraction: INTERACTIONS.TOUCH
                 });
@@ -744,29 +755,48 @@ describe('ReactCursorPosition', () => {
                 });
             });
 
-            describe.skip('Supports activation by tap gesture', () => {
+            describe('Supports activation by tap gesture', () => {
+                it.only('sets isActive for default tap', () => {
+                    jest.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        touchInteraction: INTERACTIONS.TAP,
+                        tapDuration: 10
+                    });
+                    const instance = tree.instance();
 
+                    instance.onTouchStart(touchEvent);
+                    instance.onTouchEnd(touchEvent);
+                    let childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(false);
+
+                    jest.advanceTimersByTime(11);
+                    tree.update();
+                    childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(true)
+                });
+
+                it.skip('unsets isActive on second tap', () => {
+
+                });
             });
         });
 
         describe('Mouse interactions', () => {
-            it('supports activation on hover', (done) => {
+            it('supports activation on hover', () => {
+                jest.useFakeTimers();
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 0,
                     mouseInteraction: INTERACTIONS.HOVER
                 });
-                const childComponent = renderedTree.find(GenericSpanComponent);
+                let childComponent = renderedTree.find(GenericSpanComponent);
                 expect(childComponent.prop('isActive')).toBe(false);
 
                 const instance = renderedTree.instance();
                 instance.onMouseEnter(mouseEvent);
 
-                defer(() => {
-                    renderedTree.update();
-                    const childComponent = renderedTree.find(GenericSpanComponent);
-                    expect(childComponent.prop('isActive')).toBe(true);
-                    done();
-                });
+                jest.advanceTimersByTime(1);
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
             });
 
             it('supports delayed activation on hover', () => {
