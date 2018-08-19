@@ -1057,66 +1057,6 @@ describe('ReactCursorPosition', () => {
         });
     });
 
-    describe.skip('clearTimers', () => {
-        it('drains the timers array', () => {
-            const instance = positionObserver.instance();
-            instance.timers.push({
-                name: 'test',
-                id: 1
-            });
-            expect(instance.timers.length).toBe(1);
-
-            instance.clearTimers();
-
-            expect(instance.timers.length).toBe(0);
-        });
-
-        it('calls clearTimeout for each collection item', () => {
-            sinon.spy(global, 'clearTimeout');
-            const instance = positionObserver.instance();
-            instance.timers.push(
-                {
-                    name: 'test',
-                    id: 1
-                },
-                {
-                    name: 'test-two',
-                    id: 2
-                }
-            );
-
-            instance.clearTimers();
-
-            expect(global.clearTimeout.callCount).toBe(2);
-            expect(global.clearTimeout.getCall(0).args[0]).toBe(2);
-            expect(global.clearTimeout.getCall(1).args[0]).toBe(1);
-            global.clearTimeout.restore();
-        });
-    });
-
-    describe.skip('clearTimer', () => {
-        it('calls clearTimeout for items in the collection with a matching name', () => {
-            sinon.spy(global, 'clearTimeout');
-            const instance = positionObserver.instance();
-            instance.timers.push(
-                {
-                    name: 'test',
-                    id: 1
-                },
-                {
-                    name: 'test-two',
-                    id: 2
-                }
-            );
-
-            instance.clearTimer('test');
-
-            expect(global.clearTimeout.callCount).toBe(1);
-            expect(global.clearTimeout.getCall(0).args[0]).toBe(1);
-            global.clearTimeout.restore();
-        });
-    });
-
     function getMountedComponentTree(props = {}) {
         const mountedWrapper = mount(
             <ReactCursorPosition { ...props }>
