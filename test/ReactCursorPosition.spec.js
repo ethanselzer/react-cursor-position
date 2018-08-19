@@ -167,8 +167,6 @@ describe('ReactCursorPosition', () => {
     });
 
     describe('Add Touch and Mouse Event Listeners', () => {
-        // can this be moved into the main section?
-        // where is the test for draining this collection?
         it('fills event listeners collection', () => {
             positionObserver = getMountedComponentTree();
             const instance = positionObserver.instance();
@@ -622,7 +620,7 @@ describe('ReactCursorPosition', () => {
         });
 
         it('supports onPositionChanged callback', () => {
-            const spy = sinon.spy();
+            const spy = jest.fn();
             const tree = getMountedComponentTree({
                 mouseInteraction: INTERACTIONS.CLICK,
                 touchInteraction: INTERACTIONS.TOUCH,
@@ -634,7 +632,7 @@ describe('ReactCursorPosition', () => {
 
             instance.onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
 
-            expect(spy.args[1][0]).toEqual({
+            expect(spy.mock.calls[1][0]).toEqual({
                 detectedEnvironment: {
                     isMouseDetected: false,
                     isTouchDetected: true
@@ -653,7 +651,7 @@ describe('ReactCursorPosition', () => {
         });
 
         it('supports onActivationChanged callback', () => {
-            const spy = sinon.spy();
+            const spy = jest.fn();
             const tree = getMountedComponentTree({
                 mouseInteraction: INTERACTIONS.CLICK,
                 touchInteraction: INTERACTIONS.TOUCH,
@@ -662,7 +660,7 @@ describe('ReactCursorPosition', () => {
 
             tree.instance().onTouchStart(touchEvent);
 
-            expect(spy.args[0][0].isActive).toBe(true);
+            expect(spy.mock.calls[0][0].isActive).toBe(true);
         });
 
         it('supports shouldDecorateChildren', () => {
@@ -708,7 +706,7 @@ describe('ReactCursorPosition', () => {
 
             describe('Supports activation by press gesture (long touch)', () => {
                 it('sets isActive if pressMoveThreshold is not exceeded for duration', () => {
-                    const clock = sinon.useFakeTimers();
+                    jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
                         pressMoveThreshold: 5,
@@ -720,16 +718,15 @@ describe('ReactCursorPosition', () => {
                     let childComponent = tree.find(GenericSpanComponent);
                     expect(childComponent.prop('isActive')).toBe(false);
 
-                    clock.tick(101);
+                    jest.advanceTimersByTime(101);
                     tree.update();
 
                     childComponent = tree.find(GenericSpanComponent);
                     expect(childComponent.prop('isActive')).toBe(true);
-                    clock.restore();
                 });
 
                 it('does not set isActive if pressMoveThreshold is exceeded for duration', () => {
-                    const clock = sinon.useFakeTimers();
+                    jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
                         pressMoveThreshold: 5,
@@ -739,14 +736,13 @@ describe('ReactCursorPosition', () => {
                     tree.instance().onTouchStart(touchEvent);
 
                     tree.instance().onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
-                    clock.tick(101);
+                    jest.advanceTimersByTime(101);
 
                     expect(childComponent.prop('isActive')).toBe(false)
-                    clock.restore();
                 });
 
                 it('does not set isActive if pressDuration has not elapsed', () => {
-                    const clock = sinon.useFakeTimers();
+                    jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
                         touchInteraction: INTERACTIONS.PRESS
@@ -755,10 +751,9 @@ describe('ReactCursorPosition', () => {
                     tree.instance().onTouchStart(touchEvent);
                     expect(childComponent.prop('isActive')).toBe(false);
 
-                    clock.tick(99);
+                    jest.advanceTimersByTime(99);
 
                     expect(childComponent.prop('isActive')).toBe(false)
-                    clock.restore();
                 });
             });
 
@@ -920,35 +915,33 @@ describe('ReactCursorPosition', () => {
         });
 
         describe('support for shouldStopTouchMovePropagation', () => {
-            it('is unset by default', () => {
+            it('calls stopPropagation on touchmove event object when set', () => {
                 const tree = getMountedComponentTree({
-                    mouseInteraction: INTERACTIONS.CLICK,
-                    touchInteraction: INTERACTIONS.TOUCH
-                });
-                const touchEvent = getTouchEvent();
-                sinon.spy(touchEvent, 'stopPropagation');
-
-                tree.instance().onTouchStart(touchEvent);
-                tree.instance().onTouchMove(touchEvent);
-                tree.update();
-
-                expect(touchEvent.stopPropagation.called).toBe(false);
-            });
-
-            it('can be set', () => {
-                const tree = getMountedComponentTree({
-                    mouseInteraction: INTERACTIONS.CLICK,
                     touchInteraction: INTERACTIONS.TOUCH,
                     shouldStopTouchMovePropagation: true
                 });
+                const instance = tree.instance();
                 const touchEvent = getTouchEvent();
-                sinon.spy(touchEvent, 'stopPropagation');
+                const stopPropagationSpy = jest.spyOn(touchEvent, 'stopPropagation');
 
-                tree.instance().onTouchStart(touchEvent);
-                tree.instance().onTouchMove(touchEvent);
-                tree.update();
+                instance.componentDidMount();
+                instance.onTouchMove(touchEvent);
 
-                expect(touchEvent.stopPropagation.called).toBe(true);
+                expect(stopPropagationSpy).toHaveBeenCalled();
+            });
+
+            it('does not call stopPropagation on touchmove event object when unset (default)', () => {
+                const tree = getMountedComponentTree({
+                    touchInteraction: INTERACTIONS.TOUCH
+                });
+                const instance = tree.instance();
+                const touchEvent = getTouchEvent();
+                const stopPropagationSpy = jest.spyOn(touchEvent, 'stopPropagation');
+
+                instance.componentDidMount();
+                instance.onTouchMove(touchEvent);
+
+                expect(stopPropagationSpy).not.toHaveBeenCalled();
             });
         });
 
