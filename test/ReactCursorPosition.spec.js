@@ -756,7 +756,7 @@ describe('ReactCursorPosition', () => {
             });
 
             describe('Supports activation by tap gesture', () => {
-                it('sets isActive for default tap', () => {
+                it('sets isActive on tap', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         touchInteraction: INTERACTIONS.TAP,
@@ -779,13 +779,13 @@ describe('ReactCursorPosition', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         touchInteraction: INTERACTIONS.TAP,
+                        tapDuration: 180
                     });
                     const instance = tree.instance();
 
                     // tap once to activate
                     instance.onTouchStart(touchEvent);
                     instance.onTouchEnd(touchEvent);
-                    // default tapDuration is 180
                     jest.advanceTimersByTime(181);
                     tree.update();
                     let childComponent = tree.find(GenericSpanComponent);
@@ -797,6 +797,27 @@ describe('ReactCursorPosition', () => {
                     jest.advanceTimersByTime(181);
                     tree.update();
                     childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(false);
+                });
+
+                it('does not set isActive on tap if tapMoveThreshold has been excceded', () => {
+                    jest.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        touchInteraction: INTERACTIONS.TAP,
+                        tapDuration: 180,
+                        tapMoveThreshold: 5
+                    });
+                    const instance = tree.instance();
+
+                    instance.onTouchStart(touchEvent);
+                    instance.onTouchMove(
+                        getTouchEvent({ pageX: 6, pageY: 8 })
+                    );
+                    instance.onTouchEnd(touchEvent);
+
+                    jest.advanceTimersByTime(181);
+                    tree.update();
+                    const childComponent = tree.find(GenericSpanComponent);
                     expect(childComponent.prop('isActive')).toBe(false);
                 });
             });

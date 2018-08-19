@@ -19,6 +19,7 @@ export default class PressActivation extends TouchEnvironmentActivation {
     }
 
     touchMoved({ position }) {
+        /* istanbul ignore else */
         if (!this.isActive) {
             this.setPressEventCriteria(position);
         }

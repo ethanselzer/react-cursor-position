@@ -21,6 +21,7 @@ export default class TapActivation extends TouchEnvironmentActivation {
     }
 
     touchMoved({ position }) {
+        /* istanbul ignore else */
         if (!this.isActive) {
             this.setMoveThresholdCriteria(position);
         }
