@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow, mount, render } from 'enzyme';
-import sinon from 'sinon';
 
 import ReactCursorPosition from '../src/ReactCursorPosition';
 import GenericSpanComponent from './support/GenericSpanComponent';
@@ -1022,36 +1021,33 @@ describe('ReactCursorPosition', () => {
         it('invokes init', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
-            const spy = sinon.spy(instance, 'init');
+            const spy = jest.spyOn(instance, 'init');
 
             instance.reset();
 
-            expect(spy.calledOnce).toBe(true);
-            spy.restore();
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         it('invokes setPositionState if last event exists', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
-            const spy = sinon.spy(instance, 'setPositionState');
+            const spy = jest.spyOn(instance, 'setPositionState');
             instance.init();
             instance.onMouseMove(mouseEvent);
 
             instance.reset();
 
-            expect(spy.calledTwice).toBe(true);
-            spy.restore();
+            expect(spy).toHaveBeenCalledTimes(2);
         });
 
         it('does not invoke setPositionState if last event does not exists', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
-            const spy = sinon.spy(instance, 'setPositionState');
+            const spy = jest.spyOn(instance, 'setPositionState');
 
             instance.reset();
 
-            expect(spy.called).toBe(false);
-            spy.restore();
+            expect(spy).not.toHaveBeenCalled();
         });
 
         it('defaults core to empty object', () => {
