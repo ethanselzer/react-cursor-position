@@ -257,7 +257,6 @@ export default class extends React.Component {
         const {
             TOUCH,
             TAP,
-            // DOUBLE_TAP,
             PRESS
         } = INTERACTIONS;
 
