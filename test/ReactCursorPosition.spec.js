@@ -62,9 +62,11 @@ describe('ReactCursorPosition', () => {
             mouseInteraction: INTERACTIONS.CLICK,
             touchInteraction: INTERACTIONS.TOUCH
         });
+        const instance = mountedTree.instance();
 
-        mountedTree.instance().onTouchStart(getTouchEvent({ pageX: 1, pageY: 2 }));
-        mountedTree.instance().onTouchMove(getTouchEvent({ pageX: 3, pageY: 2 }));
+        instance.componentDidMount();
+        instance.onTouchStart(getTouchEvent({ pageX: 1, pageY: 2 }));
+        instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 2 }));
         mountedTree.update();
 
         const childComponent = mountedTree.find(GenericSpanComponent);
@@ -88,7 +90,9 @@ describe('ReactCursorPosition', () => {
 
     it('decorates child components with props in the mouse environment', (done) => {
         const mountedTree = getMountedComponentTree();
-        mountedTree.instance().onMouseEnter(getMouseEvent());
+        const instance = mountedTree.instance();
+        instance.componentDidMount();
+        instance.onMouseEnter(getMouseEvent());
 
         defer(() => {
             mountedTree.update();

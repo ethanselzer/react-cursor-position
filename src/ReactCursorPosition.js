@@ -56,8 +56,6 @@ export default class extends React.Component {
 
         this.setTouchActivationStrategy(props.touchInteraction);
         this.setMouseActivationStrategy(props.mouseInteraction);
-
-        window.foo = this;
     }
 
     static displayName = 'ReactCursorPosition';
@@ -117,7 +115,6 @@ export default class extends React.Component {
     }
 
     onTouchStart(e) {
-        this.init();
         this.onTouchDetected();
         this.setShouldGuardAgainstMouseEmulationByDevices();
 
@@ -160,7 +157,6 @@ export default class extends React.Component {
             return;
         }
 
-        this.init();
         this.onMouseDetected();
         this.setPositionState(this.core.getCursorPosition(e));
         this.mouseActivation.mouseEntered();
@@ -206,6 +202,8 @@ export default class extends React.Component {
     }
 
     componentDidMount() {
+        this.init();
+
         if (this.props.isEnabled) {
             this.enable();
         }
