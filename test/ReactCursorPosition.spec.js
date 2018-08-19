@@ -948,79 +948,77 @@ describe('ReactCursorPosition', () => {
         describe('Support for onDetectedEnvironmentChanged', () => {
             describe('Touch Environment', () => {
                 it('gets called with isTouchDetected set', () => {
-                    const spy = sinon.spy();
+                    const spy = jest.fn();
                     const mountedComponent = getMountedComponentTree({
                         onDetectedEnvironmentChanged: spy
                     });
 
                     mountedComponent.instance().onTouchStart(getTouchEvent());
 
-                    expect(spy.calledOnce).toBe(true);
+                    expect(spy).toHaveBeenCalledTimes(1);
+                    expect(spy).toHaveBeenCalledWith({
+                        isMouseDetected: false,
+                        isTouchDetected: true
+                    });
                 });
             });
 
             describe('Mouse Environment', () => {
-                it('sets isMouseDetected to true', () => {
-                    const spy = sinon.spy();
+                it('gets called with isMouseDetected set to true', () => {
+                    const spy = jest.fn();
                     const mountedComponent = getMountedComponentTree({
                         onDetectedEnvironmentChanged: spy
                     });
 
                     mountedComponent.instance().onMouseEnter(getMouseEvent());
 
-                    expect(spy.calledOnce).toBe(true);
+                    expect(spy).toHaveBeenCalledTimes(1);
+                    expect(spy).toHaveBeenCalledWith({
+                        isMouseDetected: true,
+                        isTouchDetected: false
+                    });
                 });
             });
         });
 
         describe('Support for isEnabled', () => {
             it('is enabled by default', () => {
-                const { isEnabled } = ReactCursorPosition.defaultProps;
-                expect( isEnabled ).toBe(true);
-            });
-
-            it('does not call enable if already enabled', () => {
-                const positionObserver = getMountedComponentTree({ isEnabled: true });
-                const instance = positionObserver.instance();
-                sinon.spy(instance, 'enable');
-
-                positionObserver.setProps({ isEnabled: true })
-
-                expect(instance.enable.called).toBe(false);
-            });
-
-            it('can be disabled', () => {
-                const positionObserver = getMountedComponentTree({ isEnabled: false });
-                const instance = positionObserver.instance();
-                sinon.spy(instance, 'enable');
+                const tree = getMountedComponentTree();
+                const instance = tree.instance();
+                const spy = jest.spyOn(instance, 'enable');
 
                 instance.componentDidMount();
 
-                expect(instance.enable.called).toBe(false);
+                expect(spy).toHaveBeenCalled();
             });
 
-            it('can be disabled without remounting', () => {
-                const instance = positionObserver.instance();
-                sinon.spy(instance, 'disable');
+            it('can be disabled', () => {
+                const tree = getMountedComponentTree();
+                const instance = tree.instance();
+                const spy = jest.spyOn(instance, 'disable');
 
-                positionObserver.setProps({ isEnabled: false });
+                tree.setProps({ isEnabled: false });
 
-                expect(instance.disable.calledOnce).toBe(true);
+                instance.componentDidMount();
+
+                expect(spy).toHaveBeenCalled();
             });
 
-            it('can be enabled without remounting', () => {
-                const positionObserver = getMountedComponentTree({ isEnabled: false });
-                const instance = positionObserver.instance();
-                sinon.spy(instance, 'enable');
+            it('does not call enable if already enabled', () => {
+                const tree = getMountedComponentTree({ isEnabled: true });
+                const instance = tree.instance();
+                const spy = jest.spyOn(instance, 'enable');
 
-                positionObserver.setProps({ isEnabled: true });
+                instance.componentDidMount();
 
-                expect(instance.enable.calledOnce).toBe(true);
+                positionObserver.setProps({ isEnabled: true })
+
+                expect(spy).toHaveBeenCalledTimes(1);
             });
         });
     });
 
-    describe('reset', () => {
+    describe('Reset (impreative instance method)', () => {
         it('invokes init', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
