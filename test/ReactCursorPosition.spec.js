@@ -44,17 +44,14 @@ describe('ReactCursorPosition', () => {
     });
 
     it('has correct default props', () => {
-        const defaults = positionObserver.instance().constructor.defaultProps;
-        expect(defaults.isEnabled).toBe(true);
-        expect(typeof defaults.mapChildProps).toBe('function');
-        expect(defaults.pressDuration).toBe(500);
-        expect(defaults.pressMoveThreshold).toBe(5);
-        expect(defaults.shouldDecorateChildren).toBe(true);
-        expect(typeof defaults.onActivationChanged).toBe('function');
-        expect(typeof defaults.onPositionChanged).toBe('function');
-        expect(typeof defaults.onDetectedEnvironmentChanged).toBe('function');
-        expect(typeof defaults.pressDuration).toBe('number');
-        expect(typeof defaults.pressMoveThreshold).toBe('number');
+        const instance = positionObserver.instance();
+        const {
+            constructor: {
+                defaultProps
+            }
+        } = instance;
+
+        expect(defaultProps).toMatchSnapshot();
     });
 
     it('decorates child components with props in the touch environment', () => {
