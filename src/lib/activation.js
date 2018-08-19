@@ -2,6 +2,7 @@ export default class Activation {
     constructor ({
         onIsActiveChanged
     }) {
+        /* istanbul ignore next */
         if (typeof onIsActiveChanged !== 'function'){
             throw new Error('onIsActiveChanged should be a function');
         }
@@ -38,6 +39,7 @@ export default class Activation {
         }
     }
 
+    /* istanbul ignore next */
     clearTimer(timerName) {
         this.timers.forEach((timer) => {
             if (timer.name === timerName) {

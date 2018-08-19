@@ -8,8 +8,10 @@ export default class TouchEnvironmentActivation extends Activation {
         this.currentElTop = 0;
     }
 
+    /* istanbul ignore next */
     touchStarted() {}
 
+    /* istanbul ignore next */
     touchMoved() {}
 
     touchEnded() {
