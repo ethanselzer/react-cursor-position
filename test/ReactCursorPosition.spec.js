@@ -150,15 +150,6 @@ describe('ReactCursorPosition', () => {
         expect(init).toHaveBeenCalledTimes(1);
     });
 
-    it.skip('calls clearTimers on componentWillUnmount', () => {
-        const instance = positionObserver.instance();
-        sinon.spy(instance, 'clearTimers');
-
-        instance.componentWillUnmount();
-
-        expect(instance.clearTimers.calledOnce).toBe(true);
-    });
-
     it('prevents default on touch move, when activated', () => {
         const tree = getMountedComponentTree({
             mouseInteraction: INTERACTIONS.CLICK,
