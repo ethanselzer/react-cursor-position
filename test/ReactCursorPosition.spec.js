@@ -147,6 +147,7 @@ describe('ReactCursorPosition', () => {
         const positionObserver = getMountedComponentTree();
         const instance = positionObserver.instance();
         const init = jest.spyOn(instance, 'init');
+        instance.componentDidMount();
         instance.onTouchStart(touchEvent);
 
         instance.onMouseEnter(mouseEvent);
@@ -239,6 +240,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
@@ -253,8 +255,10 @@ describe('ReactCursorPosition', () => {
             describe('Mouse Environment', () => {
                 it('decorates child components with element dimensions', () => {
                     const renderedTree = getMountedComponentTree();
+                    const instance = renderedTree.instance();
 
-                    renderedTree.instance().onMouseEnter(getTouchEvent());
+                    instance.componentDidMount();
+                    instance.onMouseEnter(getTouchEvent());
                     renderedTree.update();
 
                     const childComponent = renderedTree.find(GenericSpanComponent);
@@ -381,6 +385,7 @@ describe('ReactCursorPosition', () => {
 
                     expect(childComponent.props().isPositionOutside).toBe(true);
 
+                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
@@ -395,6 +400,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     instance.onTouchMove(getTouchEvent({
                         pageX: 10,
@@ -418,6 +424,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
                     instance.onMouseMove(getMouseEvent({
                         pageX: 1,
@@ -457,6 +464,7 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
+                    instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
                     instance.onMouseMove(getMouseEvent({
                         pageX: 5,
@@ -591,9 +599,11 @@ describe('ReactCursorPosition', () => {
                 mouseInteraction: INTERACTIONS.CLICK,
                 touchInteraction: INTERACTIONS.TOUCH
             });
+            const instance = tree.instance();
 
-            tree.instance().onTouchStart(touchEvent);
-            tree.instance().onTouchMove(touchEvent);
+            instance.componentDidMount();
+            instance.onTouchStart(touchEvent);
+            instance.onTouchMove(touchEvent);
             tree.update();
 
             const childComponent = tree.find(GenericSpanComponent);
@@ -618,9 +628,11 @@ describe('ReactCursorPosition', () => {
                 touchInteraction: INTERACTIONS.TOUCH,
                 onPositionChanged: spy
             });
-            tree.instance().onTouchStart(touchEvent);
+            const instance = tree.instance();
+            instance.componentDidMount();
+            instance.onTouchStart(touchEvent);
 
-            tree.instance().onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
+            instance.onTouchMove(getTouchEvent({ pageX: 2, pageY: 3}));
 
             expect(spy.args[1][0]).toEqual({
                 detectedEnvironment: {
@@ -1013,42 +1025,55 @@ describe('ReactCursorPosition', () => {
                 expect(instance.enable.calledOnce).toBe(true);
             });
         });
+    });
 
-        describe('reset', () => {
-            it('invokes init', () => {
-                const component = getMountedComponentTree();
-                const instance = component.instance();
-                const spy = sinon.spy(instance, 'init');
+    describe('reset', () => {
+        it('invokes init', () => {
+            const component = getMountedComponentTree();
+            const instance = component.instance();
+            const spy = sinon.spy(instance, 'init');
 
+            instance.reset();
+
+            expect(spy.calledOnce).toBe(true);
+            spy.restore();
+        });
+
+        it('invokes setPositionState if last event exists', () => {
+            const component = getMountedComponentTree();
+            const instance = component.instance();
+            const spy = sinon.spy(instance, 'setPositionState');
+            instance.init();
+            instance.onMouseMove(mouseEvent);
+
+            instance.reset();
+
+            expect(spy.calledTwice).toBe(true);
+            spy.restore();
+        });
+
+        it('does not invoke setPositionState if last event does not exists', () => {
+            const component = getMountedComponentTree();
+            const instance = component.instance();
+            const spy = sinon.spy(instance, 'setPositionState');
+
+            instance.reset();
+
+            expect(spy.called).toBe(false);
+            spy.restore();
+        });
+
+        it('defaults core to empty object', () => {
+            const component = getMountedComponentTree();
+            const instance = component.instance();
+
+            function shouldNotThrow() {
                 instance.reset();
+            }
 
-                expect(spy.calledOnce).toBe(true);
-                spy.restore();
-            });
+            delete instance.core;
 
-            it('invokes setPositionState if last event exists', () => {
-                const component = getMountedComponentTree();
-                const instance = component.instance();
-                const spy = sinon.spy(instance, 'setPositionState');
-                instance.init();
-                instance.onMouseMove(mouseEvent);
-
-                instance.reset();
-
-                expect(spy.calledTwice).toBe(true);
-                spy.restore();
-            });
-
-            it('does not invoke setPositionState if last event does not exists', () => {
-                const component = getMountedComponentTree();
-                const instance = component.instance();
-                const spy = sinon.spy(instance, 'setPositionState');
-
-                instance.reset();
-
-                expect(spy.called).toBe(false);
-                spy.restore();
-            });
+            expect(shouldNotThrow).not.toThrow();
         });
     });
 
