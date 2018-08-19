@@ -4,7 +4,7 @@ import sinon from 'sinon';
 
 import ReactCursorPosition from '../src/ReactCursorPosition';
 import GenericSpanComponent from './support/GenericSpanComponent';
-import * as utils from '../src/utils/addEventListener';
+import * as adEventListener from '../src/utils/addEventListener';
 import { INTERACTIONS } from '../src/constants';
 
 describe('ReactCursorPosition', () => {
@@ -154,42 +154,45 @@ describe('ReactCursorPosition', () => {
 
     it('prevents default on touch move, when activated', () => {
         const tree = getMountedComponentTree({
-            mouseInteraction: INTERACTIONS.CLICK,
             touchInteraction: INTERACTIONS.TOUCH
         });
         const touchEvent = getTouchEvent();
-        sinon.spy(touchEvent, 'preventDefault');
+        touchEvent.preventDefault = jest.fn();
 
         tree.instance().onTouchStart(touchEvent);
         tree.instance().onTouchMove(touchEvent);
         tree.update();
 
-        expect(touchEvent.preventDefault.called).toBe(true);
+        expect(touchEvent.preventDefault).toHaveBeenCalled();
     });
 
     describe('Add Touch and Mouse Event Listeners', () => {
-        it('fills touch event listeners collection', () => {
+        // can this be moved into the main section?
+        // where is the test for draining this collection?
+        it('fills event listeners collection', () => {
             positionObserver = getMountedComponentTree();
+            const instance = positionObserver.instance();
+            const {
+                eventListeners: {
+                    length
+                }
+            } = instance;
 
-            expect(positionObserver.instance().eventListeners.length).toBe(8);
+            expect(length).toBe(8);
         });
 
         it('binds touchstart and touchmove with `passive` option unset', () => {
-            sinon.spy(utils, 'default');
-            function match(call) {
-                return call.calledWithMatch(
-                    sinon.match.any,
-                    /touch(start|move)/,
-                    sinon.match.func,
-                    sinon.match({ passive: false })
-                );
-            }
+            const spy = jest.spyOn(adEventListener, 'default');
+            const passiveFalse = {passive: false};
 
-            positionObserver = getMountedComponentTree();
+            getMountedComponentTree();
 
-            expect(match(utils.default.getCall(0))).toBe(true);
-            expect(match(utils.default.getCall(1))).toBe(true);
-            utils.default.restore();
+            expect(spy.mock.calls[0]).toEqual(
+                expect.arrayContaining(['touchstart', passiveFalse])
+            );
+            expect(spy.mock.calls[1]).toEqual(
+                expect.arrayContaining(['touchmove', passiveFalse])
+            );
         });
     });
 
@@ -208,22 +211,22 @@ describe('ReactCursorPosition', () => {
         it('calls removeEventListeners', () => {
             const mountedComponent = getMountedComponentTree();
             const instance = mountedComponent.instance();
-            sinon.spy(instance, 'removeEventListeners');
+            const spy = jest.spyOn(instance, 'removeEventListeners');
 
             mountedComponent.unmount();
 
-            expect(instance.removeEventListeners.calledOnce).toBe(true);
+            expect(spy).toHaveBeenCalledTimes(1);
         });
 
         it('calls removeEventListener on each item in the event listeners collection', () => {
             const instance = positionObserver.instance();
-            const removeEventListener = sinon.spy();
-            const eventListener = { removeEventListener };
+            const removeEventListenerSpy = jest.fn();
+            const eventListener = { removeEventListener: removeEventListenerSpy };
             instance.eventListeners.push(eventListener, eventListener);
 
             positionObserver.unmount();
 
-            expect(removeEventListener.calledTwice).toBe(true);
+            expect(removeEventListenerSpy).toHaveBeenCalled();
         });
     });
 
@@ -676,7 +679,7 @@ describe('ReactCursorPosition', () => {
             expect(childComponent.props()).toEqual({});
         });
 
-        describe('touch activation interaction options', () => {
+        describe('touchInteraction', () => {
             it('throws an error if an unsupported touch interaction is specified', () => {
                 function shouldThrow() {
                     const tree = getMountedComponentTree();
@@ -827,7 +830,7 @@ describe('ReactCursorPosition', () => {
             });
         });
 
-        describe('Mouse interactions', () => {
+        describe('mouseInteraction', () => {
             it('supports activation on hover', () => {
                 jest.useFakeTimers();
                 const renderedTree = getMountedComponentTree({
