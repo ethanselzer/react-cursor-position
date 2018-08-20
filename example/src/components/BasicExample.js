@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
-import { INTERACTIONS } from '../pkg-lnk/es/constants';
+import ReactCursorPosition, { INTERACTIONS } from '../pkg-lnk/ReactCursorPosition';
 
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
@@ -10,7 +9,7 @@ export default class extends React.Component {
         return (
             <ReactCursorPosition {...{
                 className: 'example__target example__target--basic',
-
+                activationInteractionTouch: INTERACTIONS.TAP,
                 hoverDelayInMs: 250,
                 hoverOffDelayInMs: 350
             }}>
