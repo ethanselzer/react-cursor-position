@@ -885,7 +885,7 @@ describe('ReactCursorPosition', () => {
                 expect(childComponent.prop('isActive')).toBe(false);
             });
 
-            it('supports click', () => {
+            it('supports activation on click', () => {
                 const renderedTree = getMountedComponentTree({
                     activationInteractionMouse: INTERACTIONS.CLICK
                 });
@@ -899,6 +899,28 @@ describe('ReactCursorPosition', () => {
 
                 expect(childComponent.prop('isActive')).toBe(true);
             });
+
+            it('deactivates on second click', () => {
+                const renderedTree = getMountedComponentTree({
+                    activationInteractionMouse: INTERACTIONS.CLICK
+                });
+                let childComponent = renderedTree.find(GenericSpanComponent);
+                expect(childComponent.prop('isActive')).toBe(false);
+                const instance = renderedTree.instance();
+
+                instance.onClick(mouseEvent);
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
+
+                expect(childComponent.prop('isActive')).toBe(true);
+
+                instance.onClick(mouseEvent);
+                renderedTree.update();
+                childComponent = renderedTree.find(GenericSpanComponent);
+
+                expect(childComponent.prop('isActive')).toBe(false);
+            });
+
 
             it('throws an error if an unsupported mouse interaction is specified', () => {
                 function shouldThrow() {
@@ -1035,7 +1057,7 @@ describe('ReactCursorPosition', () => {
         });
     });
 
-    describe('Reset (impreative instance method)', () => {
+    describe('Reset (imprative instance method)', () => {
         it('invokes init', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
