@@ -15,6 +15,8 @@ import TapActivation from './lib/TapActivation';
 import HoverActivation from './lib/HoverActivation';
 import ClickActivation from './lib/ClickActivation';
 
+export { INTERACTIONS };
+
 export default class extends React.Component {
     constructor(props) {
         super(props);
