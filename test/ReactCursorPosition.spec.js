@@ -820,6 +820,23 @@ describe('ReactCursorPosition', () => {
                     const childComponent = tree.find(GenericSpanComponent);
                     expect(childComponent.prop('isActive')).toBe(false);
                 });
+
+                it('does not set isActive on tap if tap is too long', () => {
+                    jest.useFakeTimers();
+                    const tree = getMountedComponentTree({
+                        activationInteractionTouch: INTERACTIONS.TAP,
+                        tapDuration: 180,
+                    });
+                    const instance = tree.instance();
+
+                    instance.onTouchStart(touchEvent);
+                    jest.advanceTimersByTime(181);
+                    instance.onTouchEnd(touchEvent);
+
+                    tree.update();
+                    const childComponent = tree.find(GenericSpanComponent);
+                    expect(childComponent.prop('isActive')).toBe(false);
+                });
             });
         });
 
@@ -920,7 +937,6 @@ describe('ReactCursorPosition', () => {
 
                 expect(childComponent.prop('isActive')).toBe(false);
             });
-
 
             it('throws an error if an unsupported mouse interaction is specified', () => {
                 function shouldThrow() {
