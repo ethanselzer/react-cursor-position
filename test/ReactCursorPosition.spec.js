@@ -55,8 +55,7 @@ describe('ReactCursorPosition', () => {
 
     it('decorates child components with props in the touch environment', () => {
         const mountedTree = getMountedComponentTree({
-            mouseInteraction: INTERACTIONS.CLICK,
-            touchInteraction: INTERACTIONS.TOUCH
+            activationInteractionTouch: INTERACTIONS.TOUCH
         });
         const instance = mountedTree.instance();
 
@@ -115,8 +114,8 @@ describe('ReactCursorPosition', () => {
 
     it('does not decorate child DOM nodes with props', () => {
         const renderedTree = getMountedComponentTree({
-            mouseInteraction: INTERACTIONS.CLICK,
-            touchInteraction: INTERACTIONS.TOUCH
+            activationInteractionMouse: INTERACTIONS.CLICK,
+            activationInteractionTouch: INTERACTIONS.TOUCH
         });
         const childDomNode = renderedTree.find('hr');
 
@@ -153,7 +152,7 @@ describe('ReactCursorPosition', () => {
 
     it('prevents default on touch move, when activated', () => {
         const tree = getMountedComponentTree({
-            touchInteraction: INTERACTIONS.TOUCH
+            activationInteractionTouch: INTERACTIONS.TOUCH
         });
         const touchEvent = getTouchEvent();
         touchEvent.preventDefault = jest.fn();
@@ -232,8 +231,8 @@ describe('ReactCursorPosition', () => {
             describe('Touch Environment', () => {
                 it('decorates child components with element dimensions', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionMouse: INTERACTIONS.CLICK,
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
 
@@ -270,7 +269,7 @@ describe('ReactCursorPosition', () => {
             describe('Touch Environment', () => {
                 it('sets isActive', (done) => {
                     const renderedTree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
                     let childComponent = renderedTree.find(GenericSpanComponent);
@@ -290,7 +289,7 @@ describe('ReactCursorPosition', () => {
 
                 it('unsets isActive onTouchEnd', () => {
                     const renderedTree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
                     instance.onTouchStart(touchEvent);
@@ -310,7 +309,7 @@ describe('ReactCursorPosition', () => {
 
                 it('unsets isActive onTouchCancel', () => {
                     const renderedTree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
                     instance.onTouchStart(touchEvent);
@@ -374,8 +373,8 @@ describe('ReactCursorPosition', () => {
             describe('Touch Environment', () => {
                 it('unsets isPositionOutside', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionMouse: INTERACTIONS.CLICK,
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
                     let childComponent = renderedTree.find(GenericSpanComponent);
@@ -392,8 +391,8 @@ describe('ReactCursorPosition', () => {
 
                 it('sets isPositionOutside', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionMouse: INTERACTIONS.CLICK,
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
 
@@ -497,8 +496,8 @@ describe('ReactCursorPosition', () => {
             describe('Touch Environment', () => {
                 it('decorates child components with position prop', () => {
                     const renderedTree = getMountedComponentTree({
-                        mouseInteraction: INTERACTIONS.CLICK,
-                        touchInteraction: INTERACTIONS.TOUCH
+                        activationInteractionMouse: INTERACTIONS.CLICK,
+                        activationInteractionTouch: INTERACTIONS.TOUCH
                     });
                     const instance = renderedTree.instance();
                     instance.onTouchStart(touchEvent);
@@ -593,8 +592,8 @@ describe('ReactCursorPosition', () => {
             }
             const tree = getMountedComponentTree({
                 mapChildProps,
-                mouseInteraction: INTERACTIONS.CLICK,
-                touchInteraction: INTERACTIONS.TOUCH
+                activationInteractionMouse: INTERACTIONS.CLICK,
+                activationInteractionTouch: INTERACTIONS.TOUCH
             });
             const instance = tree.instance();
 
@@ -621,8 +620,8 @@ describe('ReactCursorPosition', () => {
         it('supports onPositionChanged callback', () => {
             const spy = jest.fn();
             const tree = getMountedComponentTree({
-                mouseInteraction: INTERACTIONS.CLICK,
-                touchInteraction: INTERACTIONS.TOUCH,
+                activationInteractionMouse: INTERACTIONS.CLICK,
+                activationInteractionTouch: INTERACTIONS.TOUCH,
                 onPositionChanged: spy
             });
             const instance = tree.instance();
@@ -652,8 +651,8 @@ describe('ReactCursorPosition', () => {
         it('supports onActivationChanged callback', () => {
             const spy = jest.fn();
             const tree = getMountedComponentTree({
-                mouseInteraction: INTERACTIONS.CLICK,
-                touchInteraction: INTERACTIONS.TOUCH,
+                activationInteractionMouse: INTERACTIONS.CLICK,
+                activationInteractionTouch: INTERACTIONS.TOUCH,
                 onActivationChanged: spy
             });
 
@@ -676,7 +675,7 @@ describe('ReactCursorPosition', () => {
             expect(childComponent.props()).toEqual({});
         });
 
-        describe('touchInteraction', () => {
+        describe('activationInteractionTouch', () => {
             it('throws an error if an unsupported touch interaction is specified', () => {
                 function shouldThrow() {
                     const tree = getMountedComponentTree();
@@ -690,7 +689,7 @@ describe('ReactCursorPosition', () => {
 
             it('supports activation by touch gesture', () => {
                 const tree = getMountedComponentTree({
-                    touchInteraction: INTERACTIONS.TOUCH
+                    activationInteractionTouch: INTERACTIONS.TOUCH
                 });
                 let childComponent = tree.find(GenericSpanComponent);
                 expect(childComponent.prop('isActive')).toBe(false);
@@ -709,7 +708,7 @@ describe('ReactCursorPosition', () => {
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
                         pressMoveThreshold: 5,
-                        touchInteraction: INTERACTIONS.PRESS
+                        activationInteractionTouch: INTERACTIONS.PRESS
                     });
                     tree.instance().onTouchStart(touchEvent);
                     tree.instance().onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
@@ -729,7 +728,7 @@ describe('ReactCursorPosition', () => {
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
                         pressMoveThreshold: 5,
-                        touchInteraction: INTERACTIONS.PRESS
+                        activationInteractionTouch: INTERACTIONS.PRESS
                     });
                     const childComponent = tree.find(GenericSpanComponent);
                     tree.instance().onTouchStart(touchEvent);
@@ -744,7 +743,7 @@ describe('ReactCursorPosition', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
                         pressDuration: 100,
-                        touchInteraction: INTERACTIONS.PRESS
+                        activationInteractionTouch: INTERACTIONS.PRESS
                     });
                     const childComponent = tree.find(GenericSpanComponent);
                     tree.instance().onTouchStart(touchEvent);
@@ -760,7 +759,7 @@ describe('ReactCursorPosition', () => {
                 it('sets isActive on tap', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TAP,
+                        activationInteractionTouch: INTERACTIONS.TAP,
                         tapDuration: 10
                     });
                     const instance = tree.instance();
@@ -779,7 +778,7 @@ describe('ReactCursorPosition', () => {
                 it('unsets isActive on second tap', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TAP,
+                        activationInteractionTouch: INTERACTIONS.TAP,
                         tapDuration: 180
                     });
                     const instance = tree.instance();
@@ -804,7 +803,7 @@ describe('ReactCursorPosition', () => {
                 it('does not set isActive on tap if tapMoveThreshold has been excceded', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        touchInteraction: INTERACTIONS.TAP,
+                        activationInteractionTouch: INTERACTIONS.TAP,
                         tapDuration: 180,
                         tapMoveThreshold: 5
                     });
@@ -824,12 +823,12 @@ describe('ReactCursorPosition', () => {
             });
         });
 
-        describe('mouseInteraction', () => {
+        describe('activationInteractionMouse', () => {
             it('supports activation on hover', () => {
                 jest.useFakeTimers();
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 0,
-                    mouseInteraction: INTERACTIONS.HOVER
+                    activationInteractionMouse: INTERACTIONS.HOVER
                 });
                 let childComponent = renderedTree.find(GenericSpanComponent);
                 expect(childComponent.prop('isActive')).toBe(false);
@@ -847,7 +846,7 @@ describe('ReactCursorPosition', () => {
 
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 10,
-                    mouseInteraction: INTERACTIONS.HOVER
+                    activationInteractionMouse: INTERACTIONS.HOVER
                 });
                 let childComponent = renderedTree.find(GenericSpanComponent);
                 expect(childComponent.prop('isActive')).toBe(false);
@@ -867,7 +866,7 @@ describe('ReactCursorPosition', () => {
                 const renderedTree = getMountedComponentTree({
                     hoverDelayInMs: 0,
                     hoverOffDelayInMs: 10,
-                    mouseInteraction: INTERACTIONS.HOVER
+                    activationInteractionMouse: INTERACTIONS.HOVER
                 });
                 const instance = renderedTree.instance();
                 instance.onMouseEnter(mouseEvent);
@@ -888,7 +887,7 @@ describe('ReactCursorPosition', () => {
 
             it('supports click', () => {
                 const renderedTree = getMountedComponentTree({
-                    mouseInteraction: INTERACTIONS.CLICK
+                    activationInteractionMouse: INTERACTIONS.CLICK
                 });
                 let childComponent = renderedTree.find(GenericSpanComponent);
                 expect(childComponent.prop('isActive')).toBe(false);
@@ -916,7 +915,7 @@ describe('ReactCursorPosition', () => {
         describe('support for shouldStopTouchMovePropagation', () => {
             it('calls stopPropagation on touchmove event object when set', () => {
                 const tree = getMountedComponentTree({
-                    touchInteraction: INTERACTIONS.TOUCH,
+                    activationInteractionTouch: INTERACTIONS.TOUCH,
                     shouldStopTouchMovePropagation: true
                 });
                 const instance = tree.instance();
@@ -931,7 +930,7 @@ describe('ReactCursorPosition', () => {
 
             it('does not call stopPropagation on touchmove event object when unset (default)', () => {
                 const tree = getMountedComponentTree({
-                    touchInteraction: INTERACTIONS.TOUCH
+                    activationInteractionTouch: INTERACTIONS.TOUCH
                 });
                 const instance = tree.instance();
                 const touchEvent = getTouchEvent();

@@ -2,11 +2,12 @@
 
 exports[`ReactCursorPosition has correct default props 1`] = `
 Object {
+  "activationInteractionMouse": "hover",
+  "activationInteractionTouch": "press",
   "hoverDelayInMs": 0,
   "hoverOffDelayInMs": 0,
   "isEnabled": true,
   "mapChildProps": [Function],
-  "mouseInteraction": "hover",
   "onActivationChanged": [Function],
   "onDetectedEnvironmentChanged": [Function],
   "onPositionChanged": [Function],
@@ -16,6 +17,5 @@ Object {
   "shouldStopTouchMovePropagation": false,
   "tapDuration": 180,
   "tapMoveThreshold": 5,
-  "touchInteraction": "press",
 }
 `;

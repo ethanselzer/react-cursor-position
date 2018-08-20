@@ -54,8 +54,8 @@ export default class extends React.Component {
         this.onClick = this.onClick.bind(this);
         this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
 
-        this.setTouchActivationStrategy(props.touchInteraction);
-        this.setMouseActivationStrategy(props.mouseInteraction);
+        this.setTouchActivationStrategy(props.activationInteractionTouch);
+        this.setMouseActivationStrategy(props.activationInteractionMouse);
     }
 
     static displayName = 'ReactCursorPosition';
@@ -77,12 +77,12 @@ export default class extends React.Component {
         style: PropTypes.object,
         tapMoveThreshold: PropTypes.number,
         tapDuration: PropTypes.number,
-        touchInteraction: PropTypes.oneOf([
+        activationInteractionTouch: PropTypes.oneOf([
             INTERACTIONS.PRESS,
             INTERACTIONS.TAP,
             INTERACTIONS.TOUCH
         ]),
-        mouseInteraction: PropTypes.oneOf([
+        activationInteractionMouse: PropTypes.oneOf([
             INTERACTIONS.CLICK,
             INTERACTIONS.HOVER
         ])
@@ -102,8 +102,8 @@ export default class extends React.Component {
         tapMoveThreshold: 5,
         shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
-        touchInteraction: INTERACTIONS.PRESS,
-        mouseInteraction: INTERACTIONS.HOVER
+        activationInteractionTouch: INTERACTIONS.PRESS,
+        activationInteractionMouse: INTERACTIONS.HOVER
     };
 
     onIsActiveChanged({ isActive }) {
