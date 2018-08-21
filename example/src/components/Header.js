@@ -37,7 +37,7 @@ class Navigation extends React.Component {
                 return 2.4;
             case '/style' :
                 return 2.5;
-            case '/is-activated-on-touch' :
+            case '/activation-by-touch' :
                 return 2.6;
             case '/press-duration' :
                 return 2.7;
@@ -77,7 +77,7 @@ class Navigation extends React.Component {
                         <NavDropdown eventKey={2} title="API Examples" id="nav-dropdown">
                             <MenuItem eventKey={2.4} href="#/class-name">Class Name</MenuItem>
                             <MenuItem eventKey={2.11} href="#/hover-delay">Hover Delay</MenuItem>
-                            <MenuItem eventKey={2.6} href="#/is-activated-on-touch">Is Activated On Touch</MenuItem>
+                            <MenuItem eventKey={2.6} href="#/activation-by-touch">Activate by Touch</MenuItem>
                             <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
                             <MenuItem eventKey={2.12} href="#/detected-environment-changed">On Environment Changed</MenuItem>
                             <MenuItem eventKey={2.2} href="#/on-position-changed">On Position Changed</MenuItem>

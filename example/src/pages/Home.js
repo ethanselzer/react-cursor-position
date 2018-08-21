@@ -41,7 +41,7 @@ class App extends Component {
                                 <Nav bsStyle="pills" stacked>
                                     <NavItem href="#/class-name">Class Name</NavItem>
                                     <NavItem href="#/hover-delay">Hover Delay</NavItem>
-                                    <NavItem href="#/is-activated-on-touch">Is Activated On Touch</NavItem>
+                                    <NavItem href="#/activation-by-touch">Is Activated On Touch</NavItem>
                                     <NavItem href="#/map-child-props">Map Child Props</NavItem>
                                     <NavItem href="#/detected-environment-changed">On Environment Changed</NavItem>
                                     <NavItem href="#/on-position-changed">On Position Changed</NavItem>

@@ -1,11 +1,11 @@
 import React from 'react';
-import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
+import ReactCursorPosition, { INTERACTIONS } from '../pkg-lnk/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
 
 export default () => (
     <ReactCursorPosition
         className="example__target"
-        isActivatedOnTouch
+        activationInteractionTouch={INTERACTIONS.TOUCH}
     >
         <PositionLabel />
         <div className="example__instructions">

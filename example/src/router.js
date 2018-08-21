@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route } from 'react-router';
 
 import ActivationChanged from './pages/ActivationChanged';
-import IsActivatedOnTouch from './pages/IsActivatedOnTouch';
+import ActivatedByTouch from './pages/ActivationByTouch';
 import ClassName from './pages/ClassName';
 import PositionChanged from './pages/PositionChanged';
 import Home from './pages/Home';
@@ -24,7 +24,7 @@ const Routes = (props) => (
         <Route path="/detected-environment-changed" component={DetectedEnvironmentChanged} />
         <Route path="/hover-delay" component={HoverDelay} />
         <Route path="/image-magnify" component={ImageMagnify} />
-        <Route path="/is-activated-on-touch" component={IsActivatedOnTouch} />
+        <Route path="/activation-by-touch" component={ActivatedByTouch} />
         <Route path="/map-child-props" component={MapProps} />
         <Route path="/on-position-changed" component={PositionChanged} />
         <Route path="/on-activation-changed" component={ActivationChanged} />
