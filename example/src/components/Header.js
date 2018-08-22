@@ -78,11 +78,12 @@ class Navigation extends React.Component {
                             <MenuItem eventKey={2.4} href="#/class-name">Class Name</MenuItem>
                             <MenuItem eventKey={2.11} href="#/hover-delay">Hover Delay</MenuItem>
                             <MenuItem eventKey={2.6} href="#/activation-by-touch">Activate by Touch</MenuItem>
+                            <MenuItem eventKey={2.7} href="#/activation-by-tap">Activate by Tap</MenuItem>
                             <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
                             <MenuItem eventKey={2.12} href="#/detected-environment-changed">On Environment Changed</MenuItem>
                             <MenuItem eventKey={2.2} href="#/on-position-changed">On Position Changed</MenuItem>
                             <MenuItem eventKey={2.9} href="#/on-activation-changed">On Activation Changed</MenuItem>
-                            <MenuItem eventKey={2.7} href="#/press-duration">Press Duration</MenuItem>
+                            <MenuItem eventKey={2.14} href="#/press-duration">Press Duration</MenuItem>
                             <MenuItem eventKey={2.8} href="#/press-move-threshold">Press Move Threshold</MenuItem>
                             <MenuItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</MenuItem>
                             <MenuItem eventKey={2.5} href="#/style">Style</MenuItem>
