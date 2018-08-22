@@ -33,7 +33,8 @@ export default class extends Component {
                                         Interaction: Tap to activate. Tap again to deactivate
                                     </li>
                                     <li>
-                                        Implementation: Assign activationInteractionTouch the constant INTERACTIONS.TOUCH
+                                        Assign a number to tapDuration and or tapMoveThreshold props, to control the
+                                        behavior of the tap
                                     </li>
                                     <li>
                                         Related: See Activate by Press, Activate by Touch,
@@ -43,6 +44,7 @@ export default class extends Component {
                             </Col>
                             <Col sm={5}>
                                 <ul className="summary__list">
+                                    <li>Prop: activationInteractionTouch</li>
                                     <li>Type: String</li>
                                     <li>Default: INTERACTIONS.PRESS</li>
                                     <li>Import INTERACTIONS from react-cursor-position (see code example below)</li>
