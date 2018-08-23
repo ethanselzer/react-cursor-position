@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
     Col,
     Grid,
@@ -8,7 +9,7 @@ import {
 import Helmet from 'react-helmet';
 
 import Header from '../components/Header';
-import PressMoveThreshold from '../components/PressMoveThreshold';
+import ActivationByPress from '../components/ActivationByPress';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/app.css';
@@ -23,24 +24,39 @@ export default class extends Component {
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>pressMoveThreshold - API Example</h2>
+                                <h2>Press (long touch) to Activate - Example</h2>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>
-                                        Amount of movement, in pixels, allowed during press gesture detection.
+                                        Interaction: Press (Default)
+                                    </li>
+                                    <li>
+                                        Assign a number to pressDuration and or pressMoveThreshold props to control the
+                                        behavior of the press
+                                    </li>
+                                    <li>
+                                        See Related:&nbsp;
+                                        <Link to="activate-by-tap">
+                                            Activate by Tap
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-touch">
+                                            Activate by Touch
+                                        </Link>
+                                        ,&nbsp;Activate by Hover, and Activate by Click
                                     </li>
                                 </ul>
                             </Col>
                             <Col sm={5}>
                                 <ul className="summary__list">
-                                    <li>Type: Number</li>
-                                    <li>Default: 5</li>
+                                    <li>Prop: activationInteractionTouch</li>
+                                    <li>Type: String</li>
+                                    <li>Default: INTERACTIONS.PRESS</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/PressMoveThreshold.js">
-                                            Example Code
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationByPress.js">
+                                            Example Code on GitHub
                                         </a>
                                     </li>
                                 </ul>
@@ -51,7 +67,7 @@ export default class extends Component {
                 <Grid>
                     <Row>
                         <Col sm={6} md={4}>
-                            <PressMoveThreshold />
+                            <ActivationByPress />
                         </Col>
                         <Col
                             sm={6}
@@ -60,7 +76,7 @@ export default class extends Component {
                             style={{ height: '270px' }}
                         >
                             <iframe title="example"
-                                src="press-move-threshold.html"
+                                src="activation-press.html"
                                 frameBorder="0"
                                 className="code-frame"
                             />

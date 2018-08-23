@@ -9,7 +9,7 @@ export default () => (
     >
         <PositionLabel />
         <div className="example__instructions">
-            Touch and Drag In This Area
+            Touch and Drag
         </div>
     </ReactCursorPosition>
 );
