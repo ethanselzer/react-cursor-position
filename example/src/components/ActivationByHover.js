@@ -1,13 +1,14 @@
 import React from 'react';
-import ReactCursorPosition from '../pkg-lnk/ReactCursorPosition';
+import ReactCursorPosition, { INTERACTIONS } from '../pkg-lnk/ReactCursorPosition';
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
     <ReactCursorPosition
         className="example__target"
-        hoverDelayInMs={1000}
-        hoverOffDelayInMs={500}
+        activationInteractionMouse={INTERACTIONS.HOVER} //default
+        hoverDelayInMs={250} //default 0
+        hoverOffDelayInMs={150} //default 0
     >
         <PositionLabel />
         <div className="example__instructions">
