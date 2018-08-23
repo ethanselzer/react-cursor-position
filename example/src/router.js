@@ -8,7 +8,7 @@ import ActivateByTap from './pages/ActivationByTap';
 import ClassName from './pages/ClassName';
 import PositionChanged from './pages/PositionChanged';
 import Home from './pages/Home';
-import HoverDelay from './pages/HoverDelay';
+import ActivateByHover from './pages/ActivationByHover';
 import ImageMagnify from './pages/ImageMagnify';
 import MapProps from './pages/MapProps';
 import ShouldDecorateChildren from './pages/ShouldDecorateChildren';
@@ -22,7 +22,7 @@ const Routes = (props) => (
         <Route path="/" component={Home} />
         <Route path="/class-name" component={ClassName} />
         <Route path="/detected-environment-changed" component={DetectedEnvironmentChanged} />
-        <Route path="/hover-delay" component={HoverDelay} />
+        <Route path="/activate-by-hover" component={ActivateByHover} />
         <Route path="/image-magnify" component={ImageMagnify} />
         <Route path="/activate-by-touch" component={ActivatedByTouch} />
         <Route path="/activate-by-tap" component={ActivateByTap} />
