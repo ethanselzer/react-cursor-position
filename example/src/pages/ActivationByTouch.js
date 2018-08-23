@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
     Col,
     Grid,
@@ -35,7 +36,14 @@ export default class extends Component {
                                         Recommended only when scrolling is not an expected use case.
                                     </li>
                                     <li>
-                                        Related: See Activate by Press, Activate by Tap,
+                                        See Related:&nbsp;
+                                        <Link to="activate-by-press">
+                                            Activate by Press
+                                        </Link>
+                                        ,&nbsp;
+                                        <Link to="activate-by-tap">
+                                            Activate by Tap
+                                        </Link>,
                                         Activate by Hover, and Activate by Click
                                     </li>
                                 </ul>
@@ -47,7 +55,7 @@ export default class extends Component {
                                     <li>Import INTERACTIONS from react-cursor-position (see code example below)</li>
                                     <li>
                                         <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationByTouch.js">
-                                            Example Code
+                                            Example Code on GitHub
                                         </a>
                                     </li>
                                 </ul>

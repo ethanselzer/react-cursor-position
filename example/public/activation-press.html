@@ -17,11 +17,10 @@ import ReactCursorPosition from 'react-cursor-position';
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
+// Press is the default touch interaction
+// Hover is the default mouse interaction
 export default () => (
-    &lt;ReactCursorPosition
-        className="example__target"
-        pressDuration={1000}
-    &gt;
+    &lt;ReactCursorPosition&gt;
         &lt;PositionLabel /&gt;
         &lt;InstructionsLabel /&gt;
     &lt;/ReactCursorPosition&gt;
