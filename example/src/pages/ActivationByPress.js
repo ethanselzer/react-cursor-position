@@ -57,8 +57,9 @@ export default class extends Component {
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>Prop: activationInteractionTouch</li>
-                                    <li>Type: String</li>
+                                    <li>Type: One of [INTERACTIONS.PRESS, INTERACTIONS.TAP, INTERACTIONS.TOUCH]</li>
                                     <li>Default: INTERACTIONS.PRESS</li>
+                                    <li>Import INTERACTIONS from react-cursor-position (see code example below)</li>
                                     <li>
                                         <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationByPress.js">
                                             Example Code on GitHub
