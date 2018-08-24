@@ -5,7 +5,9 @@ import PositionLabel from './PositionLabel';
 export default () => (
     <ReactCursorPosition
         className="example__target"
-        activationInteractionTouch={INTERACTIONS.TAP}
+        activationInteractionTouch={INTERACTIONS.PRESS} // default
+        pressDuration={500} //default
+        pressMoveThreshold={5} //default
     >
         <PositionLabel />
         <div className="example__instructions">
