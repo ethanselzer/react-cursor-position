@@ -45,8 +45,13 @@ export default class extends Component {
                                         ,&nbsp;
                                         <Link to="activate-by-touch">
                                             Activate by Touch
-                                        </Link>,
-                                        Activate by Hover, and Activate by Click
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-click">
+                                            Activate by Click
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-hover">
+                                            Activate by Hover
+                                        </Link>
                                     </li>
                                 </ul>
                             </Col>

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
     Col,
     Grid,
@@ -39,6 +40,21 @@ export default class extends Component {
                                     </li>
                                     <li>
                                         Implement hoverOffDelayInMs to conrol delay before componet is deactivated.
+                                    </li>
+                                    <li>
+                                    See Related:&nbsp;
+                                        <Link to="activate-by-click">
+                                            Activate by Click
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-press">
+                                            Activate by Press
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-tap">
+                                            Activate by Tap
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-touch">
+                                            Activate by Touch
+                                        </Link>
                                     </li>
                                 </ul>
                             </Col>
