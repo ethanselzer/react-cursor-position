@@ -38,7 +38,7 @@ class Navigation extends React.Component {
             case '/style' :
                 return 2.5;
             case '/activate-by-hover' :
-                return 2.10;
+                return 2.11;
             case '/activate-by-touch' :
                 return 2.6;
             case '/activate-by-tap' :
@@ -47,12 +47,12 @@ class Navigation extends React.Component {
                 return 2.8;
             case '/on-activation-changed' :
                 return 2.9;
-            case '/hover-delay' :
-                return 2.11;
             case '/detected-environment-changed' :
                 return 2.12;
             case '/reset' :
                 return 2.13;
+            case '/activate-by-click' :
+                return 2.14;
             case '/image-magnify' :
                 return 3.1;
             case '/support' :
@@ -77,7 +77,8 @@ class Navigation extends React.Component {
                     <Nav {...{activeKey: this.state.selectedNavKey}}>
                         <NavItem eventKey={1} href="#/">Home</NavItem>
                         <NavDropdown eventKey={2} title="API Examples" id="nav-dropdown">
-                            <MenuItem eventKey={2.10} href="#/activate-by-hover">Activate by Hover</MenuItem>
+                            <MenuItem eventKey={2.14} href="#/activate-by-click">Activate by Click</MenuItem>
+                            <MenuItem eventKey={2.11} href="#/activate-by-hover">Activate by Hover</MenuItem>
                             <MenuItem eventKey={2.8} href="#/activate-by-press">Activate by Press</MenuItem>
                             <MenuItem eventKey={2.7} href="#/activate-by-tap">Activate by Tap</MenuItem>
                             <MenuItem eventKey={2.6} href="#/activate-by-touch">Activate by Touch</MenuItem>

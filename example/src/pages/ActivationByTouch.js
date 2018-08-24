@@ -24,7 +24,7 @@ export default class extends Component {
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>activationInteractionTouch - API Example</h2>
+                                <h2>Activate by Touch - Example</h2>
                             </Col>
                         </Row>
                         <Row>
@@ -43,8 +43,13 @@ export default class extends Component {
                                         ,&nbsp;
                                         <Link to="activate-by-tap">
                                             Activate by Tap
-                                        </Link>,
-                                        Activate by Hover, and Activate by Click
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-hover">
+                                            Activate by Hover
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-click">
+                                            Activate by Click
+                                        </Link>
                                     </li>
                                 </ul>
                             </Col>
