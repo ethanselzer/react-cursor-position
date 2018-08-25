@@ -960,7 +960,7 @@ describe('ReactCursorPosition', () => {
                 const touchEvent = getTouchEvent();
                 const stopPropagationSpy = jest.spyOn(touchEvent, 'stopPropagation');
 
-                instance.componentDidMount();
+                instance.onTouchStart(touchEvent);
                 instance.onTouchMove(touchEvent);
 
                 expect(stopPropagationSpy).toHaveBeenCalled();
@@ -974,7 +974,7 @@ describe('ReactCursorPosition', () => {
                 const touchEvent = getTouchEvent();
                 const stopPropagationSpy = jest.spyOn(touchEvent, 'stopPropagation');
 
-                instance.componentDidMount();
+                instance.onTouchStart(touchEvent);
                 instance.onTouchMove(touchEvent);
 
                 expect(stopPropagationSpy).not.toHaveBeenCalled();
