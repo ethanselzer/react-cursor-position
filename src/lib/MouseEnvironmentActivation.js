@@ -5,15 +5,11 @@ export default class MouseActivation extends Activation {
         super({ onIsActiveChanged });
     }
 
-    /* istanbul ignore next */
     mouseEntered() {}
 
-    /* istanbul ignore next */
     mouseMoved() {}
 
-    /* istanbul ignore next */
     mouseLeft() {}
 
-    /* istanbul ignore next */
     mouseClicked() {}
 }
