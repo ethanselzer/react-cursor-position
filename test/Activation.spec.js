@@ -1,4 +1,9 @@
 import Activation from '../src/lib/Activation';
+import TouchEnvironmentActivation from '../src/lib/TouchEnvironmentActivation';
+import MouseEnvironmentActivation from '../src/lib/MouseEnvironmentActivation';
+import TapActivation from '../src/lib/TapActivation';
+import PressActivation from '../src/lib/PressActivation';
+
 import noop from '../src/utils/noop';
 
 describe('Activation base class', () => {
@@ -76,5 +81,115 @@ describe('Activation base class', () => {
             expect(clearTimeout).toHaveBeenCalledTimes(1);
             expect(clearTimeout).toHaveBeenNthCalledWith(1, 1);
         });
+    });
+});
+
+describe('TouchEnvironmentActivation', () => {
+    it('stubs touchStarted', () => {
+        const tea = new TouchEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(tea.touchStarted).not.toThrow();
+    });
+
+    it('stubs touchMoved', () => {
+        const tea = new TouchEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(tea.touchMoved).not.toThrow();
+    });
+});
+
+describe('TapActivation', () => {
+    it('touchMoved returns if active', () => {
+        const tapActivation = new TapActivation({
+            onIsActiveChanged: noop,
+            tapDuration: 0,
+            tapMoveThreshold: 0
+        });
+        const spy = jest.spyOn(tapActivation, 'setMoveThresholdCriteria');
+        tapActivation.isActive = true;
+
+        tapActivation.touchMoved({ position: {x: 0, y: 0} })
+
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('touchMoved calls setMoveThresholdCriteria if not active', () => {
+        const tapActivation = new TapActivation({
+            onIsActiveChanged: noop,
+            tapDuration: 0,
+            tapMoveThreshold: 0
+        });
+        const spy = jest.spyOn(tapActivation, 'setMoveThresholdCriteria');
+
+        tapActivation.touchMoved({ position: {x: 0, y: 0} })
+
+        expect(spy).toHaveBeenCalled();
+    });
+});
+
+describe('PressActivation', () => {
+    it('touchMoved returns if active', () => {
+        const pressActivation = new PressActivation({
+            onIsActiveChanged: noop,
+            pressDuration: 0,
+            pressMoveThreshold: 0
+        });
+        const spy = jest.spyOn(pressActivation, 'setPressEventCriteria');
+        pressActivation.isActive = true;
+
+        pressActivation.touchMoved({ position: {x: 0, y: 0} })
+
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('touchMoved calls setPressEventCriteria if not active', () => {
+        const pressActivation = new PressActivation({
+            onIsActiveChanged: noop,
+            pressDuration: 0,
+            pressMoveThreshold: 0
+        });
+        const spy = jest.spyOn(pressActivation, 'setPressEventCriteria');
+
+        pressActivation.touchMoved({ position: {x: 0, y: 0} })
+
+        expect(spy).toHaveBeenCalled();
+    });
+});
+
+describe('MouseEnvironmentActivation', () => {
+    it('stubs mouseEntered', () => {
+        const mea = new MouseEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(mea.mouseEntered).not.toThrow();
+    });
+
+    it('stubs mouseMoved', () => {
+        const mea = new MouseEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(mea.mouseMoved).not.toThrow();
+    });
+
+    it('stubs mouseClicked', () => {
+        const mea = new MouseEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(mea.mouseClicked).not.toThrow();
+    });
+
+    it('stubs mouseLeft', () => {
+        const mea = new MouseEnvironmentActivation({
+            onIsActiveChanged: noop
+        });
+
+        expect(mea.mouseLeft).not.toThrow();
     });
 });

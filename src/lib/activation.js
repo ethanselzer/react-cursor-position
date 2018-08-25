@@ -1,6 +1,5 @@
 export default class Activation {
-    constructor ({ onIsActiveChanged }) {
-        /* istanbul ignore next */
+    constructor ({ onIsActiveChanged } = {}) {
         if (typeof onIsActiveChanged !== 'function'){
             throw new Error('onIsActiveChanged should be a function');
         }
