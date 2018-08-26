@@ -128,10 +128,6 @@ export default class extends React.Component {
     }
 
     onTouchMove(e) {
-        const position = this.core.getCursorPosition(this.getTouchEvent(e));
-
-        this.touchActivation.touchMoved({ e, position });
-
         if (this.props.shouldStopTouchMovePropagation) {
             e.stopPropagation();
         }
@@ -140,6 +136,8 @@ export default class extends React.Component {
             return;
         }
 
+        const position = this.core.getCursorPosition(this.getTouchEvent(e));
+        this.touchActivation.touchMoved({ e, position });
         this.setPositionState(position);
         e.preventDefault();
     }
@@ -167,6 +165,10 @@ export default class extends React.Component {
     }
 
     onMouseMove(e) {
+        if (!this.state.isActive) {
+            return;
+        }
+
         this.setPositionState(this.core.getCursorPosition(e));
     }
 
@@ -175,7 +177,8 @@ export default class extends React.Component {
         this.setState({ isPositionOutside: true });
     }
 
-    onClick() {
+    onClick(e) {
+        this.setPositionState(this.core.getCursorPosition(e));
         this.mouseActivation.mouseClicked();
         this.onMouseDetected();
     }
@@ -244,6 +247,7 @@ export default class extends React.Component {
         this.setElementDimensionsState(
             this.getElementDimensions(this.el)
         );
+        console.log('init')
     }
 
     setTouchActivationStrategy(interaction) {
