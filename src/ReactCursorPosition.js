@@ -247,7 +247,6 @@ export default class extends React.Component {
         this.setElementDimensionsState(
             this.getElementDimensions(this.el)
         );
-        console.log('init')
     }
 
     setTouchActivationStrategy(interaction) {
