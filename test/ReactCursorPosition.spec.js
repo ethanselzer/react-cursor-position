@@ -381,7 +381,6 @@ describe('ReactCursorPosition', () => {
 
                     expect(childComponent.props().isPositionOutside).toBe(true);
 
-                    instance.componentDidMount();
                     instance.onTouchStart(touchEvent);
                     renderedTree.update();
 
@@ -412,20 +411,19 @@ describe('ReactCursorPosition', () => {
             describe('Mouse Environment', () => {
                 it('unsets isPositionOutside', (done) => {
                     const renderedTree = getMountedComponentTree({
-                        hoverDelayInMs: 0,
-                        style: {
-                            width: '2px',
-                            height: '2px'
-                        }
+                        hoverDelayInMs: 0
                     });
                     const instance = renderedTree.instance();
 
                     instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
-                    instance.onMouseMove(getMouseEvent({
-                        pageX: 1,
-                        pageY: 1
-                    }));
+
+                    defer(() => {
+                        instance.onMouseMove(getMouseEvent({
+                            pageX: 1,
+                            pageY: 1
+                        }));
+                    });
 
                     defer(() => {
                         renderedTree.update();
@@ -460,12 +458,14 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = renderedTree.instance();
 
-                    instance.componentDidMount();
                     instance.onMouseEnter(mouseEvent);
-                    instance.onMouseMove(getMouseEvent({
-                        pageX: 5,
-                        pageY: 4
-                    }));
+
+                    defer(() => {
+                        instance.onMouseMove(getMouseEvent({
+                            pageX: 5,
+                            pageY: 4
+                        }));
+                    });
 
                     defer(() => {
                         renderedTree.update();
@@ -809,11 +809,20 @@ describe('ReactCursorPosition', () => {
                     });
                     const instance = tree.instance();
 
-                    instance.onTouchStart(touchEvent);
-                    instance.onTouchMove(
-                        getTouchEvent({ pageX: 6, pageY: 8 })
+                    instance.onTouchStart(
+                        getTouchEvent({
+                            pageX: 1,
+                            pageY: 2
+                        })
                     );
-                    instance.onTouchEnd(touchEvent);
+                    defer(() => {
+                        instance.onTouchMove(
+                            getTouchEvent({
+                                pageX: 7,
+                                pageY: 8
+                            })
+                        );
+                    });
 
                     jest.advanceTimersByTime(181);
                     tree.update();
@@ -910,6 +919,7 @@ describe('ReactCursorPosition', () => {
                 expect(childComponent.prop('isActive')).toBe(false);
 
                 const instance = renderedTree.instance();
+                instance.onMouseEnter(mouseEvent);
                 instance.onClick(mouseEvent);
                 renderedTree.update();
                 childComponent = renderedTree.find(GenericSpanComponent);
@@ -925,6 +935,7 @@ describe('ReactCursorPosition', () => {
                 expect(childComponent.prop('isActive')).toBe(false);
                 const instance = renderedTree.instance();
 
+                instance.onMouseEnter(mouseEvent);
                 instance.onClick(mouseEvent);
                 renderedTree.update();
                 childComponent = renderedTree.find(GenericSpanComponent);
@@ -1088,7 +1099,7 @@ describe('ReactCursorPosition', () => {
             const component = getMountedComponentTree();
             const instance = component.instance();
             const spy = jest.spyOn(instance, 'setPositionState');
-            instance.init();
+            instance.onMouseEnter(mouseEvent);
             instance.onMouseMove(mouseEvent);
 
             instance.reset();
