@@ -164,6 +164,49 @@ describe('ReactCursorPosition', () => {
         expect(touchEvent.preventDefault).toHaveBeenCalled();
     });
 
+    it('invokes setPositionState in the mouse environment if the core is ready', () => {
+        const tree = getMountedComponentTree();
+        const instance = tree.instance();
+        const spy = jest.spyOn(instance, 'setPositionState');
+
+        instance.onMouseEnter(mouseEvent);
+        instance.onMouseMove(mouseEvent);
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it('does not invoke setPositionState in the mouse environment if the core is not ready', () => {
+        const tree = getMountedComponentTree();
+        const instance = tree.instance();
+        const spy = jest.spyOn(instance, 'setPositionState');
+
+        instance.onMouseMove(mouseEvent);
+
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+    it('invokes setPositionState in the touch environment if the core is ready', () => {
+        const tree = getMountedComponentTree();
+        const instance = tree.instance();
+        const spy = jest.spyOn(instance, 'setPositionState');
+
+        instance.onTouchStart(touchEvent);
+        instance.onTouchMove(touchEvent);
+
+        expect(spy).toHaveBeenCalled();
+    });
+
+    it('does not invoke setPositionState in the touch environment if the core is not ready', () => {
+        const tree = getMountedComponentTree();
+        const instance = tree.instance();
+        const spy = jest.spyOn(instance, 'setPositionState');
+
+        instance.onTouchMove(touchEvent);
+
+        expect(spy).not.toHaveBeenCalled();
+    });
+
+
     describe('Add Touch and Mouse Event Listeners', () => {
         it('fills event listeners collection', () => {
             positionObserver = getMountedComponentTree();
