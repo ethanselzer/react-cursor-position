@@ -174,7 +174,9 @@ export default class extends React.Component {
             return;
         }
 
-        this.setPositionState(this.core.getCursorPosition(e));
+        const position = this.core.getCursorPosition(e);
+        this.setPositionState(position);
+        this.mouseActivation.mouseMoved(position);
     }
 
     onMouseLeave() {
