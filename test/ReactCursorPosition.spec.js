@@ -706,7 +706,7 @@ describe('ReactCursorPosition', () => {
                 it('sets isActive if pressMoveThreshold is not exceeded for duration', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        pressDuration: 100,
+                        pressDuration: 10,
                         pressMoveThreshold: 5,
                         activationInteractionTouch: INTERACTIONS.PRESS
                     });
@@ -716,7 +716,7 @@ describe('ReactCursorPosition', () => {
                     let childComponent = tree.find(GenericSpanComponent);
                     expect(childComponent.prop('isActive')).toBe(false);
 
-                    jest.advanceTimersByTime(101);
+                    jest.advanceTimersByTime(11);
                     tree.update();
 
                     childComponent = tree.find(GenericSpanComponent);
@@ -726,16 +726,19 @@ describe('ReactCursorPosition', () => {
                 it('does not set isActive if pressMoveThreshold is exceeded for duration', () => {
                     jest.useFakeTimers();
                     const tree = getMountedComponentTree({
-                        pressDuration: 100,
+                        pressDuration: 10,
                         pressMoveThreshold: 5,
                         activationInteractionTouch: INTERACTIONS.PRESS
                     });
+                    const instance = tree.instance();
+
+                    instance.onTouchStart(touchEvent);
+
+                    instance.onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
+                    jest.advanceTimersByTime(11);
+
+                    tree.update();
                     const childComponent = tree.find(GenericSpanComponent);
-                    tree.instance().onTouchStart(touchEvent);
-
-                    tree.instance().onTouchMove(getTouchEvent({ pageX: 10, pageY: 10 }));
-                    jest.advanceTimersByTime(101);
-
                     expect(childComponent.prop('isActive')).toBe(false)
                 });
 
@@ -1104,7 +1107,7 @@ describe('ReactCursorPosition', () => {
 
             instance.reset();
 
-            expect(spy).toHaveBeenCalledTimes(2);
+            expect(spy).toHaveBeenCalledTimes(3);
         });
 
         it('does not invoke setPositionState if last event does not exists', () => {
