@@ -120,8 +120,8 @@ Please [open an issue](https://github.com/ethanselzer/react-cursor-position/issu
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
-yarn
-yarn run build
+npm install
+npm run build
 cd example
 yarn
 yarn start
@@ -134,12 +134,12 @@ If your default browser does not start automatically, open a new browser window 
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
-yarn
+npm install
 npm run #print available commands
 ```
 The Example Project may be used in development of react-cursor-position. 
 
-To rebuild the source automatically when changes are made, run `yarn run build-watch`.
+To rebuild the source automatically when changes are made, run `npm run build-watch`.
 
 ## Contributing
 
