@@ -63,6 +63,15 @@ export default class extends React.Component {
     static displayName = 'ReactCursorPosition';
 
     static propTypes = {
+        activationInteractionMouse: PropTypes.oneOf([
+            INTERACTIONS.CLICK,
+            INTERACTIONS.HOVER
+        ]),
+        activationInteractionTouch: PropTypes.oneOf([
+            INTERACTIONS.PRESS,
+            INTERACTIONS.TAP,
+            INTERACTIONS.TOUCH
+        ]),
         children: PropTypes.any,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
@@ -70,42 +79,33 @@ export default class extends React.Component {
         isEnabled: PropTypes.bool,
         mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
-        onPositionChanged: PropTypes.func,
         onDetectedEnvironmentChanged: PropTypes.func,
+        onPositionChanged: PropTypes.func,
         pressDuration: PropTypes.number,
         pressMoveThreshold: PropTypes.number,
         shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
-        tapMoveThreshold: PropTypes.number,
         tapDuration: PropTypes.number,
-        activationInteractionTouch: PropTypes.oneOf([
-            INTERACTIONS.PRESS,
-            INTERACTIONS.TAP,
-            INTERACTIONS.TOUCH
-        ]),
-        activationInteractionMouse: PropTypes.oneOf([
-            INTERACTIONS.CLICK,
-            INTERACTIONS.HOVER
-        ])
+        tapMoveThreshold: PropTypes.number,
     };
 
     static defaultProps = {
-        isEnabled: true,
+        activationInteractionMouse: INTERACTIONS.HOVER,
+        activationInteractionTouch: INTERACTIONS.PRESS,
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
+        isEnabled: true,
         mapChildProps: props => props,
         onActivationChanged: noop,
-        onPositionChanged: noop,
         onDetectedEnvironmentChanged: noop,
+        onPositionChanged: noop,
         pressDuration: 500,
-        tapDuration: 180,
         pressMoveThreshold: 5,
-        tapMoveThreshold: 5,
         shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
-        activationInteractionTouch: INTERACTIONS.PRESS,
-        activationInteractionMouse: INTERACTIONS.HOVER
+        tapDuration: 180,
+        tapMoveThreshold: 5,
     };
 
     onIsActiveChanged({ isActive }) {
