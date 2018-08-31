@@ -50,8 +50,6 @@ class App extends Component {
                                     <NavItem href="#/detected-environment-changed">On Environment Changed</NavItem>
                                     <NavItem href="#/on-position-changed">On Position Changed</NavItem>
                                     <NavItem href="#/on-activation-changed">On Activation Changed</NavItem>
-                                    <NavItem href="#/press-duration">Press Duration</NavItem>
-                                    <NavItem href="#/press-move-threshold">Press Move Threshold</NavItem>
                                     <NavItem href="#/should-decorate-children">Should Decorate Children</NavItem>
                                     <NavItem href="#/style">Style</NavItem>
                                     <NavItem href="#/reset">Reset</NavItem>
