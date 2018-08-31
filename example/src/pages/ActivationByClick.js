@@ -24,7 +24,7 @@ export default class extends Component {
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>Hover to Activate - Example</h2>
+                                <h2>Click to Activate - Example</h2>
                             </Col>
                         </Row>
                         <Row>
