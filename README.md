@@ -1,9 +1,10 @@
 # react-cursor-position
-react-cursor-position is a primitive component for composing UI features that require notification of cursor and touch position changes. Position coordinates are plotted relative to the HTML element rendered by react-cursor-position.
+react-cursor-position is a primitive component for composing UI features that require notification of cursor or touch position changes. Position coordinates are plotted relative to the HTML element rendered by react-cursor-position. react-cursor-position re-renders child components with new position props when the cursor or touch position changes.
 
-In the mouse environment it supports scroll position changes during a hover session. In the touch environment, it supports the [long press gesture](https://material.io/guidelines/patterns/gestures.html) and does not interfere with page or element scrolling.
+* May be activated by Press, Tap, Touch, Hover and Click gestures
+* Supports scroll position changes during an active session
 
-react-cursor-position re-renders child components with new position props when the cursor or touch position changes.
+
 
 ## Status
 
@@ -25,6 +26,8 @@ npm install --save react-cursor-position
 ```
 
 ## Usage
+
+If you are upgrading from v2x to v3x please see [the release notes](https://github.com/ethanselzer/react-cursor-position/releases/tag/v3.0.0)
 
 If you are upgrading from v1x to v2x please see [the release notes](https://github.com/ethanselzer/react-cursor-position/releases/tag/v2.0.0).
 
