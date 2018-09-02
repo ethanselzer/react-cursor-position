@@ -12,16 +12,14 @@
 <pre>
 <code>
 import React from 'react';
-import ReactCursorPosition from 'react-cursor-position';
+import ReactCursorPosition, { INTERACTIONS } from 'react-cursor-position';
 
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
     &lt;ReactCursorPosition
-        className="example__target"
-        hoverDelayInMs={1000}
-        hoverOffDelayInMs={500}
+        activationInteractionMouse={INTERACTIONS.CLICK}
     &gt;
         &lt;PositionLabel /&gt;
         &lt;InstructionsLabel /&gt;
