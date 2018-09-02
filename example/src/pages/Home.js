@@ -39,15 +39,17 @@ class App extends Component {
                         <Col xs={12} sm={6} md={4} lg={3}>
                             <Panel header="Props API Examples" bsStyle="primary" className="panel">
                                 <Nav bsStyle="pills" stacked>
+                                    <NavItem href="#/activate-by-click">Activate by Click</NavItem>
+                                    <NavItem href="#/activate-by-hover">Activate by Hover</NavItem>
+                                    <NavItem href="#/activate-by-press">Activate by Press</NavItem>
+                                    <NavItem href="#/activate-by-tap">Activate by Tap</NavItem>
+                                    <NavItem href="#/activate-by-touch">Activate by Touch</NavItem>
                                     <NavItem href="#/class-name">Class Name</NavItem>
                                     <NavItem href="#/hover-delay">Hover Delay</NavItem>
-                                    <NavItem href="#/is-activated-on-touch">Is Activated On Touch</NavItem>
                                     <NavItem href="#/map-child-props">Map Child Props</NavItem>
                                     <NavItem href="#/detected-environment-changed">On Environment Changed</NavItem>
                                     <NavItem href="#/on-position-changed">On Position Changed</NavItem>
                                     <NavItem href="#/on-activation-changed">On Activation Changed</NavItem>
-                                    <NavItem href="#/press-duration">Press Duration</NavItem>
-                                    <NavItem href="#/press-move-threshold">Press Move Threshold</NavItem>
                                     <NavItem href="#/should-decorate-children">Should Decorate Children</NavItem>
                                     <NavItem href="#/style">Style</NavItem>
                                     <NavItem href="#/reset">Reset</NavItem>

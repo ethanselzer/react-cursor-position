@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
     Col,
     Grid,
@@ -8,7 +9,7 @@ import {
 import Helmet from 'react-helmet';
 
 import Header from '../components/Header';
-import PressMoveThreshold from '../components/PressMoveThreshold';
+import ActivationByClick from '../components/ActivationByClick';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/app.css';
@@ -23,23 +24,40 @@ export default class extends Component {
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>pressMoveThreshold - API Example</h2>
+                                <h2>Click to Activate - Example</h2>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>
-                                        Amount of movement, in pixels, allowed during press gesture detection.
+                                        Interaction: Click to activate.
+                                    </li>
+                                    <li>
+                                    See Related:&nbsp;
+                                        <Link to="activate-by-hover">
+                                            Activate by Hover
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-press">
+                                            Activate by Press
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-tap">
+                                            Activate by Tap
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-touch">
+                                            Activate by Touch
+                                        </Link>
                                     </li>
                                 </ul>
                             </Col>
                             <Col sm={5}>
                                 <ul className="summary__list">
-                                    <li>Type: Number</li>
-                                    <li>Default: 5</li>
+                                    <li>Prop: activationInteractionMouse</li>
+                                    <li>Type: One of [INTERACTIONS.HOVER, INTERACTIONS.CLICK]</li>
+                                    <li>Default: INTERACTIONS.HOVER</li>
+                                    <li>Import INTERACTIONS from react-cursor-position (see code example below)</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/PressMoveThreshold.js">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationByClick.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -51,16 +69,16 @@ export default class extends Component {
                 <Grid>
                     <Row>
                         <Col sm={6} md={4}>
-                            <PressMoveThreshold />
+                            <ActivationByClick />
                         </Col>
                         <Col
                             sm={6}
                             md={8}
                             className="example__source-container"
-                            style={{ height: '270px' }}
+                            style={{ height: '280px' }}
                         >
                             <iframe title="example"
-                                src="press-move-threshold.html"
+                                src="activation-click.html"
                                 frameBorder="0"
                                 className="code-frame"
                             />

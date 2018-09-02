@@ -12,15 +12,16 @@
 <pre>
 <code>
 import React from 'react';
-import ReactCursorPosition from 'react-cursor-position';
+import ReactCursorPosition, { INTERACTIONS } from 'react-cursor-position';
 
 import PositionLabel from './PositionLabel';
 import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
     &lt;ReactCursorPosition
-        className="example__target"
-        pressMoveThreshold={20}
+        activationInteractionPress={INTERACTIONS.PRESS} //default
+        pressDurationInMs={500} //default
+        pressMoveThreshold={5} //default
     &gt;
         &lt;PositionLabel /&gt;
         &lt;InstructionsLabel /&gt;

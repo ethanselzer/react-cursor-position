@@ -17,8 +17,7 @@
         },
         "test": {
             "plugins": [
-                "transform-es2015-modules-commonjs",
-                "istanbul"
+                "transform-es2015-modules-commonjs"
             ]
         }
     }

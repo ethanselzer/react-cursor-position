@@ -4,8 +4,18 @@ import objectAssign from 'object-assign';
 import omit from 'object.omit';
 import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
-import * as constants from './constants';
+import {
+    INTERACTIONS,
+    MOUSE_EMULATION_GUARD_TIMER_NAME
+} from './constants';
 import noop from './utils/noop';
+import PressActivation from './lib/PressActivation';
+import TouchActivation from './lib/TouchActivation';
+import TapActivation from './lib/TapActivation';
+import HoverActivation from './lib/HoverActivation';
+import ClickActivation from './lib/ClickActivation';
+
+export { INTERACTIONS };
 
 export default class extends React.Component {
     constructor(props) {
@@ -43,42 +53,68 @@ export default class extends React.Component {
         this.onMouseEnter = this.onMouseEnter.bind(this);
         this.onMouseMove = this.onMouseMove.bind(this);
         this.onMouseLeave = this.onMouseLeave.bind(this);
+        this.onClick = this.onClick.bind(this);
+        this.onIsActiveChanged = this.onIsActiveChanged.bind(this);
+
+        this.setTouchActivationStrategy(props.activationInteractionTouch);
+        this.setMouseActivationStrategy(props.activationInteractionMouse);
     }
 
     static displayName = 'ReactCursorPosition';
 
     static propTypes = {
+        activationInteractionMouse: PropTypes.oneOf([
+            INTERACTIONS.CLICK,
+            INTERACTIONS.HOVER
+        ]),
+        activationInteractionTouch: PropTypes.oneOf([
+            INTERACTIONS.PRESS,
+            INTERACTIONS.TAP,
+            INTERACTIONS.TOUCH
+        ]),
         children: PropTypes.any,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
-        isActivatedOnTouch: PropTypes.bool,
         isEnabled: PropTypes.bool,
         mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
-        onPositionChanged: PropTypes.func,
         onDetectedEnvironmentChanged: PropTypes.func,
-        pressDuration: PropTypes.number,
+        onPositionChanged: PropTypes.func,
+        pressDurationInMs: PropTypes.number,
         pressMoveThreshold: PropTypes.number,
         shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
-        style: PropTypes.object
+        style: PropTypes.object,
+        tapDurationInMs: PropTypes.number,
+        tapMoveThreshold: PropTypes.number,
     };
 
     static defaultProps = {
-        isActivatedOnTouch: false,
-        isEnabled: true,
+        activationInteractionMouse: INTERACTIONS.HOVER,
+        activationInteractionTouch: INTERACTIONS.PRESS,
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
+        isEnabled: true,
         mapChildProps: props => props,
         onActivationChanged: noop,
-        onPositionChanged: noop,
         onDetectedEnvironmentChanged: noop,
-        pressDuration: 500,
+        onPositionChanged: noop,
+        pressDurationInMs: 500,
         pressMoveThreshold: 5,
         shouldDecorateChildren: true,
-        shouldStopTouchMovePropagation: false
+        shouldStopTouchMovePropagation: false,
+        tapDurationInMs: 180,
+        tapMoveThreshold: 5,
     };
+
+    onIsActiveChanged({ isActive }) {
+        if (isActive) {
+            this.activate();
+        } else {
+            this.deactivate();
+        }
+    }
 
     onTouchStart(e) {
         this.init();
@@ -88,39 +124,37 @@ export default class extends React.Component {
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
         this.setPositionState(position);
 
-        if (this.props.isActivatedOnTouch) {
-            e.preventDefault();
-            this.activate();
-            return;
-        }
-
-        this.initPressEventCriteria(position);
-        this.setPressEventTimer();
+        this.touchActivation.touchStarted({ e, position });
     }
 
     onTouchMove(e) {
+        if (this.props.shouldStopTouchMovePropagation) {
+            e.stopPropagation();
+        }
+
+        if (!this.isCoreReady) {
+            return;
+        }
+
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
+        this.touchActivation.touchMoved({ e, position });
 
         if (!this.state.isActive) {
-            this.setPressEventCriteria(position);
             return;
         }
 
         this.setPositionState(position);
         e.preventDefault();
-
-        if (this.props.shouldStopTouchMovePropagation) {
-            e.stopPropagation();
-        }
     }
 
     onTouchEnd() {
-        this.deactivate();
+        this.touchActivation.touchEnded();
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
     onTouchCancel() {
-        this.deactivate();
+        this.touchActivation.touchCanceled();
+
         this.unsetShouldGuardAgainstMouseEmulationByDevices();
     }
 
@@ -132,18 +166,28 @@ export default class extends React.Component {
         this.init();
         this.onMouseDetected();
         this.setPositionState(this.core.getCursorPosition(e));
-        this.clearActivationTimers();
-        this.schedulActivation(this.props.hoverDelayInMs);
+        this.mouseActivation.mouseEntered();
     }
 
     onMouseMove(e) {
-        this.setPositionState(this.core.getCursorPosition(e));
+        if (!this.isCoreReady) {
+            return;
+        }
+
+        const position = this.core.getCursorPosition(e);
+        this.setPositionState(position);
+        this.mouseActivation.mouseMoved(position);
     }
 
     onMouseLeave() {
-        this.clearActivationTimers();
-        this.scheduleDeactivation(this.props.hoverOffDelayInMs);
+        this.mouseActivation.mouseLeft();
         this.setState({ isPositionOutside: true });
+    }
+
+    onClick(e) {
+        this.setPositionState(this.core.getCursorPosition(e));
+        this.mouseActivation.mouseClicked();
+        this.onMouseDetected();
     }
 
     onTouchDetected() {
@@ -193,8 +237,11 @@ export default class extends React.Component {
     }
 
     componentWillUnmount() {
-        this.clearTimers();
         this.disable();
+    }
+
+    get isCoreReady() {
+        return !!this.core;
     }
 
     enable() {
@@ -211,6 +258,74 @@ export default class extends React.Component {
         this.setElementDimensionsState(
             this.getElementDimensions(this.el)
         );
+    }
+
+    setTouchActivationStrategy(interaction) {
+        const {
+            pressDurationInMs,
+            pressMoveThreshold,
+            tapDurationInMs,
+            tapMoveThreshold
+        }= this.props;
+
+        const {
+            TOUCH,
+            TAP,
+            PRESS
+        } = INTERACTIONS;
+
+        switch (interaction) {
+            case PRESS :
+                this.touchActivation = new PressActivation({
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    pressDurationInMs,
+                    pressMoveThreshold
+                });
+                break;
+            case TAP :
+                this.touchActivation = new TapActivation({
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    tapDurationInMs,
+                    tapMoveThreshold
+                });
+                break;
+            case TOUCH :
+                this.touchActivation = new TouchActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
+                });
+                break;
+            default :
+                throw new Error('Must implement a touch activation strategy');
+        }
+    }
+
+    setMouseActivationStrategy(interaction) {
+        const {
+            hoverDelayInMs,
+            hoverOffDelayInMs
+        }= this.props;
+
+        const {
+            HOVER,
+            CLICK
+        } = INTERACTIONS;
+
+        switch (interaction) {
+            case  HOVER :
+                this.mouseActivation = new HoverActivation({
+                    onIsActiveChanged: this.onIsActiveChanged,
+                    hoverDelayInMs,
+                    hoverOffDelayInMs
+                });
+                break;
+            case CLICK :
+                this.mouseActivation = new ClickActivation({
+                    onIsActiveChanged: this.onIsActiveChanged
+                });
+                break;
+            default :
+                throw new Error('Must implement a mouse activation strategy');
+        }
     }
 
     reset() {
@@ -237,8 +352,6 @@ export default class extends React.Component {
     }
 
     deactivate() {
-        this.clearTimer(constants.PRESS_EVENT_TIMER_NAME);
-
         this.setState({ isActive: false }, () => {
             const { isPositionOutside, position } = this.state;
 
@@ -269,85 +382,16 @@ export default class extends React.Component {
         })
     }
 
-    schedulActivation(schedule) {
-        const scheduleId = setTimeout(() => {
-            this.activate();
-        }, schedule);
-
-        this.timers.push({
-            id: scheduleId,
-            name: constants.SET_ACTIVATION_TIMER_NAME
-        });
-    }
-
-    scheduleDeactivation(schedule) {
-        const scheduleId = setTimeout(() => {
-            this.deactivate();
-        }, schedule);
-
-        this.timers.push({
-            id: scheduleId,
-            name: constants.UNSET_ACTIVATION_TIMER_NAME
-        });
-    }
-
-    clearActivationTimers() {
-        this.clearTimer(constants.SET_ACTIVATION_TIMER_NAME);
-        this.clearTimer(constants.UNSET_ACTIVATION_TIMER_NAME);
-    }
-
-    setPressEventTimer() {
-        const {
-            pressDuration,
-            pressMoveThreshold
-        } = this.props;
-
-        this.timers.push({
-            name: constants.PRESS_EVENT_TIMER_NAME,
-            id: setTimeout(() => {
-                if (Math.abs(this.currentElTop - this.initialElTop) < pressMoveThreshold) {
-                    this.activate();
-                }
-            }, pressDuration)
-        });
-    }
-
-    setPressEventCriteria(position) {
-        this.currentElTop = position.y;
-    }
-
-    initPressEventCriteria(position) {
-        const top = position.y
-        this.initialElTop = top;
-        this.currentElTop = top;
-    }
-
     setShouldGuardAgainstMouseEmulationByDevices() {
         this.shouldGuardAgainstMouseEmulationByDevices = true;
     }
 
     unsetShouldGuardAgainstMouseEmulationByDevices() {
         this.timers.push({
-            name: constants.MOUSE_EMULATION_GUARD_TIMER_NAME,
+            name: MOUSE_EMULATION_GUARD_TIMER_NAME,
             id: setTimeout(() => {
                 this.shouldGuardAgainstMouseEmulationByDevices = false;
             }, 0)
-        });
-    }
-
-    clearTimers() {
-        const timers = this.timers;
-        while (timers.length) {
-            const timer = timers.pop();
-            clearTimeout(timer.id);
-        }
-    }
-
-    clearTimer(timerName) {
-        this.timers.forEach((timer) => {
-            if (timer.name === timerName) {
-                clearTimeout(timer.id);
-            }
         });
     }
 
@@ -416,7 +460,8 @@ export default class extends React.Component {
             addEventListener(this.el, 'touchcancel', this.onTouchCancel),
             addEventListener(this.el, 'mouseenter', this.onMouseEnter),
             addEventListener(this.el, 'mousemove', this.onMouseMove),
-            addEventListener(this.el, 'mouseleave', this.onMouseLeave)
+            addEventListener(this.el, 'mouseleave', this.onMouseLeave),
+            addEventListener(this.el, 'click', this.onClick)
         );
     }
 

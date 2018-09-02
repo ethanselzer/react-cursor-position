@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactCursorPosition has correct default props 1`] = `
+Object {
+  "activationInteractionMouse": "hover",
+  "activationInteractionTouch": "press",
+  "hoverDelayInMs": 0,
+  "hoverOffDelayInMs": 0,
+  "isEnabled": true,
+  "mapChildProps": [Function],
+  "onActivationChanged": [Function],
+  "onDetectedEnvironmentChanged": [Function],
+  "onPositionChanged": [Function],
+  "pressDurationInMs": 500,
+  "pressMoveThreshold": 5,
+  "shouldDecorateChildren": true,
+  "shouldStopTouchMovePropagation": false,
+  "tapDurationInMs": 180,
+  "tapMoveThreshold": 5,
+}
+`;

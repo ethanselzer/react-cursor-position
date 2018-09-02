@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router';
 import {
     Col,
     Grid,
@@ -8,7 +9,7 @@ import {
 import Helmet from 'react-helmet';
 
 import Header from '../components/Header';
-import HoverDelay from '../components/HoverDelay';
+import ActivationByHover from '../components/ActivationByHover';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import '../styles/app.css';
@@ -23,28 +24,48 @@ export default class extends Component {
                     <Grid>
                         <Row>
                             <Col sm={12}>
-                                <h2>Hover Delay - API Example</h2>
+                                <h2>Hover to Activate - Example</h2>
                             </Col>
                         </Row>
                         <Row>
                             <Col sm={5}>
                                 <ul className="summary__list">
                                     <li>
-                                        hoverDelayInMs - Milliseconds delay before component is activated.
+                                        The default mouse interaction option
+                                    </li>
+                                    <li>
+                                        Implement hoverDelayInMs to control delay before component is activated.
                                         Use this to help reduce unintened hover events, where the mouse cursor
                                         is moving over the target area to reach something else.
                                     </li>
                                     <li>
-                                        hoverOffDelayInMs - Milliseconds delay before componet is deactivated.
+                                        Implement hoverOffDelayInMs to conrol delay before componet is deactivated.
+                                    </li>
+                                    <li>
+                                    See Related:&nbsp;
+                                        <Link to="activate-by-click">
+                                            Activate by Click
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-press">
+                                            Activate by Press
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-tap">
+                                            Activate by Tap
+                                        </Link>,&nbsp;
+                                        <Link to="activate-by-touch">
+                                            Activate by Touch
+                                        </Link>
                                     </li>
                                 </ul>
                             </Col>
                             <Col sm={5}>
                                 <ul className="summary__list">
-                                    <li>Type: Number</li>
-                                    <li>Default: 0</li>
+                                    <li>Prop: activationInteractionMouse</li>
+                                    <li>Type: One of [INTERACTIONS.HOVER, INTERACTIONS.CLICK]</li>
+                                    <li>Default: INTERACTIONS.HOVER</li>
+                                    <li>Import INTERACTIONS from react-cursor-position (see code example below)</li>
                                     <li>
-                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/HoverDelay.js">
+                                        <a href="https://github.com/ethanselzer/react-cursor-position/blob/master/example/src/components/ActivationByHover.js">
                                             Example Code
                                         </a>
                                     </li>
@@ -56,7 +77,7 @@ export default class extends Component {
                 <Grid>
                     <Row>
                         <Col sm={6} md={4}>
-                            <HoverDelay />
+                            <ActivationByHover />
                         </Col>
                         <Col
                             sm={6}
@@ -65,7 +86,7 @@ export default class extends Component {
                             style={{ height: '280px' }}
                         >
                             <iframe title="example"
-                                src="hover-delay.html"
+                                src="activation-hover.html"
                                 frameBorder="0"
                                 className="code-frame"
                             />

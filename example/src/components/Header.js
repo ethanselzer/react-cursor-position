@@ -37,20 +37,22 @@ class Navigation extends React.Component {
                 return 2.4;
             case '/style' :
                 return 2.5;
-            case '/is-activated-on-touch' :
+            case '/activate-by-hover' :
+                return 2.11;
+            case '/activate-by-touch' :
                 return 2.6;
-            case '/press-duration' :
+            case '/activate-by-tap' :
                 return 2.7;
-            case '/press-move-threshold' :
+            case '/activate-by-press' :
                 return 2.8;
             case '/on-activation-changed' :
                 return 2.9;
-            case '/hover-delay' :
-                return 2.11;
             case '/detected-environment-changed' :
                 return 2.12;
             case '/reset' :
                 return 2.13;
+            case '/activate-by-click' :
+                return 2.14;
             case '/image-magnify' :
                 return 3.1;
             case '/support' :
@@ -75,15 +77,16 @@ class Navigation extends React.Component {
                     <Nav {...{activeKey: this.state.selectedNavKey}}>
                         <NavItem eventKey={1} href="#/">Home</NavItem>
                         <NavDropdown eventKey={2} title="API Examples" id="nav-dropdown">
+                            <MenuItem eventKey={2.14} href="#/activate-by-click">Activate by Click</MenuItem>
+                            <MenuItem eventKey={2.11} href="#/activate-by-hover">Activate by Hover</MenuItem>
+                            <MenuItem eventKey={2.8} href="#/activate-by-press">Activate by Press</MenuItem>
+                            <MenuItem eventKey={2.7} href="#/activate-by-tap">Activate by Tap</MenuItem>
+                            <MenuItem eventKey={2.6} href="#/activate-by-touch">Activate by Touch</MenuItem>
                             <MenuItem eventKey={2.4} href="#/class-name">Class Name</MenuItem>
-                            <MenuItem eventKey={2.11} href="#/hover-delay">Hover Delay</MenuItem>
-                            <MenuItem eventKey={2.6} href="#/is-activated-on-touch">Is Activated On Touch</MenuItem>
                             <MenuItem eventKey={2.1} href="#/map-child-props">Map Child Props</MenuItem>
                             <MenuItem eventKey={2.12} href="#/detected-environment-changed">On Environment Changed</MenuItem>
                             <MenuItem eventKey={2.2} href="#/on-position-changed">On Position Changed</MenuItem>
                             <MenuItem eventKey={2.9} href="#/on-activation-changed">On Activation Changed</MenuItem>
-                            <MenuItem eventKey={2.7} href="#/press-duration">Press Duration</MenuItem>
-                            <MenuItem eventKey={2.8} href="#/press-move-threshold">Press Move Threshold</MenuItem>
                             <MenuItem eventKey={2.3} href="#/should-decorate-children">Should Decorate Children</MenuItem>
                             <MenuItem eventKey={2.5} href="#/style">Style</MenuItem>
                             <MenuItem eventKey={2.13} href="#/reset">Reset</MenuItem>

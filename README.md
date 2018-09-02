@@ -69,14 +69,15 @@ The information in `detectedEnvironment` is acquired from interaction with this 
 
 All props are optional.
 
+**activationInteractionMouse** : String - One of INTERACTIONS.HOVER (default), INTERACTIONS.CLICK. Import Interactions like this `import ReactCursorPosition, { Interactions } from 'react-cursor-position'`. See [examples](https://ethanselzer.github.io/react-cursor-position/#/activate-by-hover). for more.
+
+**activationInteractionTouch** : String - One of INTERACTIONS.PRESS (default), INTERACTIONS.TAP, or INTERACTIONS.TOUCH. Import Interactions like this `import ReactCursorPosition, { Interactions } from 'react-cursor-position'`. See [examples](https://ethanselzer.github.io/react-cursor-position/#/activate-by-press).
+
 **className** : String - CSS class name(s) to be applied to the div rendered by react-cursor-position.
 
 **hoverDelayInMs** : Number - Amount of time, in milliseconds, to delay hover interaction from activating. Defaults to 0.
 
 **hoverOffDelayInMs** : Number - Amount of time, in milliseconds, to delay hover off interaciton from deactivating. Defaults to 0.
-
-**isActivatedOnTouch** : Boolean - Activate immediately on touch. Scrolling may not be possible when scroll
-gesture begins on target area. Recommended only when scrolling is not an expected use case. Defaults to false.
 
 **isEnabled** : Boolean - Enable or disable cursor position monitoring without remounting. Defaults to true.
 
@@ -95,7 +96,7 @@ Function receives one parameter with the signature `{ elementDimensions: { width
 **onDetectedEnvironmentChanged** : Function - Called when detected environment (mouse or touch) changes.
 Function receives one parameter with the signature `{ isMouseDetected: Boolean, isTouchDetected: Boolean }`.
 
-**pressDuration** : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
+**pressDurationInMs** : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
 
 **pressMoveThreshold** : Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
 
@@ -105,6 +106,10 @@ setting this prop false. Defaults to true.
 **shouldStopTouchMovePropagation** : Boolean - Stop touchmove event bubbling when react-cursor-position is active. Defaults to false.
 
 **style** : Object - Style to be applied to the div rendered by react-cursor-position.
+
+**tapDurationInMs** : Number - Max milliseconds allowed for a screen touch to be considered a tap gesture. Defaults to 180.
+
+**tapMoveThreshold** : Number - Amount of movement, in pixels, allowed during tap gesture detection. Defaults to 5.
 
 ## Imperative API
 **reset**: Invoking the reset method instructs react-cursor-position to recalculate its position relative to the page.
@@ -120,8 +125,8 @@ Please [open an issue](https://github.com/ethanselzer/react-cursor-position/issu
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
-yarn
-yarn run build
+npm install
+npm run build
 cd example
 yarn
 yarn start
@@ -134,12 +139,12 @@ If your default browser does not start automatically, open a new browser window 
 ```ssh
 git clone https://github.com/ethanselzer/react-cursor-position.git
 cd react-cursor-position
-yarn
+npm install
 npm run #print available commands
 ```
 The Example Project may be used in development of react-cursor-position. 
 
-To rebuild the source automatically when changes are made, run `yarn run build-watch`.
+To rebuild the source automatically when changes are made, run `npm run build-watch`.
 
 ## Contributing
 
