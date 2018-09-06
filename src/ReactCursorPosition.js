@@ -430,14 +430,10 @@ export default class extends React.Component {
         return e.touches[0];
     }
 
-    isReactComponent(reactElement) {
-        return typeof reactElement.type === 'function';
-    }
-
     shouldDecorateChild(child) {
         return (
             !!child &&
-            this.isReactComponent(child) &&
+            typeof child.type === 'function' &&
             this.props.shouldDecorateChildren
         );
     }
