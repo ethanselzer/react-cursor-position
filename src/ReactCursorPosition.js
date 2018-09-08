@@ -437,7 +437,7 @@ export default class extends React.Component {
     shouldDecorateChild(child) {
         return (
             !!child &&
-            getIsReactComponent(child) &&
+            this.getIsReactComponent(child) &&
             this.props.shouldDecorateChildren
         );
     }
