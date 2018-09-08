@@ -426,12 +426,12 @@ export default class extends React.Component {
         return  isPositionOutside;
     }
 
-    getIsReactComponent(reactElement) {
-        return typeof reactElement.type === 'function';
-    }
-
     getTouchEvent(e) {
         return e.touches[0];
+    }
+
+    getIsReactComponent(reactElement) {
+        return typeof reactElement.type === 'function';
     }
 
     shouldDecorateChild(child) {
