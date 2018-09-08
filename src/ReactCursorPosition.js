@@ -426,6 +426,10 @@ export default class extends React.Component {
         return  isPositionOutside;
     }
 
+    getIsReactComponent(reactElement) {
+        return typeof reactElement.type === 'function';
+    }
+
     getTouchEvent(e) {
         return e.touches[0];
     }
@@ -433,7 +437,7 @@ export default class extends React.Component {
     shouldDecorateChild(child) {
         return (
             !!child &&
-            typeof child.type === 'function' &&
+            getIsReactComponent(child) &&
             this.props.shouldDecorateChildren
         );
     }
