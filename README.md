@@ -26,6 +26,8 @@ npm install --save react-cursor-position
 
 ## Usage
 
+If you need compatibility with React 16.5.0 on v2.x of react-cusor-position, try installing react-cursor-position@2.5.1
+
 If you are upgrading from v1x to v2x please see [the release notes](https://github.com/ethanselzer/react-cursor-position/releases/tag/v2.0.0).
 
 ```JSX
