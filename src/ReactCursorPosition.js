@@ -99,6 +99,14 @@ export default class extends React.Component {
     }
 
     onTouchMove(e) {
+        if (this.props.shouldStopTouchMovePropagation) {
+            e.stopPropagation();
+        }
+
+        if (!this.isCoreReady) {
+            return;
+        }
+
         const position = this.core.getCursorPosition(this.getTouchEvent(e));
 
         if (!this.state.isActive) {
@@ -108,10 +116,6 @@ export default class extends React.Component {
 
         this.setPositionState(position);
         e.preventDefault();
-
-        if (this.props.shouldStopTouchMovePropagation) {
-            e.stopPropagation();
-        }
     }
 
     onTouchEnd() {
@@ -137,6 +141,10 @@ export default class extends React.Component {
     }
 
     onMouseMove(e) {
+        if (!this.isCoreReady) {
+            return;
+        }
+
         this.setPositionState(this.core.getCursorPosition(e));
     }
 
@@ -195,6 +203,10 @@ export default class extends React.Component {
     componentWillUnmount() {
         this.clearTimers();
         this.disable();
+    }
+
+    get isCoreReady() {
+        return !!this.core;
     }
 
     enable() {
