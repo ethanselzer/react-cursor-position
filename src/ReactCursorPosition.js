@@ -128,10 +128,6 @@ export default class extends React.Component {
     }
 
     onTouchMove(e) {
-        if (this.props.shouldStopTouchMovePropagation) {
-            e.stopPropagation();
-        }
-
         if (!this.isCoreReady) {
             return;
         }
@@ -145,6 +141,10 @@ export default class extends React.Component {
 
         this.setPositionState(position);
         e.preventDefault();
+
+        if (this.props.shouldStopTouchMovePropagation) {
+            e.stopPropagation();
+        }
     }
 
     onTouchEnd() {
