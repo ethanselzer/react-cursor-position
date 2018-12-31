@@ -37,7 +37,6 @@ interface CursorPositionOptionsProps {
   onPositionChanged?: (CursorPositionGeneratedProps) => void;
   pressDurationInMs?: number;
   pressMoveThreshold?: number;
-  shouldDecorateChildren?: boolean;
   shouldStopTouchMovePropagation?: boolean;
   style?: object;
   tapDurationInMs?: number;

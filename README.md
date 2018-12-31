@@ -107,9 +107,6 @@ Function receives one parameter with the signature `{ isMouseDetected: Boolean, 
 
 **pressMoveThreshold** : Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
 
-**shouldDecorateChildren** : Boolean - Suppress decoration of child components by
-setting this prop false. Defaults to true.
-
 **shouldStopTouchMovePropagation** : Boolean - Stop touchmove event bubbling when react-cursor-position is active. Defaults to false.
 
 **style** : Object - Style to be applied to the div rendered by react-cursor-position.

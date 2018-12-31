@@ -704,20 +704,6 @@ describe('ReactCursorPosition', () => {
             expect(spy.mock.calls[0][0].isActive).toBe(true);
         });
 
-        it('supports shouldDecorateChildren', () => {
-            const tree = getMountedComponentTree({
-                isActivatedOnTouch: true,
-                shouldDecorateChildren: false
-            });
-            const childComponent = tree.find(GenericSpanComponent);
-            const instance = tree.instance();
-            instance.onTouchStart(touchEvent);
-
-            instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
-
-            expect(childComponent.props()).toEqual({});
-        });
-
         describe('activationInteractionTouch', () => {
             it('throws an error if an unsupported touch interaction is specified', () => {
                 function shouldThrow() {

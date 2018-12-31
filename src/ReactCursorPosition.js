@@ -83,7 +83,6 @@ export default class extends React.Component {
         onPositionChanged: PropTypes.func,
         pressDurationInMs: PropTypes.number,
         pressMoveThreshold: PropTypes.number,
-        shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
         tapDurationInMs: PropTypes.number,
@@ -102,7 +101,6 @@ export default class extends React.Component {
         onPositionChanged: noop,
         pressDurationInMs: 500,
         pressMoveThreshold: 5,
-        shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
         tapDurationInMs: 180,
         tapMoveThreshold: 5,
@@ -455,16 +453,12 @@ export default class extends React.Component {
     }
 
     render() {
-        const { children, className, mapChildProps, shouldDecorateChildren, style } = this.props;
-        let props = {};
-
-        if (shouldDecorateChildren) {
-            props = objectAssign(
-                {},
-                mapChildProps(this.state),
-                this.getPassThroughProps()
-            );
-        }
+        const { children, className, mapChildProps, style } = this.props;
+        const props = objectAssign(
+            {},
+            mapChildProps(this.state),
+            this.getPassThroughProps()
+        );
 
         return (
             <div { ...{

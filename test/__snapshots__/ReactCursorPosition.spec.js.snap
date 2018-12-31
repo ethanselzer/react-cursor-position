@@ -13,7 +13,6 @@ Object {
   "onPositionChanged": [Function],
   "pressDurationInMs": 500,
   "pressMoveThreshold": 5,
-  "shouldDecorateChildren": true,
   "shouldStopTouchMovePropagation": false,
   "tapDurationInMs": 180,
   "tapMoveThreshold": 5,
