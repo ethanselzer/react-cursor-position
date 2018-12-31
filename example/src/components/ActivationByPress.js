@@ -9,10 +9,14 @@ export default () => (
         pressDurationInMs={500} //default
         pressMoveThreshold={5} //default
     >
-        <PositionLabel />
-        <div className="example__instructions">
-            Press and hold to activate, then drag
-        </div>
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps} />
+                <div className="example__instructions">
+                    Press and hold to activate, then drag
+                </div>
+            </div>
+        )}
     </ReactCursorPosition>
 );
 

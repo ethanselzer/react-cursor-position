@@ -23,8 +23,12 @@ export default () => (
         pressDurationInMs={500} //default
         pressMoveThreshold={5} //default
     &gt;
-        &lt;PositionLabel /&gt;
-        &lt;InstructionsLabel /&gt;
+        {(cursorProps) => (
+            &lt;div&gt;
+                &lt;PositionLabel {...cursorProps} /&gt;
+                &lt;InstructionsLabel /&gt;
+            &lt;/div&gt;
+        )}
     &lt;/ReactCursorPosition&gt;
 );
 </code>

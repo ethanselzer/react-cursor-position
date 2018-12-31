@@ -32,7 +32,9 @@ export default class extends React.Component {
                         this.setState({ detectedEnvironment });
                     }
                 }}&gt;
-                    &lt;InstructionsLabel /&gt;
+                    {() => (
+                        &lt;InstructionsLabel /&gt;
+                    )}
                 &lt;/ReactCursorPosition&gt;
                 &lt;DetectedEnvironmentChangeLabel {...this.state} /&gt;
             &lt;/div&gt;

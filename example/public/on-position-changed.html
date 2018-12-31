@@ -36,7 +36,9 @@ export default class extends React.Component {
                     className: 'example__target',
                     onPositionChanged: props =&gt; this.setState(props)
                 }}&gt;
-                    &lt;InstructionsLabel /&gt;
+                    {() => (
+                        &lt;InstructionsLabel /&gt;
+                    )}
                 &lt;/ReactCursorPosition&gt;
                 &lt;PositionChangedLabel {...this.state} /&gt;
             &lt;/div&gt;

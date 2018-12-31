@@ -26,7 +26,9 @@ export default class extends React.Component {
                     className: 'example__target',
                     onPositionChanged: props => this.setState(props)
                 }}>
-                    <InstructionsLabel className="example__instructions example__instructions--solo" />
+                    {() => (
+                        <InstructionsLabel className="example__instructions example__instructions--solo" />
+                    )}
                 </ReactCursorPosition>
                 <PositionLabel
                     {...this.state}

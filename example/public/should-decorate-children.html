@@ -37,8 +37,12 @@ export default class extends React.Component {
                     onPositionChanged: props => this.setState(props),
                     shouldDecorateChildren: false
                 }}&gt;
-                    &lt;PositionLabel /&gt;
-                    &lt;InstructionsLabel /&gt;
+                    {() => (
+                        &lt;div&gt;
+                            &lt;PositionLabel /&gt;
+                            &lt;InstructionsLabel /&gt;
+                        &lt;/div&gt;
+                    )}
                 &lt;/ReactCursorPosition&gt;
                 &lt;PositionLabel {...this.state} {...{
                     className: 'example__external-label',

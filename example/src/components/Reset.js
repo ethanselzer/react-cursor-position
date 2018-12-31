@@ -27,8 +27,12 @@ export default class extends React.Component {
                     className="reset example__target example__target--basic"
                     ref={(rcp) => this.rcp = rcp }
                 >
-                    <div id="spacer" style={{height: '145px'}} />
-                    <PositionLabel />
+                    {(cursorProps) => (
+                        <div>
+                            <div id="spacer" style={{height: '145px'}} />
+                            <PositionLabel {...cursorProps} />
+                        </div>
+                    )}
                 </ReactCursorPosition>
             </div>
         );

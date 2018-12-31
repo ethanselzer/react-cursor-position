@@ -16,8 +16,12 @@ export default class extends React.Component {
 
         return (
             <ReactCursorPosition {...{ style }}>
-                <PositionLabel />
-                <InstructionsLabel />
+                {(cursorProps) => (
+                    <div>
+                        <PositionLabel {...cursorProps} />
+                        <InstructionsLabel />
+                    </div>
+                )}
             </ReactCursorPosition>
         );
     }

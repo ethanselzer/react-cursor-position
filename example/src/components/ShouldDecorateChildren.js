@@ -28,8 +28,12 @@ export default class extends React.Component {
                     onPositionChanged: (props) => this.setState(props),
                     shouldDecorateChildren: false
                 }}>
-                    <PositionLabel />
-                    <InstructionsLabel />
+                    {() => (
+                        <div>
+                            <PositionLabel />
+                            <InstructionsLabel />
+                        </div>
+                    )}
                 </ReactCursorPosition>
                 <PositionLabel
                     {...this.state}

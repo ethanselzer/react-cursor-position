@@ -10,8 +10,12 @@ export default class extends React.Component {
             <ReactCursorPosition {...{
                 className: 'example__target example__target--basic'
             }}>
-                <PositionLabel />
-                <InstructionsLabel className="example__instructions" />
+                {(cursorProps) => (
+                    <div>
+                        <PositionLabel {...cursorProps} />
+                        <InstructionsLabel className="example__instructions" />
+                    </div>
+                )}
             </ReactCursorPosition>
         );
     }
