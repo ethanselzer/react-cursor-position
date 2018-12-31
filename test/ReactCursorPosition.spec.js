@@ -7,12 +7,12 @@ import * as adEventListener from '../src/utils/addEventListener';
 import { INTERACTIONS } from '../src/constants';
 
 describe('ReactCursorPosition', () => {
-    let positionObserver = shallow(<ReactCursorPosition />, {disableLifecycleMethods: true});
+    let positionObserver = shallow(<ReactCursorPosition children={() => {}}/>, {disableLifecycleMethods: true});
     const touchEvent = getTouchEvent();
     const mouseEvent = getMouseEvent();
 
     beforeEach(() => {
-        positionObserver = shallow(<ReactCursorPosition/>, {disableLifecycleMethods: true});
+        positionObserver = shallow(<ReactCursorPosition children={() => {}}/>, {disableLifecycleMethods: true});
     });
 
     it('has the display name ReactCursorPosition', () => {
@@ -619,7 +619,7 @@ describe('ReactCursorPosition', () => {
         });
 
         it('supports style', () => {
-            const tree = render(<ReactCursorPosition style={{ width: '100px' }}/>);
+            const tree = render(<ReactCursorPosition style={{ width: '100px' }} children={() => {}}/>);
 
             expect(tree.css('width')).toBe('100px');
         });
@@ -1180,8 +1180,12 @@ describe('ReactCursorPosition', () => {
     function getMountedComponentTree(props = {}) {
         const mountedWrapper = mount(
             <ReactCursorPosition { ...props }>
-                <GenericSpanComponent />
-                <hr />
+                {(cursorProps) => (
+                    <span>
+                        <GenericSpanComponent { ...cursorProps }/>
+                        <hr />
+                    </span>
+                )}
             </ReactCursorPosition>
         );
         const { el } = mountedWrapper.instance();

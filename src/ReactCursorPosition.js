@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import objectAssign from 'object-assign';
 import omit from 'object.omit';
@@ -72,7 +72,7 @@ export default class extends React.Component {
             INTERACTIONS.TAP,
             INTERACTIONS.TOUCH
         ]),
-        children: PropTypes.any,
+        children: PropTypes.func.isRequired,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
@@ -430,28 +430,6 @@ export default class extends React.Component {
         return e.touches[0];
     }
 
-    getIsReactComponent(reactElement) {
-        return typeof reactElement.type === 'function';
-    }
-
-    shouldDecorateChild(child) {
-        return (
-            !!child &&
-            this.getIsReactComponent(child) &&
-            this.props.shouldDecorateChildren
-        );
-    }
-
-    decorateChild(child, props) {
-        return cloneElement(child, props);
-    }
-
-    decorateChildren(children, props) {
-        return Children.map(children, (child) => {
-            return this.shouldDecorateChild(child) ? this.decorateChild(child, props) : child;
-        });
-    }
-
     addEventListeners() {
         this.eventListeners.push(
             addEventListener(this.el, 'touchstart', this.onTouchStart, { passive: false }),
@@ -477,12 +455,16 @@ export default class extends React.Component {
     }
 
     render() {
-        const { children, className, mapChildProps, style } = this.props;
-        const props = objectAssign(
-            {},
-            mapChildProps(this.state),
-            this.getPassThroughProps()
-        );
+        const { children, className, mapChildProps, shouldDecorateChildren, style } = this.props;
+        let props = {};
+
+        if (shouldDecorateChildren) {
+            props = objectAssign(
+                {},
+                mapChildProps(this.state),
+                this.getPassThroughProps()
+            );
+        }
 
         return (
             <div { ...{
@@ -492,7 +474,7 @@ export default class extends React.Component {
                     WebkitUserSelect: 'none'
                 })
             }}>
-                {this.decorateChildren(children, props)}
+                {children(props)}
             </div>
         );
     }

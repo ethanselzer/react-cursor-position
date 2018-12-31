@@ -36,15 +36,19 @@ import ReactCursorPosition from 'react-cursor-position';
 ...
 
 <ReactCursorPosition>
-    <YourComponentOne/>
-    <YourComponentTwo/>
+    {(cursorProps) => (
+        <div>
+            <YourComponentOne {...cursorProps} />
+            <YourComponentTwo {...cursorProps} />
+        </div>
+    )}
 </ReactCursorPosition>
 ```
 
 react-cursor-position wraps its children in a div, which mouse and touch position
 are plotted relative to.
 
-Each child component will receive the following props:
+The function provided will receive the following object:
 
 ```JavaScript
 {
