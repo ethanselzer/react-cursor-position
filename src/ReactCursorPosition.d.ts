@@ -31,7 +31,6 @@ interface CursorPositionOptionsProps {
   className?: string;
   hoverDelayInMs?: number;
   isEnabled?: boolean;
-  mapChildProps?: (CursorPositionGeneratedProps) => object;
   onActivationChanged?: ({isActive: boolean}) => void;
   onDetectedEnvironmentChanged?: (DetectedEnvironment) => void;
   onPositionChanged?: (CursorPositionGeneratedProps) => void;

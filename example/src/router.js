@@ -11,7 +11,6 @@ import ClassName from './pages/ClassName';
 import PositionChanged from './pages/PositionChanged';
 import Home from './pages/Home';
 import ImageMagnify from './pages/ImageMagnify';
-import MapProps from './pages/MapProps';
 import Style from './pages/Style';
 import Support from './pages/Support';
 import DetectedEnvironmentChanged from './pages/DetectedEnvironmentChanged';
@@ -28,7 +27,6 @@ const Routes = (props) => (
         <Route path="/activate-by-touch" component={ActivatedByTouch} />
         <Route path="/activate-by-tap" component={ActivateByTap} />
         <Route path="/activate-by-press" component={ActivateByPress} />
-        <Route path="/map-child-props" component={MapProps} />
         <Route path="/on-position-changed" component={PositionChanged} />
         <Route path="/on-activation-changed" component={ActivationChanged} />
         <Route path="/style" component={Style} />

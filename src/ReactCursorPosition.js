@@ -77,7 +77,6 @@ export default class extends React.Component {
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
         isEnabled: PropTypes.bool,
-        mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
         onDetectedEnvironmentChanged: PropTypes.func,
         onPositionChanged: PropTypes.func,
@@ -95,7 +94,6 @@ export default class extends React.Component {
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
         isEnabled: true,
-        mapChildProps: props => props,
         onActivationChanged: noop,
         onDetectedEnvironmentChanged: noop,
         onPositionChanged: noop,
@@ -453,10 +451,10 @@ export default class extends React.Component {
     }
 
     render() {
-        const { children, className, mapChildProps, style } = this.props;
+        const { children, className, style } = this.props;
         const props = objectAssign(
             {},
-            mapChildProps(this.state),
+            this.state,
             this.getPassThroughProps()
         );
 

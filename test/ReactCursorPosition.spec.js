@@ -624,42 +624,6 @@ describe('ReactCursorPosition', () => {
             expect(tree.css('width')).toBe('100px');
         });
 
-        it('supports mapChildProps', () => {
-            function mapChildProps({ elementDimensions, isActive, isPositionOutside, position }) {
-                return {
-                    elementDimensions,
-                    isOperative: isActive,
-                    isAlfresco: isPositionOutside,
-                    point: position
-                };
-            }
-            const tree = getMountedComponentTree({
-                mapChildProps,
-                activationInteractionMouse: INTERACTIONS.CLICK,
-                activationInteractionTouch: INTERACTIONS.TOUCH
-            });
-            const instance = tree.instance();
-
-            instance.componentDidMount();
-            instance.onTouchStart(touchEvent);
-            instance.onTouchMove(touchEvent);
-            tree.update();
-
-            const childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props()).toEqual({
-                elementDimensions: {
-                    width: 4,
-                    height: 4
-                },
-                isOperative: true,
-                isAlfresco: false,
-                point: {
-                    x: 1,
-                    y: 2
-                }
-            });
-        });
-
         it('supports onPositionChanged callback', () => {
             const spy = jest.fn();
             const tree = getMountedComponentTree({

@@ -7,7 +7,6 @@ Object {
   "hoverDelayInMs": 0,
   "hoverOffDelayInMs": 0,
   "isEnabled": true,
-  "mapChildProps": [Function],
   "onActivationChanged": [Function],
   "onDetectedEnvironmentChanged": [Function],
   "onPositionChanged": [Function],
