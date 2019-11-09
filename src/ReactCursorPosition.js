@@ -221,19 +221,17 @@ export default class extends React.Component {
         }
     }
 
-    componentWillReceiveProps({ isEnabled: willBeEnabled }) {
-        const { isEnabled } = this.props;
-        const isEnabledWillChange = isEnabled !== willBeEnabled;
-
-        if (!isEnabledWillChange) {
+    componentDidUpdate(prevProps) {
+        if (this.props.isEnabled === prevProps.isEnabled) {
             return;
         }
-
-        if (willBeEnabled) {
+        
+        if (this.props.isEnabled) {
             this.enable();
         } else {
             this.disable();
         }
+        
     }
 
     componentWillUnmount() {

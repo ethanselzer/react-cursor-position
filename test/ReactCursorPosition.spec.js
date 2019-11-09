@@ -1110,6 +1110,7 @@ describe('ReactCursorPosition', () => {
             });
 
             it('can be disabled without remounting', () => {
+                const positionObserver = getMountedComponentTree({ isEnabled: true });
                 const instance = positionObserver.instance();
                 const spy = jest.spyOn(instance, 'disable');
 
