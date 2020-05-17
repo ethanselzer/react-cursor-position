@@ -20,7 +20,9 @@ export default class extends React.Component {
                         this.setState({ detectedEnvironment });
                     }
                 }}>
-                    <InstructionsLabel className="example__instructions example__instructions--solo"/>
+                    {() => (
+                        <InstructionsLabel className="example__instructions example__instructions--solo"/>
+                    )}
                 </ReactCursorPosition>
                 <DetectedEnvironmentChangedLabel {...this.state} />
             </div>

@@ -46,7 +46,6 @@ class App extends Component {
                                     <NavItem href="#/activate-by-touch">Activate by Touch</NavItem>
                                     <NavItem href="#/class-name">Class Name</NavItem>
                                     <NavItem href="#/hover-delay">Hover Delay</NavItem>
-                                    <NavItem href="#/map-child-props">Map Child Props</NavItem>
                                     <NavItem href="#/detected-environment-changed">On Environment Changed</NavItem>
                                     <NavItem href="#/on-position-changed">On Position Changed</NavItem>
                                     <NavItem href="#/on-activation-changed">On Activation Changed</NavItem>

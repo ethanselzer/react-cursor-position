@@ -10,10 +10,14 @@ export default () => (
         hoverDelayInMs={250} //default 0
         hoverOffDelayInMs={150} //default 0
     >
-        <PositionLabel />
-        <div className="example__instructions">
-            <InstructionsLabel />
-        </div>
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps} />
+                <div className="example__instructions">
+                    <InstructionsLabel />
+                </div>
+            </div>
+        )}
     </ReactCursorPosition>
 );
 

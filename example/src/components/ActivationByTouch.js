@@ -7,10 +7,14 @@ export default () => (
         className="example__target"
         activationInteractionTouch={INTERACTIONS.TOUCH}
     >
-        <PositionLabel />
-        <div className="example__instructions">
-            Touch and Drag
-        </div>
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps} />
+                <div className="example__instructions">
+                    Touch and Drag
+                </div>
+            </div>
+        )}
     </ReactCursorPosition>
 );
 

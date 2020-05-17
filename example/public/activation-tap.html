@@ -21,8 +21,12 @@ export default () => (
     &lt;ReactCursorPosition
         activationInteractionTouch={INTERACTIONS.TAP}
     &gt;
-        &lt;PositionLabel /&gt;
-        &lt;InstructionsLabel /&gt;
+        {(cursorProps) => (
+            &lt;div&gt;
+                &lt;PositionLabel {...cursorProps} /&gt;
+                &lt;InstructionsLabel /&gt;
+            &lt;/div&gt;
+        )}
     &lt;/ReactCursorPosition&gt;
 );
 </code>

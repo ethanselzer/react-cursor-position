@@ -7,10 +7,13 @@ export default () => (
         className="example__target"
         activationInteractionMouse={INTERACTIONS.CLICK}
     >
-        <PositionLabel />
-        <div className="example__instructions">
-            Click to activate. Hover. Then click again to deactivate.
-        </div>
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps}/>
+                <div className="example__instructions">
+                    Click to activate. Hover. Then click again to deactivate.
+                </div>
+            </div>
+        )}
     </ReactCursorPosition>
 );
-

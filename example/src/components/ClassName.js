@@ -5,7 +5,11 @@ import InstructionsLabel from './InstructionsLabel';
 
 export default () => (
     <ReactCursorPosition className="example__target" >
-        <PositionLabel />
-        <InstructionsLabel />
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps} />
+                <InstructionsLabel />
+            </div>
+        )}
     </ReactCursorPosition>
 );

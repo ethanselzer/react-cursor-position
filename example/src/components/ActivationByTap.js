@@ -7,10 +7,14 @@ export default () => (
         className="example__target"
         activationInteractionTouch={INTERACTIONS.TAP}
     >
-        <PositionLabel />
-        <div className="example__instructions">
-            Tap to activate. Drag. Tap again to deactivate.
-        </div>
+        {(cursorProps) => (
+            <div>
+                <PositionLabel {...cursorProps} />
+                <div className="example__instructions">
+                    Tap to activate. Drag. Tap again to deactivate.
+                </div>
+            </div>
+        )}
     </ReactCursorPosition>
 );
 

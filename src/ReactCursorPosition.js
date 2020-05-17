@@ -1,4 +1,4 @@
-import React, { Children, cloneElement } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import objectAssign from 'object-assign';
 import omit from 'object.omit';
@@ -72,18 +72,16 @@ export default class extends React.Component {
             INTERACTIONS.TAP,
             INTERACTIONS.TOUCH
         ]),
-        children: PropTypes.any,
+        children: PropTypes.func.isRequired,
         className: PropTypes.string,
         hoverDelayInMs: PropTypes.number,
         hoverOffDelayInMs: PropTypes.number,
         isEnabled: PropTypes.bool,
-        mapChildProps: PropTypes.func,
         onActivationChanged: PropTypes.func,
         onDetectedEnvironmentChanged: PropTypes.func,
         onPositionChanged: PropTypes.func,
         pressDurationInMs: PropTypes.number,
         pressMoveThreshold: PropTypes.number,
-        shouldDecorateChildren: PropTypes.bool,
         shouldStopTouchMovePropagation: PropTypes.bool,
         style: PropTypes.object,
         tapDurationInMs: PropTypes.number,
@@ -96,13 +94,11 @@ export default class extends React.Component {
         hoverDelayInMs: 0,
         hoverOffDelayInMs: 0,
         isEnabled: true,
-        mapChildProps: props => props,
         onActivationChanged: noop,
         onDetectedEnvironmentChanged: noop,
         onPositionChanged: noop,
         pressDurationInMs: 500,
         pressMoveThreshold: 5,
-        shouldDecorateChildren: true,
         shouldStopTouchMovePropagation: false,
         tapDurationInMs: 180,
         tapMoveThreshold: 5,
@@ -430,28 +426,6 @@ export default class extends React.Component {
         return e.touches[0];
     }
 
-    getIsReactComponent(reactElement) {
-        return typeof reactElement.type === 'function';
-    }
-
-    shouldDecorateChild(child) {
-        return (
-            !!child &&
-            this.getIsReactComponent(child) &&
-            this.props.shouldDecorateChildren
-        );
-    }
-
-    decorateChild(child, props) {
-        return cloneElement(child, props);
-    }
-
-    decorateChildren(children, props) {
-        return Children.map(children, (child) => {
-            return this.shouldDecorateChild(child) ? this.decorateChild(child, props) : child;
-        });
-    }
-
     addEventListeners() {
         this.eventListeners.push(
             addEventListener(this.el, 'touchstart', this.onTouchStart, { passive: false }),
@@ -477,10 +451,10 @@ export default class extends React.Component {
     }
 
     render() {
-        const { children, className, mapChildProps, style } = this.props;
+        const { children, className, style } = this.props;
         const props = objectAssign(
             {},
-            mapChildProps(this.state),
+            this.state,
             this.getPassThroughProps()
         );
 
@@ -492,7 +466,7 @@ export default class extends React.Component {
                     WebkitUserSelect: 'none'
                 })
             }}>
-                {this.decorateChildren(children, props)}
+                {children(props)}
             </div>
         );
     }

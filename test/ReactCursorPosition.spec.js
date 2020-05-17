@@ -7,12 +7,12 @@ import * as adEventListener from '../src/utils/addEventListener';
 import { INTERACTIONS } from '../src/constants';
 
 describe('ReactCursorPosition', () => {
-    let positionObserver = shallow(<ReactCursorPosition />, {disableLifecycleMethods: true});
+    let positionObserver = shallow(<ReactCursorPosition children={() => {}}/>, {disableLifecycleMethods: true});
     const touchEvent = getTouchEvent();
     const mouseEvent = getMouseEvent();
 
     beforeEach(() => {
-        positionObserver = shallow(<ReactCursorPosition/>, {disableLifecycleMethods: true});
+        positionObserver = shallow(<ReactCursorPosition children={() => {}}/>, {disableLifecycleMethods: true});
     });
 
     it('has the display name ReactCursorPosition', () => {
@@ -619,45 +619,9 @@ describe('ReactCursorPosition', () => {
         });
 
         it('supports style', () => {
-            const tree = render(<ReactCursorPosition style={{ width: '100px' }}/>);
+            const tree = render(<ReactCursorPosition style={{ width: '100px' }} children={() => {}}/>);
 
             expect(tree.css('width')).toBe('100px');
-        });
-
-        it('supports mapChildProps', () => {
-            function mapChildProps({ elementDimensions, isActive, isPositionOutside, position }) {
-                return {
-                    elementDimensions,
-                    isOperative: isActive,
-                    isAlfresco: isPositionOutside,
-                    point: position
-                };
-            }
-            const tree = getMountedComponentTree({
-                mapChildProps,
-                activationInteractionMouse: INTERACTIONS.CLICK,
-                activationInteractionTouch: INTERACTIONS.TOUCH
-            });
-            const instance = tree.instance();
-
-            instance.componentDidMount();
-            instance.onTouchStart(touchEvent);
-            instance.onTouchMove(touchEvent);
-            tree.update();
-
-            const childComponent = tree.find(GenericSpanComponent);
-            expect(childComponent.props()).toEqual({
-                elementDimensions: {
-                    width: 4,
-                    height: 4
-                },
-                isOperative: true,
-                isAlfresco: false,
-                point: {
-                    x: 1,
-                    y: 2
-                }
-            });
         });
 
         it('supports onPositionChanged callback', () => {
@@ -702,20 +666,6 @@ describe('ReactCursorPosition', () => {
             tree.instance().onTouchStart(touchEvent);
 
             expect(spy.mock.calls[0][0].isActive).toBe(true);
-        });
-
-        it('supports shouldDecorateChildren', () => {
-            const tree = getMountedComponentTree({
-                isActivatedOnTouch: true,
-                shouldDecorateChildren: false
-            });
-            const childComponent = tree.find(GenericSpanComponent);
-            const instance = tree.instance();
-            instance.onTouchStart(touchEvent);
-
-            instance.onTouchMove(getTouchEvent({ pageX: 3, pageY: 4 }));
-
-            expect(childComponent.props()).toEqual({});
         });
 
         describe('activationInteractionTouch', () => {
@@ -1180,8 +1130,12 @@ describe('ReactCursorPosition', () => {
     function getMountedComponentTree(props = {}) {
         const mountedWrapper = mount(
             <ReactCursorPosition { ...props }>
-                <GenericSpanComponent />
-                <hr />
+                {(cursorProps) => (
+                    <span>
+                        <GenericSpanComponent { ...cursorProps }/>
+                        <hr />
+                    </span>
+                )}
             </ReactCursorPosition>
         );
         const { el } = mountedWrapper.instance();

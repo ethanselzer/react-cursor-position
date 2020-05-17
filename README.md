@@ -36,15 +36,19 @@ import ReactCursorPosition from 'react-cursor-position';
 ...
 
 <ReactCursorPosition>
-    <YourComponentOne/>
-    <YourComponentTwo/>
+    {(cursorProps) => (
+        <div>
+            <YourComponentOne {...cursorProps} />
+            <YourComponentTwo {...cursorProps} />
+        </div>
+    )}
 </ReactCursorPosition>
 ```
 
 react-cursor-position wraps its children in a div, which mouse and touch position
 are plotted relative to.
 
-Each child component will receive the following props:
+The function provided will receive the following object:
 
 ```JavaScript
 {
@@ -64,8 +68,6 @@ Each child component will receive the following props:
     }
 }
 ```
-This structure may be customized by implementing `mapChildProps` API feature.
-
 The information in `detectedEnvironment` is acquired from interaction with this component and will be unset until the first interaction.
 
 ## Props API
@@ -84,12 +86,6 @@ All props are optional.
 
 **isEnabled** : Boolean - Enable or disable cursor position monitoring without remounting. Defaults to true.
 
-**mapChildProps** : Function - Model child component props to your custom shape.
-Function receives one parameter with the signature
-`{ isActive: Boolean, isPositionOutside: Boolean, position: { x: Number, y: Number } }`.  
-It should return an object that is compatible with the props interface of your child components.
-See [example demo](https://ethanselzer.github.io/react-cursor-position/#/map-child-props).
-
 **onActivationChanged** : Function - Called when the component is active.
 Function receives one parameter with the signature `{ isActive: Boolean }`.
 
@@ -102,9 +98,6 @@ Function receives one parameter with the signature `{ isMouseDetected: Boolean, 
 **pressDurationInMs** : Number - Milliseconds delay before press gesture is activated. Defaults to 500.
 
 **pressMoveThreshold** : Number - Amount of movement, in pixels, allowed during press gesture detection. Defaults to 5.
-
-**shouldDecorateChildren** : Boolean - Suppress decoration of child components by
-setting this prop false. Defaults to true.
 
 **shouldStopTouchMovePropagation** : Boolean - Stop touchmove event bubbling when react-cursor-position is active. Defaults to false.
 
