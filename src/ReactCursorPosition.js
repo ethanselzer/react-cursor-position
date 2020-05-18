@@ -353,13 +353,7 @@ export default class extends React.Component {
 
     deactivate() {
         this.setState({ isActive: false }, () => {
-            const { isPositionOutside, position } = this.state;
-
-            this.props.onPositionChanged({
-                isPositionOutside,
-                position
-            });
-
+            this.props.onPositionChanged(this.state);
             this.props.onActivationChanged({ isActive: false });
         });
     }
