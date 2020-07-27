@@ -472,8 +472,9 @@ export default class extends React.Component {
     }
 
     getPassThroughProps() {
-        const ownPropNames = Object.keys(this.constructor.propTypes);
-        return omit(this.props, ownPropNames);
+        const ownPropNames = Object.keys(this.constructor.propTypes || {});
+        if (ownPropNames.length)
+            return omit(this.props, ownPropNames);
     }
 
     render() {
