@@ -5,3 +5,4 @@ dist
 stats.json
 coverage
 .nyc_output
+.idea
