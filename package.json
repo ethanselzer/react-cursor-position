@@ -64,7 +64,7 @@
     "coveralls": "^3.0.2",
     "cross-env": "^5.2.0",
     "enzyme": "^3.4.4",
-    "enzyme-adapter-react-16": "^1.2.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "eslint": "^5.4.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-plugin-flowtype": "^2.50.0",
@@ -72,15 +72,15 @@
     "eslint-plugin-jsx-a11y": "6.1.1",
     "eslint-plugin-react": "^7.11.1",
     "jest": "^23.5.0",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-test-renderer": "16.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-test-renderer": "17.0.2",
     "rimraf": "^2.6.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0"
   },
   "peerDependencies": {
-    "react": "~0.14.9 || ^15.0.0 || ^16.0.0"
+    "react": "~0.14.9 || ^15.0.0 || ^16.0.0 || ^17.0.0"
   },
   "dependencies": {
     "object-assign": "^4.1.1",

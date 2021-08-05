@@ -221,7 +221,8 @@ export default class extends React.Component {
         }
     }
 
-    componentWillReceiveProps({ isEnabled: willBeEnabled }) {
+    //TODO https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html
+    UNSAFE_componentWillReceiveProps({ isEnabled: willBeEnabled }) {
         const { isEnabled } = this.props;
         const isEnabledWillChange = isEnabled !== willBeEnabled;
 

@@ -15,5 +15,10 @@
         "import/no-unresolved": ["error", { "commonjs": true }],
         "indent": ["error", 4, { "SwitchCase": 1 }],
         "jsx-a11y/href-no-hash": "off"
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
     }
 }
