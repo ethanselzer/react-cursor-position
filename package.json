@@ -31,7 +31,7 @@
   "module": "dist/es/ReactCursorPosition.js",
   "jsnext:main": "dist/es/ReactCursorPosition.js",
   "files": [
-    "dist",
+    "/dist",
     "LICENCE"
   ],
   "scripts": {
