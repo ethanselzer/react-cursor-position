@@ -1,7 +1,5 @@
 import React, { Children, cloneElement } from 'react';
 import PropTypes from 'prop-types';
-import objectAssign from 'object-assign';
-import omit from 'object.omit';
 import Core from './lib/ElementRelativeCursorPosition';
 import addEventListener from './utils/addEventListener';
 import {
@@ -472,13 +470,17 @@ export default class extends React.Component {
     }
 
     getPassThroughProps() {
-        const ownPropNames = Object.keys(this.constructor.propTypes);
-        return omit(this.props, ownPropNames);
+        return Object.keys(this.props).reduce((result, key) => {
+            if (!Object.keys(this.constructor.propTypes).includes(key)) {
+                result[key] = this.props[key];
+            }
+            return result;
+        }, {});
     }
 
     render() {
         const { children, className, mapChildProps, style } = this.props;
-        const props = objectAssign(
+        const props = Object.assign(
             {},
             mapChildProps(this.state),
             this.getPassThroughProps()
@@ -488,7 +490,7 @@ export default class extends React.Component {
             <div { ...{
                 className,
                 ref: (el) => this.el = el,
-                style: objectAssign({}, style, {
+                style: Object.assign({}, style, {
                     WebkitUserSelect: 'none'
                 })
             }}>
