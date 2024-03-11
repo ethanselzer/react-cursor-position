@@ -1,7 +1,6 @@
 .DS_Store
 npm-debug.log
 node_modules
-dist
 stats.json
 coverage
 .nyc_output

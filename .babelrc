@@ -1,24 +1,30 @@
 {
     "presets": [
-        ["es2015", {
-            "modules": false
-        }],
-        "stage-2",
-        "react"
+      ["@babel/preset-env", {
+        "modules": false,
+        "targets": {
+          "esmodules": true
+        }
+      }],
+      "@babel/preset-react"
     ],
     "plugins": [
-        "transform-class-properties"
+      "@babel/plugin-proposal-class-properties"
     ],
     "env": {
-        "cjs": {
-            "plugins": [
-                "transform-es2015-modules-commonjs"
-            ]
-        },
-        "test": {
-            "plugins": [
-                "transform-es2015-modules-commonjs"
-            ]
-        }
+      "cjs": {
+        "presets": [
+          ["@babel/preset-env", {
+            "modules": "commonjs"
+          }]
+        ]
+      },
+      "test": {
+        "presets": [
+          ["@babel/preset-env", {
+            "modules": "commonjs"
+          }]
+        ]
+      }
     }
-}
+  }
